@@ -1,0 +1,173 @@
+:host {
+  display: block;
+  color: #fff;
+}
+
+.hero-inner {
+  display: grid;
+  gap: 3rem;
+  align-items: center;
+  grid-template-columns: 1fr;
+  padding-block: clamp(3.5rem, 2rem + 6vw, 9rem) clamp(2rem, 1rem + 3vw, 5rem);
+}
+
+@media (min-width: 900px) {
+  .hero-inner {
+    grid-template-columns: 1.05fr 0.95fr;
+  }
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--glass-line);
+  border-radius: 999px;
+  background: var(--glass-bg);
+  font-size: var(--step--1);
+  color: var(--navy-300);
+  margin-bottom: 1.5rem;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--navy-400);
+}
+
+.hero-title {
+  font-size: var(--step-4);
+  line-height: 1.15;
+  color: #fff;
+  margin-bottom: 0.6em;
+}
+
+/* Each fragment on its own line, matching the reference's stacked headline. */
+.hero-title span {
+  display: block;
+}
+
+.hero-title .highlight {
+  color: var(--navy-400);
+}
+
+.hero-lead {
+  max-width: 46ch;
+  font-size: var(--step-1);
+  color: var(--navy-300);
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+/* --- Dial --- */
+
+.hero-visual {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 320px;
+}
+
+.rings {
+  position: relative;
+  width: min(360px, 80vw);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+}
+
+.ring {
+  position: absolute;
+  border: 1px solid var(--glass-line);
+  border-radius: 50%;
+  inset: 0;
+}
+
+.ring-2 { inset: 14%; }
+.ring-3 { inset: 28%; }
+
+.node {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 12px rgb(255 255 255 / 70%);
+}
+
+.node-1 { top: 4%; left: 50%; }
+.node-2 { bottom: 12%; left: 16%; }
+.node-3 { top: 44%; right: 6%; }
+
+.dial {
+  position: relative;
+  display: grid;
+  place-items: center;
+  gap: 0.15rem;
+  padding: 1.5rem 1.8rem;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius-lg);
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+}
+
+.dial-value {
+  font-size: var(--step-2);
+  font-weight: 600;
+}
+
+.dial-label {
+  font-size: var(--step--1);
+  color: var(--navy-300);
+}
+
+.float-badge {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 32%;
+  display: grid;
+  gap: 0.1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--glass-line);
+  border-radius: var(--radius);
+  background: rgb(6 11 28 / 72%);
+  backdrop-filter: blur(8px);
+  font-size: var(--step--1);
+}
+
+.float-badge span {
+  color: var(--navy-300);
+}
+
+/* --- Stat strip --- */
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem 2rem;
+  padding-block: 2rem 3.5rem;
+  border-top: 1px solid var(--glass-line);
+}
+
+.stat {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.stat-value {
+  font-size: var(--step-2);
+  font-weight: 600;
+  color: #fff;
+}
+
+.stat-label {
+  font-size: var(--step--1);
+  color: var(--navy-400);
+}

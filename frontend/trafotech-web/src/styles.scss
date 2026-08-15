@@ -1,22 +1,59 @@
-/* TrafoTech global styles.
-   Layout uses CSS logical properties (inline-start/end, margin-inline) so the same rules serve
-   both the Arabic RTL and English LTR directions without mirrored overrides. */
+/* TrafoTech design tokens and base styles.
+   Layout uses CSS logical properties so the same rules serve Arabic RTL and English LTR. */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
 
 :root {
-  --brand: #0d5c8f;
-  --brand-dark: #07405f;
-  --brand-light: #e8f2f9;
-  --accent: #f2a324;
+  /* Navy ramp — the hero and footer live at the dark end. */
+  --navy-990: #03060f;
+  --navy-960: #060b1c;
+  --navy-930: #0a1226;
+  --navy-900: #0d1730;
+  --navy-850: #121e42;
+  --navy-800: #182a5c;
+  --navy-700: #22397a;
+  --navy-500: #4f6392;
+  --navy-400: #b9c4de;
+  --navy-300: #d7deef;
 
-  --text: #1c2733;
-  --text-muted: #5b6a7a;
-  --border: #dde5ec;
-  --bg: #ffffff;
-  --bg-alt: #f5f8fa;
+  --bg: #fbfaf8;
+  --bg-subtle: #f4f2ee;
+  --bg-raised: #ffffff;
 
-  --radius: 10px;
-  --shadow: 0 1px 3px rgb(16 34 51 / 8%), 0 8px 24px rgb(16 34 51 / 6%);
-  --container: 1140px;
+  --ink: #0c1226;
+  --ink-muted: #55607d;
+  --ink-faint: #8a92a8;
+
+  --line: #e7e3db;
+  --line-strong: #d3cec2;
+
+  --accent: var(--navy-700);
+  --accent-soft: var(--navy-500);
+
+  --hero-from: #03060f;
+  --hero-via: #121e42;
+  --hero-to: #182a5c;
+
+  --glass-bg: rgb(255 255 255 / 6%);
+  --glass-line: rgb(255 255 255 / 14%);
+  --glass-hi: rgb(255 255 255 / 22%);
+
+  --font-ar: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-en: 'IBM Plex Sans', system-ui, sans-serif;
+
+  /* Fluid type scale. */
+  --step--1: clamp(0.82rem, 0.79rem + 0.15vw, 0.9rem);
+  --step-0: clamp(0.97rem, 0.93rem + 0.2vw, 1.08rem);
+  --step-1: clamp(1.16rem, 1.06rem + 0.45vw, 1.42rem);
+  --step-2: clamp(1.4rem, 1.22rem + 0.85vw, 1.9rem);
+  --step-3: clamp(1.68rem, 1.38rem + 1.45vw, 2.55rem);
+  --step-4: clamp(2rem, 1.5rem + 2.4vw, 3.4rem);
+
+  --radius: 14px;
+  --radius-lg: 22px;
+  --container: 1200px;
+  --shadow-sm: 0 1px 2px rgb(12 18 38 / 6%), 0 4px 14px rgb(12 18 38 / 5%);
+  --shadow-md: 0 2px 6px rgb(12 18 38 / 8%), 0 18px 44px rgb(12 18 38 / 8%);
 }
 
 * {
@@ -31,39 +68,39 @@ body {
 
 body {
   background: var(--bg);
-  color: var(--text);
-  font-family: 'Segoe UI', 'Noto Sans Arabic', 'Tahoma', system-ui, sans-serif;
-  line-height: 1.7;
+  color: var(--ink);
+  font-family: var(--font-en);
+  font-size: var(--step-0);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Arabic copy reads better with slightly more leading at the same size. */
 html[dir='rtl'] body {
+  font-family: var(--font-ar);
   line-height: 1.85;
 }
 
 h1,
 h2,
-h3 {
-  line-height: 1.3;
-  color: var(--brand-dark);
-  margin: 0 0 0.6em;
+h3,
+h4 {
+  margin: 0 0 0.5em;
+  line-height: 1.2;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
 }
 
-h1 {
-  font-size: clamp(1.8rem, 1.2rem + 2.4vw, 2.7rem);
-}
-
-h2 {
-  font-size: clamp(1.4rem, 1.1rem + 1.4vw, 2rem);
-}
+h1 { font-size: var(--step-4); }
+h2 { font-size: var(--step-3); }
+h3 { font-size: var(--step-1); }
 
 p {
   margin: 0 0 1em;
 }
 
 a {
-  color: var(--brand);
+  color: var(--accent);
   text-decoration: none;
 }
 
@@ -82,93 +119,85 @@ img {
   width: 100%;
   max-width: var(--container);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: 1.5rem;
+}
+
+.container-wide {
+  max-width: 1440px;
 }
 
 /* --- Buttons --- */
 
 .btn {
-  display: inline-block;
-  padding: 0.65rem 1.4rem;
-  border-radius: var(--radius);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.6rem;
   border: 1px solid transparent;
-  background: var(--brand);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-700));
   color: #fff;
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
 .btn:hover,
 .btn:focus-visible {
-  background: var(--brand-dark);
   text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgb(24 42 92 / 30%);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--glass-line);
+  color: #fff;
+}
+
+.btn-ghost:hover,
+.btn-ghost:focus-visible {
+  background: var(--glass-bg);
+  box-shadow: none;
 }
 
 .btn-outline {
   background: transparent;
-  border-color: var(--border);
-  color: var(--brand);
+  border-color: var(--line-strong);
+  color: var(--accent);
 }
 
 .btn-outline:hover,
 .btn-outline:focus-visible {
-  background: var(--brand-light);
+  background: var(--bg-subtle);
+  box-shadow: none;
 }
 
-/* --- Layout primitives --- */
-
-.section {
-  padding-block: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+/* Arrow glyphs must flip with the reading direction. */
+html[dir='rtl'] .btn .arrow {
+  transform: scaleX(-1);
 }
 
-.section-alt {
-  background: var(--bg-alt);
+/* --- Section chrome --- */
+
+.eyebrow {
+  display: inline-block;
+  margin-bottom: 0.9rem;
+  font-size: var(--step--1);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-soft);
 }
 
-.grid {
-  display: grid;
-  gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+.section-lead {
+  max-width: 62ch;
+  font-size: var(--step-1);
+  color: var(--ink-muted);
 }
 
-.card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 1.5rem;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.card h3 {
-  margin-bottom: 0.4rem;
-}
-
-.card-body {
-  flex: 1;
-}
-
-.muted {
-  color: var(--text-muted);
-}
-
-/* --- Status blocks --- */
-
-.state {
-  padding: 3rem 1.25rem;
-  text-align: center;
-  color: var(--text-muted);
-}
-
-.state-error {
-  color: #a8323d;
-}
-
-/* --- CMS-authored rich text --- */
+/* --- CMS rich text --- */
 
 .rich-text :where(h2, h3) {
   margin-top: 1.6em;
@@ -189,24 +218,43 @@ img {
   margin-inline: 0;
   padding-inline-start: 1rem;
   border-inline-start: 3px solid var(--accent);
-  color: var(--text-muted);
+  color: var(--ink-muted);
 }
 
-.rich-text pre {
-  overflow-x: auto;
-  background: var(--bg-alt);
-  padding: 1rem;
-  border-radius: var(--radius);
-}
-
+.rich-text pre,
 .rich-text table {
-  display: block;
   overflow-x: auto;
-  border-collapse: collapse;
-  width: 100%;
 }
 
-.rich-text :where(th, td) {
-  border: 1px solid var(--border);
-  padding: 0.5rem 0.75rem;
+/* --- Scroll reveal --- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* --- Status blocks --- */
+
+.state {
+  padding: 4rem 1.5rem;
+  text-align: center;
+  color: var(--ink-muted);
+}
+
+.state-error {
+  color: #a8323d;
 }

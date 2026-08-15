@@ -1,0 +1,28 @@
+<header class="section-head">
+  @if (block().eyebrow) {
+    <span class="eyebrow">{{ block().eyebrow }}</span>
+  }
+  @if (block().heading) {
+    <h2>{{ block().heading }}</h2>
+  }
+  @if (block().lead) {
+    <p class="section-lead">{{ block().lead }}</p>
+  }
+</header>
+
+@if (block().features?.contentItems?.length) {
+  <ul class="feature-grid">
+    @for (feature of block().features!.contentItems; track feature.contentItemId) {
+      <li class="feature">
+        <span class="feature-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path [attr.d]="glyph(feature.icon)" />
+          </svg>
+        </span>
+        <h3>{{ feature.displayText }}</h3>
+        <p>{{ feature.description }}</p>
+      </li>
+    }
+  </ul>
+}

@@ -1,0 +1,42 @@
+<header class="section-head section-head--split">
+  <div>
+    @if (block().eyebrow) {
+      <span class="eyebrow">{{ block().eyebrow }}</span>
+    }
+    @if (block().heading) {
+      <h2>{{ block().heading }}</h2>
+    }
+  </div>
+
+  @if (block().linkText) {
+    <a class="head-link" [routerLink]="href(block().link?.url)">
+      {{ block().linkText }}
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  }
+</header>
+
+@if (block().products?.contentItems?.length) {
+  <ul class="product-grid">
+    @for (product of block().products!.contentItems; track product.contentItemId) {
+      <li class="product">
+        @if (product.badge) {
+          <span class="badge">{{ product.badge }}</span>
+        }
+        <h3>{{ product.displayText }}</h3>
+        <p class="product-desc">{{ product.description }}</p>
+
+        @if (product.points?.contentItems?.length) {
+          <ul class="points">
+            @for (point of product.points!.contentItems; track point.contentItemId) {
+              <li>
+                <span class="tick" aria-hidden="true">✓</span>
+                {{ point.displayText }}
+              </li>
+            }
+          </ul>
+        }
+      </li>
+    }
+  </ul>
+}

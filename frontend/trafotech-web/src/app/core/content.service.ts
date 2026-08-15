@@ -2,7 +2,53 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { GraphQLClient } from './graphql.client';
 import { BlogPost, Page, Service } from './models/content.models';
+import { PageWithSections } from './models/blocks.models';
 import { environment } from '../../environments/environment';
+
+/**
+ * Blocks are fetched with inline fragments per type. Adding a block type means
+ * adding a fragment here and a case in BlockHostComponent.
+ */
+const BLOCK_FIELDS = `
+  __typename
+  contentItemId
+  displayText
+  ... on PageHeroBlock {
+    eyebrow headingBefore headingHighlight headingAfter lead
+    primaryText primaryLink { url text }
+    secondaryText secondaryLink { url text }
+    dialValue dialLabel badgeTitle badgeText
+    stats { contentItems { ... on StatItem { contentItemId displayText value suffix label } } }
+  }
+  ... on FeatureGridBlock {
+    eyebrow heading lead
+    features { contentItems { ... on FeatureItem { contentItemId displayText icon description } } }
+  }
+  ... on ProductGridBlock {
+    eyebrow heading linkText link { url text }
+    products {
+      contentItems {
+        ... on ProductCard {
+          contentItemId displayText badge description link { url text }
+          points { contentItems { contentItemId displayText } }
+        }
+      }
+    }
+  }
+  ... on CtaBlock { heading text buttonText buttonLink { url text } }
+  ... on RichTextBlock { body { html } }
+`;
+
+const SECTION_FIELDS = `
+  contentItemId
+  displayText
+  anchor
+  background
+  width
+  spacing
+  hidden
+  blocks { contentItems { ${BLOCK_FIELDS} } }
+`;
 
 const PAGE_FIELDS = `
   contentItemId
@@ -49,6 +95,51 @@ export class ContentService {
       return null;
     }
     return /^https?:\/\//i.test(url) ? url : `${environment.cmsUrl}${url}`;
+  }
+
+  /**
+   * Fetches a page with its full section/block tree, in the requested culture.
+   *
+   * Falls back to any culture when the requested one has no translation yet, so
+   * an untranslated page still renders rather than showing an empty screen.
+   */
+  getPageWithSections(path: string, culture?: string): Observable<PageWithSections | null> {
+    const query = `query PageSections($path: String!, $culture: String) {
+      localized: page(where: { path: $path, localization: { culture: $culture } }) {
+        ...PageParts
+      }
+      fallback: page(where: { path: $path }) {
+        ...PageParts
+      }
+    }
+    fragment PageParts on Page {
+      contentItemId
+      displayText
+      path
+      seo { metaTitle metaDescription metaKeywords }
+      sections { contentItems { ... on Section { ${SECTION_FIELDS} } } }
+    }`;
+
+    return this.gql
+      .query<{ localized: PageWithSections[]; fallback: PageWithSections[] }>(query, {
+        path,
+        culture: culture ?? null,
+      })
+      .pipe(
+        map((data) => {
+          const page = data.localized?.[0] ?? data.fallback?.[0];
+          if (!page?.sections) {
+            return page ?? null;
+          }
+          // Hidden sections are authored but withheld, so drop them client-side.
+          return {
+            ...page,
+            sections: {
+              contentItems: page.sections.contentItems.filter((s) => !s.hidden),
+            },
+          };
+        }),
+      );
   }
 
   getPageByPath(path: string): Observable<Page | null> {

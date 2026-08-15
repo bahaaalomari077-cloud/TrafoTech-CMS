@@ -946,6 +946,9 @@
                 },
                 "BagPartSettings": {
                   "ContainedContentTypes": [
+                    "ProductGridBlock",
+                    "FeatureGridBlock",
+                    "PageHeroBlock",
                     "HeroBlock",
                     "RichTextBlock",
                     "MediaBlock",
@@ -1204,6 +1207,265 @@
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "PageHeroBlock",
+          "DisplayName": "Page hero",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "PageHeroBlock",
+              "Name": "PageHeroBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Stats",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:2#Stats;0",
+                  "DisplayName": "Stats"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "StatItem"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FeatureGridBlock",
+          "DisplayName": "Feature grid",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FeatureGridBlock",
+              "Name": "FeatureGridBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Features",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:2#Features;0",
+                  "DisplayName": "Features"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "FeatureItem"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FeatureItem",
+          "DisplayName": "Feature",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FeatureItem",
+              "Name": "FeatureItem",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductGridBlock",
+          "DisplayName": "Product grid",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ProductGridBlock",
+              "Name": "ProductGridBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Products",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:2#Products;0",
+                  "DisplayName": "Products"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ProductCard"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductCard",
+          "DisplayName": "Product card",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ProductCard",
+              "Name": "ProductCard",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Points",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:2#Points;0",
+                  "DisplayName": "Points"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ProductPoint"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductPoint",
+          "DisplayName": "Point",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
                 }
               }
             }
@@ -2651,6 +2913,353 @@
               }
             }
           ]
+        },
+        {
+          "Name": "PageHeroBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Eyebrow"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "HeadingBefore",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Heading (before highlight)"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "HeadingHighlight",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Highlighted word"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "HeadingAfter",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Heading (after highlight)"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Lead",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Lead paragraph"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "PrimaryText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "Primary button text"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "PrimaryLink",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "6",
+                  "DisplayName": "Primary button link"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "SecondaryText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "7",
+                  "DisplayName": "Secondary button text"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "SecondaryLink",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "8",
+                  "DisplayName": "Secondary button link"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "DialValue",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "9",
+                  "DisplayName": "Dial value"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "DialLabel",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "10",
+                  "DisplayName": "Dial label"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "BadgeTitle",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "11",
+                  "DisplayName": "Floating badge title"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "BadgeText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "12",
+                  "DisplayName": "Floating badge text"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FeatureGridBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Eyebrow"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Lead",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Lead paragraph"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FeatureItem",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Icon",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Icon"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Shield",
+                      "value": "shield"
+                    },
+                    {
+                      "name": "Growth",
+                      "value": "growth"
+                    },
+                    {
+                      "name": "Link",
+                      "value": "link"
+                    },
+                    {
+                      "name": "Support",
+                      "value": "support"
+                    },
+                    {
+                      "name": "Bolt",
+                      "value": "bolt"
+                    },
+                    {
+                      "name": "Clock",
+                      "value": "clock"
+                    }
+                  ],
+                  "DefaultValue": "shield"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Description"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductGridBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Eyebrow"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "LinkText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Link text"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Link"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductCard",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Badge",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Category badge"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Description"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Link"
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -3163,13 +3772,13 @@
           },
           "Seo": {
             "MetaTitle": {
-              "Text": "ترافو تيك — حلول المحولات الكهربائية"
+              "Text": "ترافو تيك — بنية الدفع الفوري للاقتصاد الرقمي"
             },
             "MetaDescription": {
-              "Text": "تصميم وتوريد وصيانة محولات التوزيع والقدرة في الأردن والمنطقة."
+              "Text": "حلول ترافو تيك لتمويل سلاسل التوريد وبنية الدفع الفوري."
             },
             "MetaKeywords": {
-              "Text": "محولات, كهرباء, صيانة, الأردن"
+              "Text": "مدفوعات, تسوية فورية, ISO 20022, محفظة رقمية"
             },
             "NoIndex": {
               "Value": false
@@ -3179,8 +3788,8 @@
             "ContentItems": [
               {
                 "ContentType": "Section",
-                "ContentItemId": "sechomehero000000000000000",
-                "ContentItemVersionId": "sechomeherov10000000000000",
+                "ContentItemId": "sechero0000000000000000000",
+                "ContentItemVersionId": "secherov100000000000000000",
                 "DisplayText": "Hero",
                 "Latest": true,
                 "Published": true,
@@ -3192,7 +3801,7 @@
                     "Text": "hero"
                   },
                   "Background": {
-                    "Text": "brand"
+                    "Text": "dark"
                   },
                   "Width": {
                     "Text": "full"
@@ -3207,169 +3816,145 @@
                 "Blocks": {
                   "ContentItems": [
                     {
-                      "ContentType": "HeroBlock",
-                      "ContentItemId": "heroblock00000000000000000",
-                      "ContentItemVersionId": "heroblockv1000000000000000",
-                      "DisplayText": "Hero block",
+                      "ContentType": "PageHeroBlock",
+                      "ContentItemId": "blkhero0000000000000000000",
+                      "ContentItemVersionId": "blkherov100000000000000000",
+                      "DisplayText": "Hero",
                       "Latest": true,
                       "Published": true,
                       "TitlePart": {
-                        "Title": "Hero block"
+                        "Title": "Hero"
                       },
-                      "HeroBlock": {
-                        "Heading": {
-                          "Text": "حلول المحولات الكهربائية"
+                      "PageHeroBlock": {
+                        "Eyebrow": {
+                          "Text": "مرحباً بكم في ترافو تيك"
                         },
-                        "Subheading": {
-                          "Text": "تصميم وتوريد وصيانة محولات التوزيع والقدرة."
+                        "HeadingBefore": {
+                          "Text": "حلول"
                         },
-                        "PrimaryButtonText": {
-                          "Text": "خدماتنا"
+                        "HeadingHighlight": {
+                          "Text": "ترافو تيك"
                         },
-                        "PrimaryButtonLink": {
-                          "Url": "/services",
-                          "Text": "خدماتنا"
+                        "HeadingAfter": {
+                          "Text": "لتمويل سلاسل التوريد"
                         },
-                        "SecondaryButtonText": {
-                          "Text": "اتصل بنا"
+                        "Lead": {
+                          "Text": "بنية الدفع الفوري للاقتصاد الرقمي"
                         },
-                        "SecondaryButtonLink": {
+                        "PrimaryText": {
+                          "Text": "اطلب عرضاً توضيحياً"
+                        },
+                        "PrimaryLink": {
                           "Url": "/contact",
-                          "Text": "اتصل بنا"
+                          "Text": "اطلب عرضاً توضيحياً"
                         },
-                        "Alignment": {
-                          "Text": "center"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentType": "Section",
-                "ContentItemId": "sechomeintro00000000000000",
-                "ContentItemVersionId": "sechomeintrov1000000000000",
-                "DisplayText": "Intro",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Intro"
-                },
-                "Section": {
-                  "Anchor": {
-                    "Text": "intro"
-                  },
-                  "Background": {
-                    "Text": "default"
-                  },
-                  "Width": {
-                    "Text": "container"
-                  },
-                  "Spacing": {
-                    "Text": "normal"
-                  },
-                  "Hidden": {
-                    "Value": false
-                  }
-                },
-                "Blocks": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "RichTextBlock",
-                      "ContentItemId": "introtext00000000000000000",
-                      "ContentItemVersionId": "introtextv1000000000000000",
-                      "DisplayText": "Intro text",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Intro text"
-                      },
-                      "RichTextBlock": {
-                        "Body": {
-                          "Html": "<h2>من نحن</h2><p>ترافو تيك شركة متخصصة في حلول المحولات الكهربائية، تخدم قطاعات الطاقة والصناعة والبنية التحتية.</p>"
-                        }
-                      }
-                    },
-                    {
-                      "ContentType": "StatsBlock",
-                      "ContentItemId": "keynumbers0000000000000000",
-                      "ContentItemVersionId": "keynumbersv100000000000000",
-                      "DisplayText": "Key numbers",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Key numbers"
-                      },
-                      "StatsBlock": {
-                        "Heading": {
-                          "Text": "أرقامنا"
+                        "SecondaryText": {
+                          "Text": "استعرض المنتجات"
+                        },
+                        "SecondaryLink": {
+                          "Url": "/services",
+                          "Text": "استعرض المنتجات"
+                        },
+                        "DialValue": {
+                          "Text": "0.8s"
+                        },
+                        "DialLabel": {
+                          "Text": "زمن التحويل"
+                        },
+                        "BadgeTitle": {
+                          "Text": "ISO 20022"
+                        },
+                        "BadgeText": {
+                          "Text": "متوافق مع ISO 20022"
                         }
                       },
                       "Stats": {
                         "ContentItems": [
                           {
                             "ContentType": "StatItem",
-                            "ContentItemId": "سنواتالخبرة000000000000000",
-                            "ContentItemVersionId": "سنواتالخبرةv10000000000000",
-                            "DisplayText": "سنوات الخبرة",
+                            "ContentItemId": "sthuptime00000000000000000",
+                            "ContentItemVersionId": "sthuptimev1000000000000000",
+                            "DisplayText": "جاهزية النظام",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "سنوات الخبرة"
+                              "Title": "جاهزية النظام"
                             },
                             "StatItem": {
                               "Value": {
-                                "Text": "15"
+                                "Text": "99.99"
                               },
                               "Suffix": {
-                                "Text": "+"
+                                "Text": "%"
                               },
                               "Label": {
-                                "Text": "سنة خبرة"
+                                "Text": "جاهزية النظام"
                               }
                             }
                           },
                           {
                             "ContentType": "StatItem",
-                            "ContentItemId": "مشروعمنجز00000000000000000",
-                            "ContentItemVersionId": "مشروعمنجزv1000000000000000",
-                            "DisplayText": "مشروع منجز",
+                            "ContentItemId": "sthspeed000000000000000000",
+                            "ContentItemVersionId": "sthspeedv10000000000000000",
+                            "DisplayText": "زمن التحويل",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "مشروع منجز"
+                              "Title": "زمن التحويل"
                             },
                             "StatItem": {
                               "Value": {
-                                "Text": "450"
+                                "Text": "<5"
                               },
                               "Suffix": {
-                                "Text": "+"
+                                "Text": "s"
                               },
                               "Label": {
-                                "Text": "مشروع منجز"
+                                "Text": "زمن التحويل"
                               }
                             }
                           },
                           {
                             "ContentType": "StatItem",
-                            "ContentItemId": "عملاء000000000000000000000",
-                            "ContentItemVersionId": "عملاءv10000000000000000000",
-                            "DisplayText": "عملاء",
+                            "ContentItemId": "sthalways00000000000000000",
+                            "ContentItemVersionId": "sthalwaysv1000000000000000",
+                            "DisplayText": "تشغيل متواصل",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "عملاء"
+                              "Title": "تشغيل متواصل"
                             },
                             "StatItem": {
                               "Value": {
-                                "Text": "120"
+                                "Text": "24/7"
+                              },
+                              "Suffix": {
+                                "Text": ""
+                              },
+                              "Label": {
+                                "Text": "تشغيل متواصل"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "sthmarkets0000000000000000",
+                            "ContentItemVersionId": "sthmarketsv100000000000000",
+                            "DisplayText": "سوقاً نشطاً",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "سوقاً نشطاً"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "12"
                               },
                               "Suffix": {
                                 "Text": "+"
                               },
                               "Label": {
-                                "Text": "عميل"
+                                "Text": "سوقاً نشطاً"
                               }
                             }
                           }
@@ -3381,17 +3966,17 @@
               },
               {
                 "ContentType": "Section",
-                "ContentItemId": "sechomecards00000000000000",
-                "ContentItemVersionId": "sechomecardsv1000000000000",
-                "DisplayText": "Services cards",
+                "ContentItemId": "secwhy00000000000000000000",
+                "ContentItemVersionId": "secwhyv1000000000000000000",
+                "DisplayText": "Why TrafoTech",
                 "Latest": true,
                 "Published": true,
                 "TitlePart": {
-                  "Title": "Services cards"
+                  "Title": "Why TrafoTech"
                 },
                 "Section": {
                   "Anchor": {
-                    "Text": "services"
+                    "Text": "why"
                   },
                   "Background": {
                     "Text": "alt"
@@ -3400,7 +3985,7 @@
                     "Text": "container"
                   },
                   "Spacing": {
-                    "Text": "normal"
+                    "Text": "spacious"
                   },
                   "Hidden": {
                     "Value": false
@@ -3409,77 +3994,101 @@
                 "Blocks": {
                   "ContentItems": [
                     {
-                      "ContentType": "CardsBlock",
-                      "ContentItemId": "servicecards00000000000000",
-                      "ContentItemVersionId": "servicecardsv1000000000000",
-                      "DisplayText": "Service cards",
+                      "ContentType": "FeatureGridBlock",
+                      "ContentItemId": "blkwhy00000000000000000000",
+                      "ContentItemVersionId": "blkwhyv1000000000000000000",
+                      "DisplayText": "Why TrafoTech",
                       "Latest": true,
                       "Published": true,
                       "TitlePart": {
-                        "Title": "Service cards"
+                        "Title": "Why TrafoTech"
                       },
-                      "CardsBlock": {
+                      "FeatureGridBlock": {
+                        "Eyebrow": {
+                          "Text": "لماذا ترافو تيك"
+                        },
                         "Heading": {
-                          "Text": "ما نقدمه"
+                          "Text": "بنية تحتية يُبنى عليها اقتصاد"
                         },
-                        "Intro": {
-                          "Text": "خدمات متكاملة من التصميم حتى التشغيل."
-                        },
-                        "ColumnsPerRow": {
-                          "Value": 3.0
+                        "Lead": {
+                          "Text": "كل قرار هندسي في منصتنا يعود إلى سؤال واحد: ماذا يحدث لو توقف هذا النظام لدقيقة واحدة؟"
                         }
                       },
-                      "Cards": {
+                      "Features": {
                         "ContentItems": [
                           {
-                            "ContentType": "CardItem",
-                            "ContentItemId": "الصيانة0000000000000000000",
-                            "ContentItemVersionId": "الصيانةv100000000000000000",
-                            "DisplayText": "الصيانة",
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftsecurity0000000000000000",
+                            "ContentItemVersionId": "ftsecurityv100000000000000",
+                            "DisplayText": "أمان بمعايير البنوك",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "الصيانة"
+                              "Title": "أمان بمعايير البنوك"
                             },
-                            "CardItem": {
-                              "Description": {
-                                "Text": "صيانة دورية وطارئة للمحولات."
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "shield"
                               },
-                              "Link": {
-                                "Url": "/services/transformer-maintenance",
-                                "Text": "التفاصيل"
+                              "Description": {
+                                "Text": "تشفير من الطرف إلى الطرف، ومفاتيح بأجهزة HSM، وسجل تدقيق غير قابل للتعديل لكل عملية."
                               }
                             }
                           },
                           {
-                            "ContentType": "CardItem",
-                            "ContentItemId": "التوريد0000000000000000000",
-                            "ContentItemVersionId": "التوريدv100000000000000000",
-                            "DisplayText": "التوريد",
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftscale0000000000000000000",
+                            "ContentItemVersionId": "ftscalev100000000000000000",
+                            "DisplayText": "يتوسّع مع نموّك",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "التوريد"
+                              "Title": "يتوسّع مع نموّك"
                             },
-                            "CardItem": {
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "growth"
+                              },
                               "Description": {
-                                "Text": "توريد محولات بمواصفات مخصصة."
+                                "Text": "بنية أفقية تعالج ملايين العمليات في الساعة دون توقف الخدمة أو تدهور زمن الاستجابة."
                               }
                             }
                           },
                           {
-                            "ContentType": "CardItem",
-                            "ContentItemId": "الفحصوالاختبار000000000000",
-                            "ContentItemVersionId": "الفحصوالاختبارv10000000000",
-                            "DisplayText": "الفحص والاختبار",
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftinterop00000000000000000",
+                            "ContentItemVersionId": "ftinteropv1000000000000000",
+                            "DisplayText": "تشغيل بيني مفتوح",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "الفحص والاختبار"
+                              "Title": "تشغيل بيني مفتوح"
                             },
-                            "CardItem": {
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "link"
+                              },
                               "Description": {
-                                "Text": "اختبارات الجودة والسلامة في الموقع."
+                                "Text": "واجهات برمجية موثّقة ومعايير ISO 20022 تجعل الربط مع أي نظام قائم مسألة أيام لا شهور."
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftsupport00000000000000000",
+                            "ContentItemVersionId": "ftsupportv1000000000000000",
+                            "DisplayText": "دعم على مدار الساعة",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "دعم على مدار الساعة"
+                            },
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "support"
+                              },
+                              "Description": {
+                                "Text": "فرق هندسية في ثلاث مناطق زمنية، مع اتفاقيات مستوى خدمة مضمونة تعاقدياً."
                               }
                             }
                           }
@@ -3491,17 +4100,17 @@
               },
               {
                 "ContentType": "Section",
-                "ContentItemId": "sechomefaq0000000000000000",
-                "ContentItemVersionId": "sechomefaqv100000000000000",
-                "DisplayText": "FAQ",
+                "ContentItemId": "secprod0000000000000000000",
+                "ContentItemVersionId": "secprodv100000000000000000",
+                "DisplayText": "Products",
                 "Latest": true,
                 "Published": true,
                 "TitlePart": {
-                  "Title": "FAQ"
+                  "Title": "Products"
                 },
                 "Section": {
                   "Anchor": {
-                    "Text": "faq"
+                    "Text": "products"
                   },
                   "Background": {
                     "Text": "default"
@@ -3510,7 +4119,7 @@
                     "Text": "container"
                   },
                   "Spacing": {
-                    "Text": "normal"
+                    "Text": "spacious"
                   },
                   "Hidden": {
                     "Value": false
@@ -3519,52 +4128,198 @@
                 "Blocks": {
                   "ContentItems": [
                     {
-                      "ContentType": "FaqBlock",
-                      "ContentItemId": "commonquestions00000000000",
-                      "ContentItemVersionId": "commonquestionsv1000000000",
-                      "DisplayText": "Common questions",
+                      "ContentType": "ProductGridBlock",
+                      "ContentItemId": "blkprod0000000000000000000",
+                      "ContentItemVersionId": "blkprodv100000000000000000",
+                      "DisplayText": "Products",
                       "Latest": true,
                       "Published": true,
                       "TitlePart": {
-                        "Title": "Common questions"
+                        "Title": "Products"
                       },
-                      "FaqBlock": {
+                      "ProductGridBlock": {
+                        "Eyebrow": {
+                          "Text": "منتجاتنا"
+                        },
                         "Heading": {
-                          "Text": "أسئلة شائعة"
+                          "Text": "منظومة دفع متكاملة"
+                        },
+                        "LinkText": {
+                          "Text": "كل المنتجات"
+                        },
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "كل المنتجات"
                         }
                       },
-                      "Questions": {
+                      "Products": {
                         "ContentItems": [
                           {
-                            "ContentType": "FaqItem",
-                            "ContentItemId": "مامدةتنفيذالمشروع000000000",
-                            "ContentItemVersionId": "مامدةتنفيذالمشروعv10000000",
-                            "DisplayText": "ما مدة تنفيذ المشروع؟",
+                            "ContentType": "ProductCard",
+                            "ContentItemId": "pcrtgs00000000000000000000",
+                            "ContentItemVersionId": "pcrtgsv1000000000000000000",
+                            "DisplayText": "التسوية الإجمالية الفورية",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "ما مدة تنفيذ المشروع؟"
+                              "Title": "التسوية الإجمالية الفورية"
                             },
-                            "FaqItem": {
-                              "Answer": {
-                                "Html": "<p>تعتمد على حجم المشروع، وتتراوح عادة بين 4 و 12 أسبوعاً.</p>"
+                            "ProductCard": {
+                              "Badge": {
+                                "Text": "البنوك المركزية"
+                              },
+                              "Description": {
+                                "Text": "تسوية نهائية لا رجعة فيها للمدفوعات عالية القيمة، مع إدارة سيولة لحظية ونافذة تشغيل ممتدة."
                               }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "pprtgs10000000000000000000",
+                                  "ContentItemVersionId": "pprtgs1v100000000000000000",
+                                  "DisplayText": "تسوية نهائية خلال ثوانٍ",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "تسوية نهائية خلال ثوانٍ"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "pprtgs20000000000000000000",
+                                  "ContentItemVersionId": "pprtgs2v100000000000000000",
+                                  "DisplayText": "إدارة طوابير وسيولة ذكية",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "إدارة طوابير وسيولة ذكية"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "pprtgs30000000000000000000",
+                                  "ContentItemVersionId": "pprtgs3v100000000000000000",
+                                  "DisplayText": "توافق كامل مع ISO 20022",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "توافق كامل مع ISO 20022"
+                                  }
+                                }
+                              ]
                             }
                           },
                           {
-                            "ContentType": "FaqItem",
-                            "ContentItemId": "هلتقدمونصيانةطارئة00000000",
-                            "ContentItemVersionId": "هلتقدمونصيانةطارئةv1000000",
-                            "DisplayText": "هل تقدمون صيانة طارئة؟",
+                            "ContentType": "ProductCard",
+                            "ContentItemId": "pcinstant00000000000000000",
+                            "ContentItemVersionId": "pcinstantv1000000000000000",
+                            "DisplayText": "منصة الدفع الفوري",
                             "Latest": true,
                             "Published": true,
                             "TitlePart": {
-                              "Title": "هل تقدمون صيانة طارئة؟"
+                              "Title": "منصة الدفع الفوري"
                             },
-                            "FaqItem": {
-                              "Answer": {
-                                "Html": "<p>نعم، لدينا فريق استجابة على مدار الساعة.</p>"
+                            "ProductCard": {
+                              "Badge": {
+                                "Text": "البنوك المركزية"
+                              },
+                              "Description": {
+                                "Text": "تحويلات على مدار الساعة تصل خلال أقل من خمس ثوانٍ، مبنية للتشغيل البيني بين كل بنوك السوق."
                               }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppinst10000000000000000000",
+                                  "ContentItemVersionId": "ppinst1v100000000000000000",
+                                  "DisplayText": "متاح ٢٤/٧ طوال أيام السنة",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "متاح ٢٤/٧ طوال أيام السنة"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppinst20000000000000000000",
+                                  "ContentItemVersionId": "ppinst2v100000000000000000",
+                                  "DisplayText": "عناوين اسمية بدل أرقام الحسابات",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "عناوين اسمية بدل أرقام الحسابات"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppinst30000000000000000000",
+                                  "ContentItemVersionId": "ppinst3v100000000000000000",
+                                  "DisplayText": "طلب الدفع والتحقق من المستفيد",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "طلب الدفع والتحقق من المستفيد"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductCard",
+                            "ContentItemId": "pcwallet000000000000000000",
+                            "ContentItemVersionId": "pcwalletv10000000000000000",
+                            "DisplayText": "المحفظة الرقمية",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "المحفظة الرقمية"
+                            },
+                            "ProductCard": {
+                              "Badge": {
+                                "Text": "البنوك التجارية"
+                              },
+                              "Description": {
+                                "Text": "محفظة بعلامتك التجارية للأفراد والتجار، مع تعريف رقمي بالهوية وحدود مرنة حسب مستوى العميل."
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppwal100000000000000000000",
+                                  "ContentItemVersionId": "ppwal1v1000000000000000000",
+                                  "DisplayText": "تعريف رقمي بالهوية خلال دقائق",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "تعريف رقمي بالهوية خلال دقائق"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppwal200000000000000000000",
+                                  "ContentItemVersionId": "ppwal2v1000000000000000000",
+                                  "DisplayText": "دفع بالرمز الموحّد QR",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "دفع بالرمز الموحّد QR"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppwal300000000000000000000",
+                                  "ContentItemVersionId": "ppwal3v1000000000000000000",
+                                  "DisplayText": "محافظ فرعية ورقابة على الإنفاق",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "محافظ فرعية ورقابة على الإنفاق"
+                                  }
+                                }
+                              ]
                             }
                           }
                         ]
@@ -3575,8 +4330,8 @@
               },
               {
                 "ContentType": "Section",
-                "ContentItemId": "sechomecta0000000000000000",
-                "ContentItemVersionId": "sechomectav100000000000000",
+                "ContentItemId": "seccta00000000000000000000",
+                "ContentItemVersionId": "secctav1000000000000000000",
                 "DisplayText": "CTA",
                 "Latest": true,
                 "Published": true,
@@ -3588,10 +4343,10 @@
                     "Text": "cta"
                   },
                   "Background": {
-                    "Text": "brand"
+                    "Text": "dark"
                   },
                   "Width": {
-                    "Text": "wide"
+                    "Text": "full"
                   },
                   "Spacing": {
                     "Text": "normal"
@@ -3604,27 +4359,27 @@
                   "ContentItems": [
                     {
                       "ContentType": "CtaBlock",
-                      "ContentItemId": "contactcta0000000000000000",
-                      "ContentItemVersionId": "contactctav100000000000000",
-                      "DisplayText": "Contact CTA",
+                      "ContentItemId": "blkcta00000000000000000000",
+                      "ContentItemVersionId": "blkctav1000000000000000000",
+                      "DisplayText": "CTA",
                       "Latest": true,
                       "Published": true,
                       "TitlePart": {
-                        "Title": "Contact CTA"
+                        "Title": "CTA"
                       },
                       "CtaBlock": {
                         "Heading": {
-                          "Text": "جاهزون لمشروعك القادم"
+                          "Text": "جاهزون للحديث عن نظامك القادم؟"
                         },
                         "Text": {
-                          "Text": "تواصل معنا للحصول على استشارة وعرض سعر."
+                          "Text": "أخبرنا عن التحدي الذي تواجهه، وسنعود إليك خلال يوم عمل واحد."
                         },
                         "ButtonText": {
-                          "Text": "اطلب عرض سعر"
+                          "Text": "ابدأ المحادثة"
                         },
                         "ButtonLink": {
                           "Url": "/contact",
-                          "Text": "اطلب عرض سعر"
+                          "Text": "ابدأ المحادثة"
                         }
                       }
                     }
@@ -4150,504 +4905,6 @@
         },
         {
           "ContentType": "Page",
-          "ContentItemId": "trafotechpagehome000en0000",
-          "ContentItemVersionId": "trafotechpagehomevenv10000",
-          "DisplayText": "Home",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": {
-            "Title": "Home"
-          },
-          "AutoroutePart": {
-            "Path": "en"
-          },
-          "LocalizationPart": {
-            "Culture": "en",
-            "LocalizationSet": "trafotech-home"
-          },
-          "Seo": {
-            "MetaTitle": {
-              "Text": "TrafoTech — Electrical Transformer Solutions"
-            },
-            "MetaDescription": {
-              "Text": "Design, supply and maintenance of distribution and power transformers in Jordan and the region."
-            },
-            "MetaKeywords": {
-              "Text": "transformers, electrical, maintenance, Jordan"
-            },
-            "NoIndex": {
-              "Value": false
-            }
-          },
-          "Sections": {
-            "ContentItems": [
-              {
-                "ContentType": "Section",
-                "ContentItemId": "sechomehero000000000en0000",
-                "ContentItemVersionId": "sechomeherov100000env10000",
-                "DisplayText": "Hero",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Hero"
-                },
-                "Section": {
-                  "Anchor": {
-                    "Text": "hero"
-                  },
-                  "Background": {
-                    "Text": "brand"
-                  },
-                  "Width": {
-                    "Text": "full"
-                  },
-                  "Spacing": {
-                    "Text": "none"
-                  },
-                  "Hidden": {
-                    "Value": false
-                  }
-                },
-                "Blocks": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "HeroBlock",
-                      "ContentItemId": "heroblock00000000000en0000",
-                      "ContentItemVersionId": "heroblockv10000000env10000",
-                      "DisplayText": "Hero block",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Hero block"
-                      },
-                      "HeroBlock": {
-                        "Heading": {
-                          "Text": "Electrical Transformer Solutions"
-                        },
-                        "Subheading": {
-                          "Text": "Design, supply and maintenance of distribution and power transformers."
-                        },
-                        "PrimaryButtonText": {
-                          "Text": "Our Services"
-                        },
-                        "PrimaryButtonLink": {
-                          "Url": "/services",
-                          "Text": "Our Services"
-                        },
-                        "SecondaryButtonText": {
-                          "Text": "Contact Us"
-                        },
-                        "SecondaryButtonLink": {
-                          "Url": "/contact",
-                          "Text": "Contact Us"
-                        },
-                        "Alignment": {
-                          "Text": "center"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentType": "Section",
-                "ContentItemId": "sechomeintro00000000en0000",
-                "ContentItemVersionId": "sechomeintrov10000env10000",
-                "DisplayText": "Intro",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Intro"
-                },
-                "Section": {
-                  "Anchor": {
-                    "Text": "intro"
-                  },
-                  "Background": {
-                    "Text": "default"
-                  },
-                  "Width": {
-                    "Text": "container"
-                  },
-                  "Spacing": {
-                    "Text": "normal"
-                  },
-                  "Hidden": {
-                    "Value": false
-                  }
-                },
-                "Blocks": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "RichTextBlock",
-                      "ContentItemId": "introtext00000000000en0000",
-                      "ContentItemVersionId": "introtextv10000000env10000",
-                      "DisplayText": "Intro text",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Intro text"
-                      },
-                      "RichTextBlock": {
-                        "Body": {
-                          "Html": "<h2>About Us</h2><p>TrafoTech specialises in electrical transformer solutions, serving the energy, industrial and infrastructure sectors.</p>"
-                        }
-                      }
-                    },
-                    {
-                      "ContentType": "StatsBlock",
-                      "ContentItemId": "keynumbers0000000000en0000",
-                      "ContentItemVersionId": "keynumbersv1000000env10000",
-                      "DisplayText": "Key numbers",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Key numbers"
-                      },
-                      "StatsBlock": {
-                        "Heading": {
-                          "Text": "By the Numbers"
-                        }
-                      },
-                      "Stats": {
-                        "ContentItems": [
-                          {
-                            "ContentType": "StatItem",
-                            "ContentItemId": "سنواتالخبرة000000000en0000",
-                            "ContentItemVersionId": "سنواتالخبرةv100000env10000",
-                            "DisplayText": "Years of experience",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "Years of experience"
-                            },
-                            "StatItem": {
-                              "Value": {
-                                "Text": "15"
-                              },
-                              "Suffix": {
-                                "Text": "+"
-                              },
-                              "Label": {
-                                "Text": "Years of experience"
-                              }
-                            }
-                          },
-                          {
-                            "ContentType": "StatItem",
-                            "ContentItemId": "مشروعمنجز00000000000en0000",
-                            "ContentItemVersionId": "مشروعمنجزv10000000env10000",
-                            "DisplayText": "Projects delivered",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "Projects delivered"
-                            },
-                            "StatItem": {
-                              "Value": {
-                                "Text": "450"
-                              },
-                              "Suffix": {
-                                "Text": "+"
-                              },
-                              "Label": {
-                                "Text": "Projects delivered"
-                              }
-                            }
-                          },
-                          {
-                            "ContentType": "StatItem",
-                            "ContentItemId": "عملاء000000000000000en0000",
-                            "ContentItemVersionId": "عملاءv100000000000env10000",
-                            "DisplayText": "Clients",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "Clients"
-                            },
-                            "StatItem": {
-                              "Value": {
-                                "Text": "120"
-                              },
-                              "Suffix": {
-                                "Text": "+"
-                              },
-                              "Label": {
-                                "Text": "Clients served"
-                              }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentType": "Section",
-                "ContentItemId": "sechomecards00000000en0000",
-                "ContentItemVersionId": "sechomecardsv10000env10000",
-                "DisplayText": "Services cards",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Services cards"
-                },
-                "Section": {
-                  "Anchor": {
-                    "Text": "services"
-                  },
-                  "Background": {
-                    "Text": "alt"
-                  },
-                  "Width": {
-                    "Text": "container"
-                  },
-                  "Spacing": {
-                    "Text": "normal"
-                  },
-                  "Hidden": {
-                    "Value": false
-                  }
-                },
-                "Blocks": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "CardsBlock",
-                      "ContentItemId": "servicecards00000000en0000",
-                      "ContentItemVersionId": "servicecardsv10000env10000",
-                      "DisplayText": "Service cards",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Service cards"
-                      },
-                      "CardsBlock": {
-                        "Heading": {
-                          "Text": "What We Offer"
-                        },
-                        "Intro": {
-                          "Text": "End-to-end services, from design through commissioning."
-                        },
-                        "ColumnsPerRow": {
-                          "Value": 3.0
-                        }
-                      },
-                      "Cards": {
-                        "ContentItems": [
-                          {
-                            "ContentType": "CardItem",
-                            "ContentItemId": "الصيانة0000000000000en0000",
-                            "ContentItemVersionId": "الصيانةv1000000000env10000",
-                            "DisplayText": "Maintenance",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "Maintenance"
-                            },
-                            "CardItem": {
-                              "Description": {
-                                "Text": "Scheduled and emergency transformer maintenance."
-                              },
-                              "Link": {
-                                "Url": "/services/transformer-maintenance",
-                                "Text": "Learn more"
-                              }
-                            }
-                          },
-                          {
-                            "ContentType": "CardItem",
-                            "ContentItemId": "التوريد0000000000000en0000",
-                            "ContentItemVersionId": "التوريدv1000000000env10000",
-                            "DisplayText": "Supply",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "Supply"
-                            },
-                            "CardItem": {
-                              "Description": {
-                                "Text": "Supply of transformers built to your specification."
-                              }
-                            }
-                          },
-                          {
-                            "ContentType": "CardItem",
-                            "ContentItemId": "الفحصوالاختبار000000en0000",
-                            "ContentItemVersionId": "الفحصوالاختبارv100env10000",
-                            "DisplayText": "Testing & Inspection",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "Testing & Inspection"
-                            },
-                            "CardItem": {
-                              "Description": {
-                                "Text": "On-site quality and safety testing."
-                              }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentType": "Section",
-                "ContentItemId": "sechomefaq0000000000en0000",
-                "ContentItemVersionId": "sechomefaqv1000000env10000",
-                "DisplayText": "FAQ",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "FAQ"
-                },
-                "Section": {
-                  "Anchor": {
-                    "Text": "faq"
-                  },
-                  "Background": {
-                    "Text": "default"
-                  },
-                  "Width": {
-                    "Text": "container"
-                  },
-                  "Spacing": {
-                    "Text": "normal"
-                  },
-                  "Hidden": {
-                    "Value": false
-                  }
-                },
-                "Blocks": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "FaqBlock",
-                      "ContentItemId": "commonquestions00000en0000",
-                      "ContentItemVersionId": "commonquestionsv10env10000",
-                      "DisplayText": "Common questions",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Common questions"
-                      },
-                      "FaqBlock": {
-                        "Heading": {
-                          "Text": "Frequently Asked Questions"
-                        }
-                      },
-                      "Questions": {
-                        "ContentItems": [
-                          {
-                            "ContentType": "FaqItem",
-                            "ContentItemId": "مامدةتنفيذالمشروع000en0000",
-                            "ContentItemVersionId": "مامدةتنفيذالمشروعvenv10000",
-                            "DisplayText": "How long does a project take?",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "How long does a project take?"
-                            },
-                            "FaqItem": {
-                              "Answer": {
-                                "Html": "<p>It depends on scope, but most projects run between 4 and 12 weeks.</p>"
-                              }
-                            }
-                          },
-                          {
-                            "ContentType": "FaqItem",
-                            "ContentItemId": "هلتقدمونصيانةطارئة00en0000",
-                            "ContentItemVersionId": "هلتقدمونصيانةطارئةenv10000",
-                            "DisplayText": "Do you offer emergency maintenance?",
-                            "Latest": true,
-                            "Published": true,
-                            "TitlePart": {
-                              "Title": "Do you offer emergency maintenance?"
-                            },
-                            "FaqItem": {
-                              "Answer": {
-                                "Html": "<p>Yes — our response team is available around the clock.</p>"
-                              }
-                            }
-                          }
-                        ]
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentType": "Section",
-                "ContentItemId": "sechomecta0000000000en0000",
-                "ContentItemVersionId": "sechomectav1000000env10000",
-                "DisplayText": "CTA",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "CTA"
-                },
-                "Section": {
-                  "Anchor": {
-                    "Text": "cta"
-                  },
-                  "Background": {
-                    "Text": "brand"
-                  },
-                  "Width": {
-                    "Text": "wide"
-                  },
-                  "Spacing": {
-                    "Text": "normal"
-                  },
-                  "Hidden": {
-                    "Value": false
-                  }
-                },
-                "Blocks": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "CtaBlock",
-                      "ContentItemId": "contactcta0000000000en0000",
-                      "ContentItemVersionId": "contactctav1000000env10000",
-                      "DisplayText": "Contact CTA",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Contact CTA"
-                      },
-                      "CtaBlock": {
-                        "Heading": {
-                          "Text": "Ready for your next project"
-                        },
-                        "Text": {
-                          "Text": "Get in touch for a consultation and a quote."
-                        },
-                        "ButtonText": {
-                          "Text": "Request a Quote"
-                        },
-                        "ButtonLink": {
-                          "Url": "/contact",
-                          "Text": "Request a Quote"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "Page": {
-            "Body": {
-              "Html": "<p>Welcome to TrafoTech.</p>"
-            },
-            "MetaDescription": {
-              "Text": "TrafoTech — electrical transformer solutions and products."
-            }
-          }
-        },
-        {
-          "ContentType": "Page",
           "ContentItemId": "pagecontact000000000en0000",
           "ContentItemVersionId": "pagecontactv100000env10000",
           "DisplayText": "Contact",
@@ -4761,6 +5018,650 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "trafotechpagehome000en0000",
+          "ContentItemVersionId": "trafotechpagehomevenv10000",
+          "DisplayText": "Home",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Home"
+          },
+          "AutoroutePart": {
+            "Path": "en"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-home"
+          },
+          "Seo": {
+            "MetaTitle": {
+              "Text": "TrafoTech — Instant payment infrastructure for the digital economy"
+            },
+            "MetaDescription": {
+              "Text": "TrafoTech solutions for supply chain finance and instant payment infrastructure."
+            },
+            "MetaKeywords": {
+              "Text": "payments, instant settlement, ISO 20022, digital wallet"
+            },
+            "NoIndex": {
+              "Value": false
+            }
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechero0000000000000en0000",
+                "ContentItemVersionId": "secherov1000000000env10000",
+                "DisplayText": "Hero",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Hero"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "hero"
+                  },
+                  "Background": {
+                    "Text": "dark"
+                  },
+                  "Width": {
+                    "Text": "full"
+                  },
+                  "Spacing": {
+                    "Text": "none"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "PageHeroBlock",
+                      "ContentItemId": "blkhero0000000000000en0000",
+                      "ContentItemVersionId": "blkherov1000000000env10000",
+                      "DisplayText": "Hero",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Hero"
+                      },
+                      "PageHeroBlock": {
+                        "Eyebrow": {
+                          "Text": "Welcome to TrafoTech"
+                        },
+                        "HeadingBefore": {
+                          "Text": "TrafoTech"
+                        },
+                        "HeadingHighlight": {
+                          "Text": "solutions"
+                        },
+                        "HeadingAfter": {
+                          "Text": "for supply chain finance"
+                        },
+                        "Lead": {
+                          "Text": "Instant payment infrastructure for the digital economy"
+                        },
+                        "PrimaryText": {
+                          "Text": "Request a demo"
+                        },
+                        "PrimaryLink": {
+                          "Url": "/contact",
+                          "Text": "Request a demo"
+                        },
+                        "SecondaryText": {
+                          "Text": "Browse products"
+                        },
+                        "SecondaryLink": {
+                          "Url": "/services",
+                          "Text": "Browse products"
+                        },
+                        "DialValue": {
+                          "Text": "0.8s"
+                        },
+                        "DialLabel": {
+                          "Text": "Transfer time"
+                        },
+                        "BadgeTitle": {
+                          "Text": "ISO 20022"
+                        },
+                        "BadgeText": {
+                          "Text": "ISO 20022 compliant"
+                        }
+                      },
+                      "Stats": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "sthuptime00000000000en0000",
+                            "ContentItemVersionId": "sthuptimev10000000env10000",
+                            "DisplayText": "System uptime",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "System uptime"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "99.99"
+                              },
+                              "Suffix": {
+                                "Text": "%"
+                              },
+                              "Label": {
+                                "Text": "System uptime"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "sthspeed000000000000en0000",
+                            "ContentItemVersionId": "sthspeedv100000000env10000",
+                            "DisplayText": "Transfer time",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Transfer time"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "<5"
+                              },
+                              "Suffix": {
+                                "Text": "s"
+                              },
+                              "Label": {
+                                "Text": "Transfer time"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "sthalways00000000000en0000",
+                            "ContentItemVersionId": "sthalwaysv10000000env10000",
+                            "DisplayText": "Always on",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Always on"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "24/7"
+                              },
+                              "Suffix": {
+                                "Text": ""
+                              },
+                              "Label": {
+                                "Text": "Always on"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "sthmarkets0000000000en0000",
+                            "ContentItemVersionId": "sthmarketsv1000000env10000",
+                            "DisplayText": "Active markets",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Active markets"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "12"
+                              },
+                              "Suffix": {
+                                "Text": "+"
+                              },
+                              "Label": {
+                                "Text": "Active markets"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secwhy00000000000000en0000",
+                "ContentItemVersionId": "secwhyv10000000000env10000",
+                "DisplayText": "Why TrafoTech",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Why TrafoTech"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "why"
+                  },
+                  "Background": {
+                    "Text": "alt"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FeatureGridBlock",
+                      "ContentItemId": "blkwhy00000000000000en0000",
+                      "ContentItemVersionId": "blkwhyv10000000000env10000",
+                      "DisplayText": "Why TrafoTech",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Why TrafoTech"
+                      },
+                      "FeatureGridBlock": {
+                        "Eyebrow": {
+                          "Text": "Why TrafoTech"
+                        },
+                        "Heading": {
+                          "Text": "Infrastructure an economy can be built on"
+                        },
+                        "Lead": {
+                          "Text": "Every engineering decision on our platform comes back to one question: what happens if this system stops for a single minute?"
+                        }
+                      },
+                      "Features": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftsecurity0000000000en0000",
+                            "ContentItemVersionId": "ftsecurityv1000000env10000",
+                            "DisplayText": "Bank-grade security",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Bank-grade security"
+                            },
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "shield"
+                              },
+                              "Description": {
+                                "Text": "End-to-end encryption, HSM-held keys, and an immutable audit trail for every transaction."
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftscale0000000000000en0000",
+                            "ContentItemVersionId": "ftscalev1000000000env10000",
+                            "DisplayText": "Scales as you grow",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Scales as you grow"
+                            },
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "growth"
+                              },
+                              "Description": {
+                                "Text": "A horizontal architecture handling millions of transactions an hour with no downtime and no latency drift."
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftinterop00000000000en0000",
+                            "ContentItemVersionId": "ftinteropv10000000env10000",
+                            "DisplayText": "Open interoperability",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Open interoperability"
+                            },
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "link"
+                              },
+                              "Description": {
+                                "Text": "Documented APIs and ISO 20022 standards make integrating with any existing system a matter of days, not months."
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "FeatureItem",
+                            "ContentItemId": "ftsupport00000000000en0000",
+                            "ContentItemVersionId": "ftsupportv10000000env10000",
+                            "DisplayText": "Round-the-clock support",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Round-the-clock support"
+                            },
+                            "FeatureItem": {
+                              "Icon": {
+                                "Text": "support"
+                              },
+                              "Description": {
+                                "Text": "Engineering teams across three time zones, with contractually guaranteed SLAs."
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secprod0000000000000en0000",
+                "ContentItemVersionId": "secprodv1000000000env10000",
+                "DisplayText": "Products",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Products"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "products"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "ProductGridBlock",
+                      "ContentItemId": "blkprod0000000000000en0000",
+                      "ContentItemVersionId": "blkprodv1000000000env10000",
+                      "DisplayText": "Products",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Products"
+                      },
+                      "ProductGridBlock": {
+                        "Eyebrow": {
+                          "Text": "Our products"
+                        },
+                        "Heading": {
+                          "Text": "A complete payments ecosystem"
+                        },
+                        "LinkText": {
+                          "Text": "All products"
+                        },
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "All products"
+                        }
+                      },
+                      "Products": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "ProductCard",
+                            "ContentItemId": "pcrtgs00000000000000en0000",
+                            "ContentItemVersionId": "pcrtgsv10000000000env10000",
+                            "DisplayText": "Real-time gross settlement",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Real-time gross settlement"
+                            },
+                            "ProductCard": {
+                              "Badge": {
+                                "Text": "Central banks"
+                              },
+                              "Description": {
+                                "Text": "Irrevocable final settlement for high-value payments, with real-time liquidity management and an extended operating window."
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "pprtgs10000000000000en0000",
+                                  "ContentItemVersionId": "pprtgs1v1000000000env10000",
+                                  "DisplayText": "Final settlement in seconds",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Final settlement in seconds"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "pprtgs20000000000000en0000",
+                                  "ContentItemVersionId": "pprtgs2v1000000000env10000",
+                                  "DisplayText": "Smart queue and liquidity management",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Smart queue and liquidity management"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "pprtgs30000000000000en0000",
+                                  "ContentItemVersionId": "pprtgs3v1000000000env10000",
+                                  "DisplayText": "Full ISO 20022 compliance",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Full ISO 20022 compliance"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductCard",
+                            "ContentItemId": "pcinstant00000000000en0000",
+                            "ContentItemVersionId": "pcinstantv10000000env10000",
+                            "DisplayText": "Instant payments platform",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Instant payments platform"
+                            },
+                            "ProductCard": {
+                              "Badge": {
+                                "Text": "Central banks"
+                              },
+                              "Description": {
+                                "Text": "Round-the-clock transfers arriving in under five seconds, built for interoperability across every bank in the market."
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppinst10000000000000en0000",
+                                  "ContentItemVersionId": "ppinst1v1000000000env10000",
+                                  "DisplayText": "Available 24/7, every day of the year",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Available 24/7, every day of the year"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppinst20000000000000en0000",
+                                  "ContentItemVersionId": "ppinst2v1000000000env10000",
+                                  "DisplayText": "Aliases instead of account numbers",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Aliases instead of account numbers"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppinst30000000000000en0000",
+                                  "ContentItemVersionId": "ppinst3v1000000000env10000",
+                                  "DisplayText": "Request to pay and payee verification",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Request to pay and payee verification"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductCard",
+                            "ContentItemId": "pcwallet000000000000en0000",
+                            "ContentItemVersionId": "pcwalletv100000000env10000",
+                            "DisplayText": "Digital wallet",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Digital wallet"
+                            },
+                            "ProductCard": {
+                              "Badge": {
+                                "Text": "Commercial banks"
+                              },
+                              "Description": {
+                                "Text": "A white-label wallet for consumers and merchants, with digital identity verification and flexible limits by customer tier."
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppwal100000000000000en0000",
+                                  "ContentItemVersionId": "ppwal1v10000000000env10000",
+                                  "DisplayText": "Digital identity verification in minutes",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Digital identity verification in minutes"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppwal200000000000000en0000",
+                                  "ContentItemVersionId": "ppwal2v10000000000env10000",
+                                  "DisplayText": "Unified QR code payments",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Unified QR code payments"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "ppwal300000000000000en0000",
+                                  "ContentItemVersionId": "ppwal3v10000000000env10000",
+                                  "DisplayText": "Sub-wallets and spending controls",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Sub-wallets and spending controls"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "seccta00000000000000en0000",
+                "ContentItemVersionId": "secctav10000000000env10000",
+                "DisplayText": "CTA",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "CTA"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "cta"
+                  },
+                  "Background": {
+                    "Text": "dark"
+                  },
+                  "Width": {
+                    "Text": "full"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "CtaBlock",
+                      "ContentItemId": "blkcta00000000000000en0000",
+                      "ContentItemVersionId": "blkctav10000000000env10000",
+                      "DisplayText": "CTA",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "CTA"
+                      },
+                      "CtaBlock": {
+                        "Heading": {
+                          "Text": "Ready to talk about your next system?"
+                        },
+                        "Text": {
+                          "Text": "Tell us about the challenge you are facing and we will come back to you within one business day."
+                        },
+                        "ButtonText": {
+                          "Text": "Start the conversation"
+                        },
+                        "ButtonLink": {
+                          "Url": "/contact",
+                          "Text": "Start the conversation"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Page": {
+            "Body": {
+              "Html": "<p>Welcome to TrafoTech.</p>"
+            },
+            "MetaDescription": {
+              "Text": "TrafoTech — electrical transformer solutions and products."
+            }
           }
         }
       ]

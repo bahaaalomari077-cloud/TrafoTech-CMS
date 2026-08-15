@@ -1,0 +1,46 @@
+/* Backgrounds — the dark variants also flip text colour for their children. */
+
+.bg-default {
+  background: var(--bg);
+}
+
+.bg-alt {
+  background: var(--bg-subtle);
+}
+
+.bg-brand {
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-700));
+  color: #fff;
+}
+
+.bg-dark {
+  background: linear-gradient(160deg, var(--hero-from), var(--hero-via) 55%, var(--hero-to));
+  color: #fff;
+}
+
+.bg-brand :is(h1, h2, h3),
+.bg-dark :is(h1, h2, h3) {
+  color: #fff;
+}
+
+/* Vertical rhythm */
+
+.space-none {
+  padding-block: 0;
+}
+
+.space-compact {
+  padding-block: clamp(2rem, 1.2rem + 2vw, 3rem);
+}
+
+.space-normal {
+  padding-block: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+.space-spacious {
+  padding-block: clamp(4rem, 2.5rem + 5vw, 8rem);
+}
+
+.section-inner-full {
+  width: 100%;
+}

@@ -1,43 +1,45 @@
-import { Component, inject, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { forkJoin } from 'rxjs';
+import { Component, effect, inject, signal } from '@angular/core';
+import { Title, Meta } from '@angular/platform-browser';
 import { ContentService } from '../../core/content.service';
-import { BlogPost, Page, Service } from '../../core/models/content.models';
-import { SafeHtmlPipe } from '../../core/safe-html.pipe';
+import { I18nService } from '../../core/i18n.service';
+import { PageWithSections } from '../../core/models/blocks.models';
+import { SectionHostComponent } from '../../blocks/section-host/section-host';
 import { TranslatePipe } from '../../core/translate.pipe';
 
 @Component({
   selector: 'app-home',
-  imports: [RouterLink, TranslatePipe, SafeHtmlPipe],
+  imports: [SectionHostComponent, TranslatePipe],
   templateUrl: './home.html',
-  styleUrl: './home.scss',
 })
 export class HomeComponent {
   private readonly content = inject(ContentService);
+  private readonly i18n = inject(I18nService);
+  private readonly title = inject(Title);
+  private readonly meta = inject(Meta);
 
-  protected readonly page = signal<Page | null>(null);
-  protected readonly services = signal<Service[]>([]);
-  protected readonly posts = signal<BlogPost[]>([]);
+  protected readonly page = signal<PageWithSections | null>(null);
   protected readonly loading = signal(true);
   protected readonly error = signal(false);
 
   constructor() {
-    this.load();
+    // Re-fetches whenever the language changes, so the toggle swaps content too.
+    effect(() => {
+      const lang = this.i18n.lang();
+      this.load(lang);
+    });
   }
 
-  protected load(): void {
+  protected load(culture = this.i18n.lang()): void {
     this.loading.set(true);
     this.error.set(false);
 
-    forkJoin({
-      page: this.content.getPageByPath('home'),
-      services: this.content.getServices(),
-      posts: this.content.getBlogPosts(3),
-    }).subscribe({
-      next: ({ page, services, posts }) => {
+    // Autoroute gives each culture its own path: Arabic keeps /home, English lives at /en.
+    const path = culture === 'en' ? 'en' : 'home';
+
+    this.content.getPageWithSections(path, culture).subscribe({
+      next: (page) => {
         this.page.set(page);
-        this.services.set(services.slice(0, 6));
-        this.posts.set(posts);
+        this.applySeo(page);
         this.loading.set(false);
       },
       error: () => {
@@ -47,12 +49,16 @@ export class HomeComponent {
     });
   }
 
-  protected heroImage(page: Page | null): string | null {
-    return this.content.mediaUrl(page?.heroImage?.files?.[0]?.url);
-  }
-
-  /** Autoroute paths are absolute from the CMS root; the SPA routes mirror them 1:1. */
-  protected routeFor(path: string): string {
-    return `/${path}`;
+  private applySeo(page: PageWithSections | null): void {
+    if (!page) {
+      return;
+    }
+    this.title.setTitle(page.seo?.metaTitle || page.displayText);
+    if (page.seo?.metaDescription) {
+      this.meta.updateTag({ name: 'description', content: page.seo.metaDescription });
+    }
+    if (page.seo?.metaKeywords) {
+      this.meta.updateTag({ name: 'keywords', content: page.seo.metaKeywords });
+    }
   }
 }

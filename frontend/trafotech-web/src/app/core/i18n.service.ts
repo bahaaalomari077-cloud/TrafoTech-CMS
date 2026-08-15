@@ -92,8 +92,8 @@ export class I18nService {
     } catch {
       // Ignore and fall through to the default.
     }
-    // Matches the CMS default culture, so an unvisited browser and a fresh
-    // content item start in the same language.
-    return 'en';
+    // The site's primary audience is Arabic and the homepage is authored in it,
+    // so a first visit opens in Arabic. The admin UI is English regardless.
+    return 'ar';
   }
 }

@@ -1,0 +1,77 @@
+<div class="hero-inner container container-wide">
+  <div class="hero-copy">
+    @if (block().eyebrow) {
+      <span class="hero-badge">
+        <span class="dot" aria-hidden="true"></span>
+        {{ block().eyebrow }}
+      </span>
+    }
+
+    <h1 class="hero-title">
+      @if (block().headingBefore) {
+        <span>{{ block().headingBefore }}</span>
+      }
+      @if (block().headingHighlight) {
+        <span class="highlight">{{ block().headingHighlight }}</span>
+      }
+      @if (block().headingAfter) {
+        <span>{{ block().headingAfter }}</span>
+      }
+    </h1>
+
+    @if (block().lead) {
+      <p class="hero-lead">{{ block().lead }}</p>
+    }
+
+    <div class="hero-actions">
+      @if (block().primaryText) {
+        <a class="btn" [routerLink]="href(block().primaryLink?.url)">
+          {{ block().primaryText }}
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      }
+      @if (block().secondaryText) {
+        <a class="btn btn-ghost" [routerLink]="href(block().secondaryLink?.url)">
+          {{ block().secondaryText }}
+        </a>
+      }
+    </div>
+  </div>
+
+  <!-- Decorative dial: concentric rings with a value chip at the centre. -->
+  <div class="hero-visual" aria-hidden="true">
+    <div class="rings">
+      <span class="ring ring-1"></span>
+      <span class="ring ring-2"></span>
+      <span class="ring ring-3"></span>
+      <span class="node node-1"></span>
+      <span class="node node-2"></span>
+      <span class="node node-3"></span>
+
+      @if (block().dialValue) {
+        <div class="dial">
+          <span class="dial-value">{{ block().dialValue }}</span>
+          <span class="dial-label">{{ block().dialLabel }}</span>
+        </div>
+      }
+    </div>
+
+    @if (block().badgeTitle) {
+      <div class="float-badge">
+        <strong>{{ block().badgeTitle }}</strong>
+        <span>{{ block().badgeText }}</span>
+      </div>
+    }
+  </div>
+</div>
+
+@if (block().stats?.contentItems?.length) {
+  <div class="hero-stats container container-wide">
+    @for (stat of block().stats!.contentItems; track stat.contentItemId) {
+      <div class="stat">
+        <span class="stat-value">{{ stat.value }}{{ stat.suffix }}</span>
+        <span class="stat-label">{{ stat.label }}</span>
+      </div>
+    }
+  </div>
+}
