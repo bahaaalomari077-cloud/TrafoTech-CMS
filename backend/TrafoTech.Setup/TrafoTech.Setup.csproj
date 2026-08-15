@@ -21,6 +21,9 @@
   <!--
     Recipes\**\*.json is embedded automatically by the Orchard theme targets, which is how the
     setup-recipe harvester finds trafotech.recipe.json — no explicit EmbeddedResource needed.
+
+    Editor placement lives in the TrafoTech.Admin module instead: placement shipped by a theme
+    only applies to that theme's own rendering, and the admin renders under TheAdmin.
   -->
 
 </Project>

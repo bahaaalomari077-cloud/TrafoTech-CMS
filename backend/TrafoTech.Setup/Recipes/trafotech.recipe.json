@@ -57,7 +57,8 @@
         "OrchardCore.Admin",
         "OrchardCore.Navigation",
         "OrchardCore.Themes",
-        "TheAdmin"
+        "TheAdmin",
+        "TrafoTech.Admin"
       ]
     },
     {
@@ -101,7 +102,7 @@
               "Name": "TitlePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "0"
+                  "Position": "Content;0"
                 }
               }
             },
@@ -110,7 +111,7 @@
               "Name": "AutoroutePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "1"
+                  "Position": "Content;1"
                 },
                 "AutoroutePartSettings": {
                   "Pattern": "{{ ContentItem.DisplayText | slugify }}",
@@ -124,7 +125,7 @@
               "Name": "LocalizationPart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "2"
+                  "Position": "Content;2"
                 }
               }
             },
@@ -133,7 +134,7 @@
               "Name": "Seo",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "3",
+                  "Position": "Parts:5#SEO;0",
                   "DisplayName": "SEO"
                 }
               }
@@ -143,7 +144,7 @@
               "Name": "Sections",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "4",
+                  "Position": "Sections;0",
                   "DisplayName": "Sections"
                 },
                 "BagPartSettings": {
@@ -159,7 +160,7 @@
               "Name": "Page",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "5"
+                  "Position": "Content;3"
                 }
               }
             }
@@ -184,7 +185,7 @@
               "Name": "TitlePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "0"
+                  "Position": "Content;0"
                 }
               }
             },
@@ -193,7 +194,7 @@
               "Name": "AutoroutePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "1"
+                  "Position": "Content;1"
                 },
                 "AutoroutePartSettings": {
                   "Pattern": "services/{{ ContentItem.DisplayText | slugify }}",
@@ -206,7 +207,7 @@
               "Name": "LocalizationPart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "2"
+                  "Position": "Content;2"
                 }
               }
             },
@@ -215,7 +216,7 @@
               "Name": "Service",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "3"
+                  "Position": "Content;3"
                 }
               }
             }
@@ -240,7 +241,7 @@
               "Name": "TitlePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "0"
+                  "Position": "Content;0"
                 }
               }
             },
@@ -249,7 +250,7 @@
               "Name": "AutoroutePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "1"
+                  "Position": "Content;1"
                 },
                 "AutoroutePartSettings": {
                   "Pattern": "blog/{{ ContentItem.DisplayText | slugify }}",
@@ -262,7 +263,7 @@
               "Name": "LocalizationPart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "2"
+                  "Position": "Content;2"
                 }
               }
             },
@@ -271,7 +272,7 @@
               "Name": "MarkdownBodyPart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "4"
+                  "Position": "Content;4"
                 }
               }
             },
@@ -280,7 +281,7 @@
               "Name": "BlogPost",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "3"
+                  "Position": "Content;3"
                 }
               }
             }
@@ -879,7 +880,16 @@
               "Name": "TitlePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "0"
+                  "Position": "Content;0"
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Content;1"
                 }
               }
             },
@@ -888,7 +898,7 @@
               "Name": "Address",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "1"
+                  "Position": "Content;2"
                 }
               }
             }
@@ -913,7 +923,7 @@
               "Name": "TitlePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "0"
+                  "Position": "Content;0"
                 }
               }
             },
@@ -922,7 +932,7 @@
               "Name": "Section",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "1"
+                  "Position": "Content;1"
                 }
               }
             },
@@ -931,7 +941,7 @@
               "Name": "Blocks",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "2",
+                  "Position": "Blocks;0",
                   "DisplayName": "Blocks"
                 },
                 "BagPartSettings": {
@@ -972,7 +982,16 @@
               "Name": "TitlePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "0"
+                  "Position": "Content;0"
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Content;1"
                 }
               }
             },
@@ -981,7 +1000,7 @@
               "Name": "SiteHeader",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "1"
+                  "Position": "Content;2"
                 }
               }
             },
@@ -990,7 +1009,7 @@
               "Name": "SocialLinks",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "9",
+                  "Position": "Social;0",
                   "DisplayName": "Social links"
                 },
                 "BagPartSettings": {
@@ -1022,7 +1041,16 @@
               "Name": "TitlePart",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "0"
+                  "Position": "Content;0"
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Content;1"
                 }
               }
             },
@@ -1031,7 +1059,7 @@
               "Name": "SiteFooter",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "1"
+                  "Position": "Content;2"
                 }
               }
             },
@@ -1040,7 +1068,7 @@
               "Name": "LinkColumns",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "2",
+                  "Position": "Links;0",
                   "DisplayName": "Link columns"
                 },
                 "BagPartSettings": {
@@ -1056,7 +1084,7 @@
               "Name": "SocialLinks",
               "Settings": {
                 "ContentTypePartSettings": {
-                  "Position": "9",
+                  "Position": "Social;0",
                   "DisplayName": "Social links"
                 },
                 "BagPartSettings": {
@@ -2731,6 +2759,10 @@
             "IsPrimary": {
               "Value": true
             }
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-address"
           }
         },
         {
@@ -2808,6 +2840,10 @@
                 }
               }
             ]
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-siteheader"
           }
         },
         {
@@ -2969,6 +3005,10 @@
                 }
               }
             ]
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-sitefooter"
           }
         },
         {
@@ -3706,6 +3746,1010 @@
                         "Addresses": {
                           "ContentItemIds": [
                             "addrmain000000000000000000"
+                          ]
+                        },
+                        "ZoomLevel": {
+                          "Value": 13.0
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentType": "Address",
+          "ContentItemId": "addrmain000000000000en0000",
+          "ContentItemVersionId": "addrmainv100000000env10000",
+          "DisplayText": "Head Office",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Head Office"
+          },
+          "Address": {
+            "Label": {
+              "Text": "Head Office"
+            },
+            "Street": {
+              "Text": "Queen Rania Al Abdullah Street"
+            },
+            "City": {
+              "Text": "Amman"
+            },
+            "Region": {
+              "Text": "Amman"
+            },
+            "PostalCode": {
+              "Text": "11183"
+            },
+            "Country": {
+              "Text": "Jordan"
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Email": {
+              "Text": "info@trafotech.local"
+            },
+            "Latitude": {
+              "Text": "31.9539"
+            },
+            "Longitude": {
+              "Text": "35.9106"
+            },
+            "WorkingHours": {
+              "Text": "Sunday – Thursday: 8:00 AM – 5:00 PM"
+            },
+            "IsPrimary": {
+              "Value": true
+            }
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-address"
+          }
+        },
+        {
+          "ContentType": "SiteHeader",
+          "ContentItemId": "siteheader0000000000en0000",
+          "ContentItemVersionId": "siteheaderv1000000env10000",
+          "DisplayText": "Site header",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site header"
+          },
+          "SiteHeader": {
+            "MenuName": {
+              "Text": "Main Menu"
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Email": {
+              "Text": "info@trafotech.local"
+            },
+            "CtaText": {
+              "Text": "Request a Quote"
+            },
+            "CtaLink": {
+              "Url": "/contact",
+              "Text": "Request a Quote"
+            },
+            "ShowLanguageSwitcher": {
+              "Value": true
+            },
+            "Sticky": {
+              "Value": true
+            }
+          },
+          "SocialLinks": {
+            "ContentItems": [
+              {
+                "ContentType": "SocialLink",
+                "ContentItemId": "linkedin000000000000en0000",
+                "ContentItemVersionId": "linkedinv100000000env10000",
+                "DisplayText": "LinkedIn",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "LinkedIn"
+                },
+                "SocialLink": {
+                  "Network": {
+                    "Text": "linkedin"
+                  },
+                  "Url": {
+                    "Text": "https://linkedin.com/company/trafotech"
+                  }
+                }
+              },
+              {
+                "ContentType": "SocialLink",
+                "ContentItemId": "facebook000000000000en0000",
+                "ContentItemVersionId": "facebookv100000000env10000",
+                "DisplayText": "Facebook",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Facebook"
+                },
+                "SocialLink": {
+                  "Network": {
+                    "Text": "facebook"
+                  },
+                  "Url": {
+                    "Text": "https://facebook.com/trafotech"
+                  }
+                }
+              }
+            ]
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-siteheader"
+          }
+        },
+        {
+          "ContentType": "SiteFooter",
+          "ContentItemId": "sitefooter0000000000en0000",
+          "ContentItemVersionId": "sitefooterv1000000env10000",
+          "DisplayText": "Site footer",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site footer"
+          },
+          "SiteFooter": {
+            "About": {
+              "Text": "TrafoTech — electrical transformer solutions and products in Jordan and the region."
+            },
+            "Addresses": {
+              "ContentItemIds": [
+                "addrmain000000000000en0000"
+              ]
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Email": {
+              "Text": "info@trafotech.local"
+            },
+            "Copyright": {
+              "Text": "© 2026 TrafoTech. All rights reserved."
+            },
+            "ShowNewsletter": {
+              "Value": true
+            },
+            "NewsletterHeading": {
+              "Text": "Subscribe to our newsletter"
+            }
+          },
+          "LinkColumns": {
+            "ContentItems": [
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "footcolcompany000000en0000",
+                "ContentItemVersionId": "footcolcompanyv100env10000",
+                "DisplayText": "Company",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Company"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "مننحن000000000000000en0000",
+                      "ContentItemVersionId": "مننحنv100000000000env10000",
+                      "DisplayText": "About Us",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "About Us"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/about",
+                          "Text": "About Us"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "خدماتنا0000000000000en0000",
+                      "ContentItemVersionId": "خدماتناv1000000000env10000",
+                      "DisplayText": "Our Services",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Our Services"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "Our Services"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "المدونة0000000000000en0000",
+                      "ContentItemVersionId": "المدونةv1000000000env10000",
+                      "DisplayText": "Blog",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Blog"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/blog",
+                          "Text": "Blog"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "footcolsupport000000en0000",
+                "ContentItemVersionId": "footcolsupportv100env10000",
+                "DisplayText": "Support",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Support"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "اتصلبنا0000000000000en0000",
+                      "ContentItemVersionId": "اتصلبناv1000000000env10000",
+                      "DisplayText": "Contact Us",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Contact Us"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/contact",
+                          "Text": "Contact Us"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "SocialLinks": {
+            "ContentItems": [
+              {
+                "ContentType": "SocialLink",
+                "ContentItemId": "linkedinfooter000000en0000",
+                "ContentItemVersionId": "linkedinfooterv100env10000",
+                "DisplayText": "LinkedIn footer",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "LinkedIn footer"
+                },
+                "SocialLink": {
+                  "Network": {
+                    "Text": "linkedin"
+                  },
+                  "Url": {
+                    "Text": "https://linkedin.com/company/trafotech"
+                  }
+                }
+              }
+            ]
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-sitefooter"
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "trafotechpageabout00en0000",
+          "ContentItemVersionId": "trafotechpageaboutenv10000",
+          "DisplayText": "About",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "About"
+          },
+          "AutoroutePart": {
+            "Path": "en/about"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-about"
+          },
+          "Page": {
+            "Body": {
+              "Html": "<p>About TrafoTech.</p>"
+            },
+            "MetaDescription": {
+              "Text": "An introduction to TrafoTech."
+            }
+          }
+        },
+        {
+          "ContentType": "Service",
+          "ContentItemId": "trafotechservicesampen0000",
+          "ContentItemVersionId": "trafotechservicesaenv10000",
+          "DisplayText": "Transformer Maintenance",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Transformer Maintenance"
+          },
+          "AutoroutePart": {
+            "Path": "en/services/transformer-maintenance"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-svc-maintenance"
+          },
+          "Service": {
+            "Summary": {
+              "Text": "Scheduled and emergency maintenance for distribution and power transformers."
+            },
+            "Description": {
+              "Html": "<p>A specialist team for on-site transformer maintenance.</p>"
+            },
+            "Order": {
+              "Value": 1.0
+            }
+          }
+        },
+        {
+          "ContentType": "BlogPost",
+          "ContentItemId": "trafotechblogpostsamen0000",
+          "ContentItemVersionId": "trafotechblogpostsenv10000",
+          "DisplayText": "Welcome to the TrafoTech blog",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Welcome to the TrafoTech blog"
+          },
+          "AutoroutePart": {
+            "Path": "en/blog/welcome-to-the-trafotech-blog"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-post-welcome"
+          },
+          "MarkdownBodyPart": {
+            "Markdown": "The first post on the TrafoTech blog."
+          },
+          "BlogPost": {
+            "Subtitle": {
+              "Text": "Company news and updates"
+            },
+            "PublishedOn": {
+              "Value": "2026-01-01T00:00:00Z"
+            },
+            "Categories": {
+              "TaxonomyContentItemId": "trafotechblogcategories000",
+              "TermContentItemIds": [
+                "trafotechcategorynews00000"
+              ]
+            }
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "trafotechpagehome000en0000",
+          "ContentItemVersionId": "trafotechpagehomevenv10000",
+          "DisplayText": "Home",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Home"
+          },
+          "AutoroutePart": {
+            "Path": "en"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-home"
+          },
+          "Seo": {
+            "MetaTitle": {
+              "Text": "TrafoTech — Electrical Transformer Solutions"
+            },
+            "MetaDescription": {
+              "Text": "Design, supply and maintenance of distribution and power transformers in Jordan and the region."
+            },
+            "MetaKeywords": {
+              "Text": "transformers, electrical, maintenance, Jordan"
+            },
+            "NoIndex": {
+              "Value": false
+            }
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomehero000000000en0000",
+                "ContentItemVersionId": "sechomeherov100000env10000",
+                "DisplayText": "Hero",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Hero"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "hero"
+                  },
+                  "Background": {
+                    "Text": "brand"
+                  },
+                  "Width": {
+                    "Text": "full"
+                  },
+                  "Spacing": {
+                    "Text": "none"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "HeroBlock",
+                      "ContentItemId": "heroblock00000000000en0000",
+                      "ContentItemVersionId": "heroblockv10000000env10000",
+                      "DisplayText": "Hero block",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Hero block"
+                      },
+                      "HeroBlock": {
+                        "Heading": {
+                          "Text": "Electrical Transformer Solutions"
+                        },
+                        "Subheading": {
+                          "Text": "Design, supply and maintenance of distribution and power transformers."
+                        },
+                        "PrimaryButtonText": {
+                          "Text": "Our Services"
+                        },
+                        "PrimaryButtonLink": {
+                          "Url": "/services",
+                          "Text": "Our Services"
+                        },
+                        "SecondaryButtonText": {
+                          "Text": "Contact Us"
+                        },
+                        "SecondaryButtonLink": {
+                          "Url": "/contact",
+                          "Text": "Contact Us"
+                        },
+                        "Alignment": {
+                          "Text": "center"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomeintro00000000en0000",
+                "ContentItemVersionId": "sechomeintrov10000env10000",
+                "DisplayText": "Intro",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Intro"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "intro"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "RichTextBlock",
+                      "ContentItemId": "introtext00000000000en0000",
+                      "ContentItemVersionId": "introtextv10000000env10000",
+                      "DisplayText": "Intro text",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Intro text"
+                      },
+                      "RichTextBlock": {
+                        "Body": {
+                          "Html": "<h2>About Us</h2><p>TrafoTech specialises in electrical transformer solutions, serving the energy, industrial and infrastructure sectors.</p>"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "StatsBlock",
+                      "ContentItemId": "keynumbers0000000000en0000",
+                      "ContentItemVersionId": "keynumbersv1000000env10000",
+                      "DisplayText": "Key numbers",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Key numbers"
+                      },
+                      "StatsBlock": {
+                        "Heading": {
+                          "Text": "By the Numbers"
+                        }
+                      },
+                      "Stats": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "سنواتالخبرة000000000en0000",
+                            "ContentItemVersionId": "سنواتالخبرةv100000env10000",
+                            "DisplayText": "Years of experience",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Years of experience"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "15"
+                              },
+                              "Suffix": {
+                                "Text": "+"
+                              },
+                              "Label": {
+                                "Text": "Years of experience"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "مشروعمنجز00000000000en0000",
+                            "ContentItemVersionId": "مشروعمنجزv10000000env10000",
+                            "DisplayText": "Projects delivered",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Projects delivered"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "450"
+                              },
+                              "Suffix": {
+                                "Text": "+"
+                              },
+                              "Label": {
+                                "Text": "Projects delivered"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "عملاء000000000000000en0000",
+                            "ContentItemVersionId": "عملاءv100000000000env10000",
+                            "DisplayText": "Clients",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Clients"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "120"
+                              },
+                              "Suffix": {
+                                "Text": "+"
+                              },
+                              "Label": {
+                                "Text": "Clients served"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomecards00000000en0000",
+                "ContentItemVersionId": "sechomecardsv10000env10000",
+                "DisplayText": "Services cards",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Services cards"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "services"
+                  },
+                  "Background": {
+                    "Text": "alt"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "CardsBlock",
+                      "ContentItemId": "servicecards00000000en0000",
+                      "ContentItemVersionId": "servicecardsv10000env10000",
+                      "DisplayText": "Service cards",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Service cards"
+                      },
+                      "CardsBlock": {
+                        "Heading": {
+                          "Text": "What We Offer"
+                        },
+                        "Intro": {
+                          "Text": "End-to-end services, from design through commissioning."
+                        },
+                        "ColumnsPerRow": {
+                          "Value": 3.0
+                        }
+                      },
+                      "Cards": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "CardItem",
+                            "ContentItemId": "الصيانة0000000000000en0000",
+                            "ContentItemVersionId": "الصيانةv1000000000env10000",
+                            "DisplayText": "Maintenance",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Maintenance"
+                            },
+                            "CardItem": {
+                              "Description": {
+                                "Text": "Scheduled and emergency transformer maintenance."
+                              },
+                              "Link": {
+                                "Url": "/services/transformer-maintenance",
+                                "Text": "Learn more"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "CardItem",
+                            "ContentItemId": "التوريد0000000000000en0000",
+                            "ContentItemVersionId": "التوريدv1000000000env10000",
+                            "DisplayText": "Supply",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Supply"
+                            },
+                            "CardItem": {
+                              "Description": {
+                                "Text": "Supply of transformers built to your specification."
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "CardItem",
+                            "ContentItemId": "الفحصوالاختبار000000en0000",
+                            "ContentItemVersionId": "الفحصوالاختبارv100env10000",
+                            "DisplayText": "Testing & Inspection",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Testing & Inspection"
+                            },
+                            "CardItem": {
+                              "Description": {
+                                "Text": "On-site quality and safety testing."
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomefaq0000000000en0000",
+                "ContentItemVersionId": "sechomefaqv1000000env10000",
+                "DisplayText": "FAQ",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "FAQ"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "faq"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FaqBlock",
+                      "ContentItemId": "commonquestions00000en0000",
+                      "ContentItemVersionId": "commonquestionsv10env10000",
+                      "DisplayText": "Common questions",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Common questions"
+                      },
+                      "FaqBlock": {
+                        "Heading": {
+                          "Text": "Frequently Asked Questions"
+                        }
+                      },
+                      "Questions": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "FaqItem",
+                            "ContentItemId": "مامدةتنفيذالمشروع000en0000",
+                            "ContentItemVersionId": "مامدةتنفيذالمشروعvenv10000",
+                            "DisplayText": "How long does a project take?",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "How long does a project take?"
+                            },
+                            "FaqItem": {
+                              "Answer": {
+                                "Html": "<p>It depends on scope, but most projects run between 4 and 12 weeks.</p>"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "FaqItem",
+                            "ContentItemId": "هلتقدمونصيانةطارئة00en0000",
+                            "ContentItemVersionId": "هلتقدمونصيانةطارئةenv10000",
+                            "DisplayText": "Do you offer emergency maintenance?",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Do you offer emergency maintenance?"
+                            },
+                            "FaqItem": {
+                              "Answer": {
+                                "Html": "<p>Yes — our response team is available around the clock.</p>"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomecta0000000000en0000",
+                "ContentItemVersionId": "sechomectav1000000env10000",
+                "DisplayText": "CTA",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "CTA"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "cta"
+                  },
+                  "Background": {
+                    "Text": "brand"
+                  },
+                  "Width": {
+                    "Text": "wide"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "CtaBlock",
+                      "ContentItemId": "contactcta0000000000en0000",
+                      "ContentItemVersionId": "contactctav1000000env10000",
+                      "DisplayText": "Contact CTA",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Contact CTA"
+                      },
+                      "CtaBlock": {
+                        "Heading": {
+                          "Text": "Ready for your next project"
+                        },
+                        "Text": {
+                          "Text": "Get in touch for a consultation and a quote."
+                        },
+                        "ButtonText": {
+                          "Text": "Request a Quote"
+                        },
+                        "ButtonLink": {
+                          "Url": "/contact",
+                          "Text": "Request a Quote"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Page": {
+            "Body": {
+              "Html": "<p>Welcome to TrafoTech.</p>"
+            },
+            "MetaDescription": {
+              "Text": "TrafoTech — electrical transformer solutions and products."
+            }
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "pagecontact000000000en0000",
+          "ContentItemVersionId": "pagecontactv100000env10000",
+          "DisplayText": "Contact",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Contact"
+          },
+          "AutoroutePart": {
+            "Path": "en/contact"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-contact"
+          },
+          "Seo": {
+            "MetaTitle": {
+              "Text": "Contact Us — TrafoTech"
+            },
+            "MetaDescription": {
+              "Text": "Get in touch with the TrafoTech team."
+            },
+            "NoIndex": {
+              "Value": false
+            }
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentType": "Section",
+                "ContentItemId": "seccontactmain000000en0000",
+                "ContentItemVersionId": "seccontactmainv100env10000",
+                "DisplayText": "Contact",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Contact"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "contact"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "ContactFormBlock",
+                      "ContentItemId": "contactform000000000en0000",
+                      "ContentItemVersionId": "contactformv100000env10000",
+                      "DisplayText": "Contact form",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Contact form"
+                      },
+                      "ContactFormBlock": {
+                        "Heading": {
+                          "Text": "Send Us a Message"
+                        },
+                        "Intro": {
+                          "Text": "Fill in the form and we will get back to you."
+                        },
+                        "RecipientEmail": {
+                          "Text": "info@trafotech.local"
+                        },
+                        "SubmitButtonText": {
+                          "Text": "Send"
+                        },
+                        "SuccessMessage": {
+                          "Text": "Thanks for reaching out — we have received your message."
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "MapBlock",
+                      "ContentItemId": "locations00000000000en0000",
+                      "ContentItemVersionId": "locationsv10000000env10000",
+                      "DisplayText": "Locations",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Locations"
+                      },
+                      "MapBlock": {
+                        "Heading": {
+                          "Text": "Our Locations"
+                        },
+                        "Addresses": {
+                          "ContentItemIds": [
+                            "addrmain000000000000en0000"
                           ]
                         },
                         "ZoomLevel": {

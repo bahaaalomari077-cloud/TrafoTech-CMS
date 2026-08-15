@@ -35,8 +35,7 @@
   -->
   <Target Name="RemoveArabicAdminTranslations" BeforeTargets="CopyPackageTranslationFiles">
     <ItemGroup>
-      <PackageTranslationFiles Remove="@(PackageTranslationFiles)"
-                               Condition="$([System.String]::Copy('%(Identity)').Contains('Localization\ar\'))" />
+      <PackageTranslationFiles Remove="@(PackageTranslationFiles)" Condition="$([System.String]::Copy('%(Identity)').Contains('Localization\ar\'))" />
     </ItemGroup>
     <!-- Also clear any catalogue copied by an earlier build. -->
     <RemoveDir Directories="Localization\ar" ContinueOnError="true" />
@@ -44,6 +43,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TrafoTech.Setup\TrafoTech.Setup.csproj" />
+    <ProjectReference Include="..\TrafoTech.Admin\TrafoTech.Admin.csproj" />
   </ItemGroup>
 
 </Project>
