@@ -6,9 +6,15 @@
   "website": "https://trafotech.local",
   "version": "1.0.0",
   "issetuprecipe": true,
-  "categories": [ "headless" ],
-  "tags": [ "headless", "graphql", "api", "localization" ],
-
+  "categories": [
+    "headless"
+  ],
+  "tags": [
+    "headless",
+    "graphql",
+    "api",
+    "localization"
+  ],
   "steps": [
     {
       "name": "feature",
@@ -27,6 +33,8 @@
         "OrchardCore.Taxonomies",
         "OrchardCore.Lists",
         "OrchardCore.Flows",
+        "OrchardCore.Widgets",
+        "OrchardCore.Forms",
         "OrchardCore.Indexing",
         "OrchardCore.Search.Lucene",
         "OrchardCore.Localization",
@@ -52,12 +60,10 @@
         "TheAdmin"
       ]
     },
-
     {
       "name": "themes",
       "admin": "TheAdmin"
     },
-
     {
       "name": "settings",
       "HomeRoute": {
@@ -67,10 +73,12 @@
       },
       "LocalizationSettings": {
         "DefaultCulture": "ar",
-        "SupportedCultures": [ "ar", "en" ]
+        "SupportedCultures": [
+          "ar",
+          "en"
+        ]
       }
     },
-
     {
       "name": "ContentDefinition",
       "ContentTypes": [
@@ -91,33 +99,72 @@
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
-              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
             },
             {
               "PartName": "AutoroutePart",
               "Name": "AutoroutePart",
               "Settings": {
-                "ContentTypePartSettings": { "Position": "1" },
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                },
                 "AutoroutePartSettings": {
                   "Pattern": "{{ ContentItem.DisplayText | slugify }}",
                   "AllowCustomPath": true,
-                  "ShowHomepageOption": false
+                  "ShowHomepageOption": true
                 }
               }
             },
             {
               "PartName": "LocalizationPart",
               "Name": "LocalizationPart",
-              "Settings": { "ContentTypePartSettings": { "Position": "2" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
+            },
+            {
+              "PartName": "Seo",
+              "Name": "Seo",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3",
+                  "DisplayName": "SEO"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Sections",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4",
+                  "DisplayName": "Sections"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "Section"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
             },
             {
               "PartName": "Page",
               "Name": "Page",
-              "Settings": { "ContentTypePartSettings": { "Position": "3" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "5"
+                }
+              }
             }
           ]
         },
-
         {
           "Name": "Service",
           "DisplayName": "Service",
@@ -135,13 +182,19 @@
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
-              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
             },
             {
               "PartName": "AutoroutePart",
               "Name": "AutoroutePart",
               "Settings": {
-                "ContentTypePartSettings": { "Position": "1" },
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                },
                 "AutoroutePartSettings": {
                   "Pattern": "services/{{ ContentItem.DisplayText | slugify }}",
                   "AllowCustomPath": true
@@ -151,16 +204,23 @@
             {
               "PartName": "LocalizationPart",
               "Name": "LocalizationPart",
-              "Settings": { "ContentTypePartSettings": { "Position": "2" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
             },
             {
               "PartName": "Service",
               "Name": "Service",
-              "Settings": { "ContentTypePartSettings": { "Position": "3" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
             }
           ]
         },
-
         {
           "Name": "BlogPost",
           "DisplayName": "Blog Post",
@@ -178,13 +238,19 @@
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
-              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
             },
             {
               "PartName": "AutoroutePart",
               "Name": "AutoroutePart",
               "Settings": {
-                "ContentTypePartSettings": { "Position": "1" },
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                },
                 "AutoroutePartSettings": {
                   "Pattern": "blog/{{ ContentItem.DisplayText | slugify }}",
                   "AllowCustomPath": true
@@ -194,21 +260,32 @@
             {
               "PartName": "LocalizationPart",
               "Name": "LocalizationPart",
-              "Settings": { "ContentTypePartSettings": { "Position": "2" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
             },
             {
               "PartName": "MarkdownBodyPart",
               "Name": "MarkdownBodyPart",
-              "Settings": { "ContentTypePartSettings": { "Position": "4" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4"
+                }
+              }
             },
             {
               "PartName": "BlogPost",
               "Name": "BlogPost",
-              "Settings": { "ContentTypePartSettings": { "Position": "3" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                }
+              }
             }
           ]
         },
-
         {
           "Name": "Category",
           "DisplayName": "Category",
@@ -226,13 +303,19 @@
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
-              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
             },
             {
               "PartName": "AutoroutePart",
               "Name": "AutoroutePart",
               "Settings": {
-                "ContentTypePartSettings": { "Position": "1" },
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                },
                 "AutoroutePartSettings": {
                   "Pattern": "blog/category/{{ ContentItem.DisplayText | slugify }}",
                   "AllowCustomPath": true
@@ -241,7 +324,6 @@
             }
           ]
         },
-
         {
           "Name": "BlogCategories",
           "DisplayName": "Blog Categories",
@@ -258,136 +340,2292 @@
             {
               "PartName": "TitlePart",
               "Name": "TitlePart",
-              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
             },
             {
               "PartName": "TaxonomyPart",
               "Name": "TaxonomyPart",
-              "Settings": { "ContentTypePartSettings": { "Position": "1" } }
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "HeroBlock",
+          "DisplayName": "Hero",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "HeroBlock",
+              "Name": "HeroBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "RichTextBlock",
+          "DisplayName": "Rich text",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "RichTextBlock",
+              "Name": "RichTextBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "MediaBlock",
+          "DisplayName": "Image / Video",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "MediaBlock",
+              "Name": "MediaBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CardsBlock",
+          "DisplayName": "Cards",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "CardsBlock",
+              "Name": "CardsBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Cards",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2",
+                  "DisplayName": "Cards"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "CardItem"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CardItem",
+          "DisplayName": "Card",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "CardItem",
+              "Name": "CardItem",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "StatsBlock",
+          "DisplayName": "Statistics",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "StatsBlock",
+              "Name": "StatsBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Stats",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2",
+                  "DisplayName": "Stats"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "StatItem"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "StatItem",
+          "DisplayName": "Statistic",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "StatItem",
+              "Name": "StatItem",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "PartnersBlock",
+          "DisplayName": "Partners / Logos",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "PartnersBlock",
+              "Name": "PartnersBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FaqBlock",
+          "DisplayName": "FAQ",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FaqBlock",
+              "Name": "FaqBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Questions",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2",
+                  "DisplayName": "Questions"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "FaqItem"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FaqItem",
+          "DisplayName": "Question",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FaqItem",
+              "Name": "FaqItem",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CtaBlock",
+          "DisplayName": "Call to action",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "CtaBlock",
+              "Name": "CtaBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ContactFormBlock",
+          "DisplayName": "Contact form",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ContactFormBlock",
+              "Name": "ContactFormBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "MapBlock",
+          "DisplayName": "Map",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "MapBlock",
+              "Name": "MapBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Address",
+          "DisplayName": "Address",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "Address",
+              "Name": "Address",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Section",
+          "DisplayName": "Section",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "Section",
+              "Name": "Section",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Blocks",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2",
+                  "DisplayName": "Blocks"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "HeroBlock",
+                    "RichTextBlock",
+                    "MediaBlock",
+                    "CardsBlock",
+                    "StatsBlock",
+                    "PartnersBlock",
+                    "FaqBlock",
+                    "CtaBlock",
+                    "ContactFormBlock",
+                    "MapBlock"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "SiteHeader",
+          "DisplayName": "Site header",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "SiteHeader",
+              "Name": "SiteHeader",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "SocialLinks",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "9",
+                  "DisplayName": "Social links"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "SocialLink"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "SiteFooter",
+          "DisplayName": "Site footer",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "SiteFooter",
+              "Name": "SiteFooter",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "LinkColumns",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2",
+                  "DisplayName": "Link columns"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "FooterLinkColumn"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "SocialLinks",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "9",
+                  "DisplayName": "Social links"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "SocialLink"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FooterLinkColumn",
+          "DisplayName": "Footer link column",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Links",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1",
+                  "DisplayName": "Links"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "FooterLink"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FooterLink",
+          "DisplayName": "Footer link",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FooterLink",
+              "Name": "FooterLink",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "SocialLink",
+          "DisplayName": "Social link",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "SocialLink",
+              "Name": "SocialLink",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
             }
           ]
         }
       ],
-
       "ContentParts": [
         {
           "Name": "Page",
-          "Settings": { "ContentPartSettings": { "Attachable": true } },
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true
+            }
+          },
           "ContentPartFieldDefinitionRecords": [
             {
               "FieldName": "HtmlField",
               "Name": "Body",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "0", "DisplayName": "Body" },
-                "HtmlFieldSettings": { "Hint": "Main page content." }
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Body"
+                },
+                "HtmlFieldSettings": {
+                  "Hint": "Main page content."
+                }
               }
             },
             {
               "FieldName": "TextField",
               "Name": "MetaDescription",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "1", "DisplayName": "Meta description" },
-                "TextFieldSettings": { "Hint": "Shown by search engines. Around 155 characters." }
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Meta description"
+                },
+                "TextFieldSettings": {
+                  "Hint": "Shown by search engines. Around 155 characters."
+                }
               }
             },
             {
               "FieldName": "MediaField",
               "Name": "HeroImage",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "2", "DisplayName": "Hero image" },
-                "MediaFieldSettings": { "Multiple": false }
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Hero image"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
               }
             }
           ]
         },
-
         {
           "Name": "Service",
-          "Settings": { "ContentPartSettings": { "Attachable": true } },
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true
+            }
+          },
           "ContentPartFieldDefinitionRecords": [
             {
               "FieldName": "TextField",
               "Name": "Summary",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "0", "DisplayName": "Summary" },
-                "TextFieldSettings": { "Hint": "One or two lines shown on the services listing." },
-                "TextFieldEditorSettings": { "Editor": "TextArea" }
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Summary"
+                },
+                "TextFieldSettings": {
+                  "Hint": "One or two lines shown on the services listing."
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
               }
             },
             {
               "FieldName": "HtmlField",
               "Name": "Description",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "1", "DisplayName": "Description" }
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Description"
+                }
               }
             },
             {
               "FieldName": "MediaField",
               "Name": "Icon",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "2", "DisplayName": "Icon" },
-                "MediaFieldSettings": { "Multiple": false, "Hint": "Square SVG or PNG." }
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Icon"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "Hint": "Square SVG or PNG."
+                }
               }
             },
             {
               "FieldName": "NumericField",
               "Name": "Order",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "3", "DisplayName": "Sort order" },
-                "NumericFieldSettings": { "Scale": 0, "DefaultValue": "0" }
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Sort order"
+                },
+                "NumericFieldSettings": {
+                  "Scale": 0,
+                  "DefaultValue": "0"
+                }
               }
             }
           ]
         },
-
         {
           "Name": "BlogPost",
-          "Settings": { "ContentPartSettings": { "Attachable": true } },
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true
+            }
+          },
           "ContentPartFieldDefinitionRecords": [
             {
               "FieldName": "TextField",
               "Name": "Subtitle",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "0", "DisplayName": "Subtitle" }
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Subtitle"
+                }
               }
             },
             {
               "FieldName": "MediaField",
               "Name": "CoverImage",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "1", "DisplayName": "Cover image" },
-                "MediaFieldSettings": { "Multiple": false }
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Cover image"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
               }
             },
             {
               "FieldName": "TaxonomyField",
               "Name": "Categories",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "2", "DisplayName": "Categories" },
-                "TaxonomyFieldSettings": { "TaxonomyContentItemId": "", "Unique": false },
-                "TaxonomyFieldTagsEditorSettings": { "Open": false }
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Categories"
+                },
+                "TaxonomyFieldSettings": {
+                  "TaxonomyContentItemId": "",
+                  "Unique": false
+                },
+                "TaxonomyFieldTagsEditorSettings": {
+                  "Open": false
+                }
               }
             },
             {
               "FieldName": "DateTimeField",
               "Name": "PublishedOn",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "3", "DisplayName": "Published on" }
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Published on"
+                }
               }
             },
             {
               "FieldName": "TextField",
               "Name": "MetaDescription",
               "Settings": {
-                "ContentPartFieldSettings": { "Position": "4", "DisplayName": "Meta description" },
-                "TextFieldEditorSettings": { "Editor": "TextArea" }
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Meta description"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "HeroBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Subheading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Subheading"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Background",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Background image/video"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false,
+                  "AllowedExtensions": [
+                    ".jpg",
+                    ".jpeg",
+                    ".png",
+                    ".webp",
+                    ".mp4",
+                    ".webm"
+                  ]
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "PrimaryButtonText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Primary button text"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "PrimaryButtonLink",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Primary button link"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "SecondaryButtonText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "Secondary button text"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "SecondaryButtonLink",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "6",
+                  "DisplayName": "Secondary button link"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Alignment",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "7",
+                  "DisplayName": "Text alignment"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Start",
+                      "value": "start"
+                    },
+                    {
+                      "name": "Center",
+                      "value": "center"
+                    },
+                    {
+                      "name": "End",
+                      "value": "end"
+                    }
+                  ],
+                  "DefaultValue": "center"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "RichTextBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Body",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Body"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "MediaBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Media",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Media"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Caption",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Caption"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Width",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Width"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Container",
+                      "value": "container"
+                    },
+                    {
+                      "name": "Full bleed",
+                      "value": "full"
+                    }
+                  ],
+                  "DefaultValue": "container"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CardsBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Intro",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Intro"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "ColumnsPerRow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Columns per row"
+                },
+                "NumericFieldSettings": {
+                  "Scale": 0,
+                  "DefaultValue": "3",
+                  "Minimum": 1,
+                  "Maximum": 4
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CardItem",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Icon",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Icon / image"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Description"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Link"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "StatsBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "StatItem",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Value",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Value"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Suffix",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Suffix"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Label",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Label"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "PartnersBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Logos",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Logos"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FaqBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FaqItem",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Answer",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Answer"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "CtaBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Text",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Text"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "ButtonText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Button text"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "ButtonLink",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Button link"
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Background",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Background"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ContactFormBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Intro",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Intro"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "RecipientEmail",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Recipient email"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "SubmitButtonText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Submit button text"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "SuccessMessage",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Success message"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "MapBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "ContentPickerField",
+              "Name": "Addresses",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Addresses"
+                },
+                "ContentPickerFieldSettings": {
+                  "Multiple": true,
+                  "DisplayedContentTypes": [
+                    "Address"
+                  ]
+                }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "ZoomLevel",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Zoom level"
+                },
+                "NumericFieldSettings": {
+                  "Scale": 0,
+                  "DefaultValue": "13"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Address",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Label",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Label"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Street",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Street"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "City",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "City"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Region",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Region / Governorate"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "PostalCode",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Postal code"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Country",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "Country"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Phone",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "6",
+                  "DisplayName": "Phone"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Email",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "7",
+                  "DisplayName": "Email"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Latitude",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "8",
+                  "DisplayName": "Latitude"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Longitude",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "9",
+                  "DisplayName": "Longitude"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "WorkingHours",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "10",
+                  "DisplayName": "Working hours"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "IsPrimary",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "11",
+                  "DisplayName": "Primary address"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Section",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Anchor",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Anchor id"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Background",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Background"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Default",
+                      "value": "default"
+                    },
+                    {
+                      "name": "Alternate",
+                      "value": "alt"
+                    },
+                    {
+                      "name": "Brand",
+                      "value": "brand"
+                    },
+                    {
+                      "name": "Dark",
+                      "value": "dark"
+                    }
+                  ],
+                  "DefaultValue": "default"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Width",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Width"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Container",
+                      "value": "container"
+                    },
+                    {
+                      "name": "Wide",
+                      "value": "wide"
+                    },
+                    {
+                      "name": "Full bleed",
+                      "value": "full"
+                    }
+                  ],
+                  "DefaultValue": "container"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Spacing",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Vertical spacing"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Normal",
+                      "value": "normal"
+                    },
+                    {
+                      "name": "Compact",
+                      "value": "compact"
+                    },
+                    {
+                      "name": "Spacious",
+                      "value": "spacious"
+                    },
+                    {
+                      "name": "None",
+                      "value": "none"
+                    }
+                  ],
+                  "DefaultValue": "normal"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "Hidden",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Hide this section"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Seo",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "MetaTitle",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Meta title"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "MetaDescription",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Meta description"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "MetaKeywords",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Meta keywords"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "CanonicalUrl",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Canonical URL"
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "OpenGraphImage",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Social share image"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "NoIndex",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "Hide from search engines"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "SiteHeader",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Logo",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Logo"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "LogoDark",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Logo (dark background)"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "MenuName",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Navigation menu name"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Phone",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Top bar phone"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Email",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Top bar email"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "CtaText",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "CTA button text"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "CtaLink",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "6",
+                  "DisplayName": "CTA button link"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "ShowLanguageSwitcher",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "7",
+                  "DisplayName": "Show language switcher"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "Sticky",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "8",
+                  "DisplayName": "Sticky header"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "SiteFooter",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "MediaField",
+              "Name": "Logo",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Logo"
+                },
+                "MediaFieldSettings": {
+                  "Multiple": false
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "About",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Short about text"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "ContentPickerField",
+              "Name": "Addresses",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Addresses"
+                },
+                "ContentPickerFieldSettings": {
+                  "Multiple": true,
+                  "DisplayedContentTypes": [
+                    "Address"
+                  ]
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Phone",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Phone"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Email",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Email"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Copyright",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "Copyright text"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "ShowNewsletter",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "6",
+                  "DisplayName": "Show newsletter signup"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "NewsletterHeading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "7",
+                  "DisplayName": "Newsletter heading"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "FooterLink",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Link"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "SocialLink",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Network",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Network"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Facebook",
+                      "value": "facebook"
+                    },
+                    {
+                      "name": "Instagram",
+                      "value": "instagram"
+                    },
+                    {
+                      "name": "LinkedIn",
+                      "value": "linkedin"
+                    },
+                    {
+                      "name": "X",
+                      "value": "x"
+                    },
+                    {
+                      "name": "YouTube",
+                      "value": "youtube"
+                    },
+                    {
+                      "name": "WhatsApp",
+                      "value": "whatsapp"
+                    },
+                    {
+                      "name": "TikTok",
+                      "value": "tiktok"
+                    },
+                    {
+                      "name": "Telegram",
+                      "value": "telegram"
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Url",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "URL"
+                }
               }
             }
           ]
         }
       ]
     },
-
     {
       "name": "Roles",
       "Roles": [
@@ -425,7 +2663,6 @@
         }
       ]
     },
-
     {
       "name": "lucene-index",
       "Indices": [
@@ -433,17 +2670,307 @@
           "Search": {
             "AnalyzerName": "standard",
             "IndexLatest": false,
-            "IndexedContentTypes": [ "Page", "Service", "BlogPost" ],
+            "IndexedContentTypes": [
+              "Page",
+              "Service",
+              "BlogPost"
+            ],
             "Culture": "any",
             "StoreSourceData": true
           }
         }
       ]
     },
-
     {
       "name": "content",
       "data": [
+        {
+          "ContentType": "Address",
+          "ContentItemId": "addrmain000000000000000000",
+          "ContentItemVersionId": "addrmainv10000000000000000",
+          "DisplayText": "المقر الرئيسي",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "المقر الرئيسي"
+          },
+          "Address": {
+            "Label": {
+              "Text": "المقر الرئيسي"
+            },
+            "Street": {
+              "Text": "شارع الملكة رانيا العبدالله"
+            },
+            "City": {
+              "Text": "عمّان"
+            },
+            "Region": {
+              "Text": "عمّان"
+            },
+            "PostalCode": {
+              "Text": "11183"
+            },
+            "Country": {
+              "Text": "الأردن"
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Email": {
+              "Text": "info@trafotech.local"
+            },
+            "Latitude": {
+              "Text": "31.9539"
+            },
+            "Longitude": {
+              "Text": "35.9106"
+            },
+            "WorkingHours": {
+              "Text": "الأحد – الخميس: 8:00 ص – 5:00 م"
+            },
+            "IsPrimary": {
+              "Value": true
+            }
+          }
+        },
+        {
+          "ContentType": "SiteHeader",
+          "ContentItemId": "siteheader0000000000000000",
+          "ContentItemVersionId": "siteheaderv100000000000000",
+          "DisplayText": "Site header",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site header"
+          },
+          "SiteHeader": {
+            "MenuName": {
+              "Text": "Main Menu"
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Email": {
+              "Text": "info@trafotech.local"
+            },
+            "CtaText": {
+              "Text": "اطلب عرض سعر"
+            },
+            "CtaLink": {
+              "Url": "/contact",
+              "Text": "اطلب عرض سعر"
+            },
+            "ShowLanguageSwitcher": {
+              "Value": true
+            },
+            "Sticky": {
+              "Value": true
+            }
+          },
+          "SocialLinks": {
+            "ContentItems": [
+              {
+                "ContentType": "SocialLink",
+                "ContentItemId": "linkedin000000000000000000",
+                "ContentItemVersionId": "linkedinv10000000000000000",
+                "DisplayText": "LinkedIn",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "LinkedIn"
+                },
+                "SocialLink": {
+                  "Network": {
+                    "Text": "linkedin"
+                  },
+                  "Url": {
+                    "Text": "https://linkedin.com/company/trafotech"
+                  }
+                }
+              },
+              {
+                "ContentType": "SocialLink",
+                "ContentItemId": "facebook000000000000000000",
+                "ContentItemVersionId": "facebookv10000000000000000",
+                "DisplayText": "Facebook",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Facebook"
+                },
+                "SocialLink": {
+                  "Network": {
+                    "Text": "facebook"
+                  },
+                  "Url": {
+                    "Text": "https://facebook.com/trafotech"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentType": "SiteFooter",
+          "ContentItemId": "sitefooter0000000000000000",
+          "ContentItemVersionId": "sitefooterv100000000000000",
+          "DisplayText": "Site footer",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site footer"
+          },
+          "SiteFooter": {
+            "About": {
+              "Text": "ترافو تيك — حلول ومنتجات المحولات الكهربائية في الأردن والمنطقة."
+            },
+            "Addresses": {
+              "ContentItemIds": [
+                "addrmain000000000000000000"
+              ]
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Email": {
+              "Text": "info@trafotech.local"
+            },
+            "Copyright": {
+              "Text": "© 2026 TrafoTech. جميع الحقوق محفوظة."
+            },
+            "ShowNewsletter": {
+              "Value": true
+            },
+            "NewsletterHeading": {
+              "Text": "اشترك بالنشرة البريدية"
+            }
+          },
+          "LinkColumns": {
+            "ContentItems": [
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "footcolcompany000000000000",
+                "ContentItemVersionId": "footcolcompanyv10000000000",
+                "DisplayText": "الشركة",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "الشركة"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "مننحن000000000000000000000",
+                      "ContentItemVersionId": "مننحنv10000000000000000000",
+                      "DisplayText": "من نحن",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "من نحن"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/about",
+                          "Text": "من نحن"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "خدماتنا0000000000000000000",
+                      "ContentItemVersionId": "خدماتناv100000000000000000",
+                      "DisplayText": "خدماتنا",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "خدماتنا"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "خدماتنا"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "المدونة0000000000000000000",
+                      "ContentItemVersionId": "المدونةv100000000000000000",
+                      "DisplayText": "المدونة",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "المدونة"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/blog",
+                          "Text": "المدونة"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "footcolsupport000000000000",
+                "ContentItemVersionId": "footcolsupportv10000000000",
+                "DisplayText": "الدعم",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "الدعم"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "اتصلبنا0000000000000000000",
+                      "ContentItemVersionId": "اتصلبناv100000000000000000",
+                      "DisplayText": "اتصل بنا",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "اتصل بنا"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/contact",
+                          "Text": "اتصل بنا"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "SocialLinks": {
+            "ContentItems": [
+              {
+                "ContentType": "SocialLink",
+                "ContentItemId": "linkedinfooter000000000000",
+                "ContentItemVersionId": "linkedinfooterv10000000000",
+                "DisplayText": "LinkedIn footer",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "LinkedIn footer"
+                },
+                "SocialLink": {
+                  "Network": {
+                    "Text": "linkedin"
+                  },
+                  "Url": {
+                    "Text": "https://linkedin.com/company/trafotech"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "ContentType": "BlogCategories",
           "ContentItemId": "trafotechblogcategories000",
@@ -451,7 +2978,9 @@
           "DisplayText": "Blog Categories",
           "Latest": true,
           "Published": true,
-          "TitlePart": { "Title": "Blog Categories" },
+          "TitlePart": {
+            "Title": "Blog Categories"
+          },
           "TaxonomyPart": {
             "TermContentType": "Category",
             "Terms": [
@@ -461,8 +2990,12 @@
                 "DisplayText": "News",
                 "Published": true,
                 "Latest": true,
-                "TitlePart": { "Title": "News" },
-                "AutoroutePart": { "Path": "blog/category/news" }
+                "TitlePart": {
+                  "Title": "News"
+                },
+                "AutoroutePart": {
+                  "Path": "blog/category/news"
+                }
               },
               {
                 "ContentType": "Category",
@@ -470,29 +3003,16 @@
                 "DisplayText": "Projects",
                 "Published": true,
                 "Latest": true,
-                "TitlePart": { "Title": "Projects" },
-                "AutoroutePart": { "Path": "blog/category/projects" }
+                "TitlePart": {
+                  "Title": "Projects"
+                },
+                "AutoroutePart": {
+                  "Path": "blog/category/projects"
+                }
               }
             ]
           }
         },
-
-        {
-          "ContentType": "Page",
-          "ContentItemId": "trafotechpagehome000000000",
-          "ContentItemVersionId": "trafotechpagehomev01000000",
-          "DisplayText": "Home",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": { "Title": "Home" },
-          "AutoroutePart": { "Path": "home" },
-          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-home" },
-          "Page": {
-            "Body": { "Html": "<p>مرحباً بكم في ترافو تيك.</p>" },
-            "MetaDescription": { "Text": "ترافو تيك — حلول ومنتجات المحولات الكهربائية." }
-          }
-        },
-
         {
           "ContentType": "Page",
           "ContentItemId": "trafotechpageabout00000000",
@@ -500,15 +3020,25 @@
           "DisplayText": "About",
           "Latest": true,
           "Published": true,
-          "TitlePart": { "Title": "About" },
-          "AutoroutePart": { "Path": "about" },
-          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-about" },
+          "TitlePart": {
+            "Title": "About"
+          },
+          "AutoroutePart": {
+            "Path": "about"
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-about"
+          },
           "Page": {
-            "Body": { "Html": "<p>عن شركة ترافو تيك.</p>" },
-            "MetaDescription": { "Text": "نبذة عن شركة ترافو تيك." }
+            "Body": {
+              "Html": "<p>عن شركة ترافو تيك.</p>"
+            },
+            "MetaDescription": {
+              "Text": "نبذة عن شركة ترافو تيك."
+            }
           }
         },
-
         {
           "ContentType": "Service",
           "ContentItemId": "trafotechservicesample0001",
@@ -516,16 +3046,28 @@
           "DisplayText": "Transformer Maintenance",
           "Latest": true,
           "Published": true,
-          "TitlePart": { "Title": "Transformer Maintenance" },
-          "AutoroutePart": { "Path": "services/transformer-maintenance" },
-          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-svc-maintenance" },
+          "TitlePart": {
+            "Title": "Transformer Maintenance"
+          },
+          "AutoroutePart": {
+            "Path": "services/transformer-maintenance"
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-svc-maintenance"
+          },
           "Service": {
-            "Summary": { "Text": "صيانة دورية وطارئة لمحولات التوزيع والقدرة." },
-            "Description": { "Html": "<p>فريق متخصص لصيانة المحولات في الموقع.</p>" },
-            "Order": { "Value": 1.0 }
+            "Summary": {
+              "Text": "صيانة دورية وطارئة لمحولات التوزيع والقدرة."
+            },
+            "Description": {
+              "Html": "<p>فريق متخصص لصيانة المحولات في الموقع.</p>"
+            },
+            "Order": {
+              "Value": 1.0
+            }
           }
         },
-
         {
           "ContentType": "BlogPost",
           "ContentItemId": "trafotechblogpostsample001",
@@ -533,17 +3075,648 @@
           "DisplayText": "Welcome to the TrafoTech blog",
           "Latest": true,
           "Published": true,
-          "TitlePart": { "Title": "Welcome to the TrafoTech blog" },
-          "AutoroutePart": { "Path": "blog/welcome-to-the-trafotech-blog" },
-          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-post-welcome" },
-          "MarkdownBodyPart": { "Markdown": "أول مقال على مدونة ترافو تيك." },
+          "TitlePart": {
+            "Title": "Welcome to the TrafoTech blog"
+          },
+          "AutoroutePart": {
+            "Path": "blog/welcome-to-the-trafotech-blog"
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-post-welcome"
+          },
+          "MarkdownBodyPart": {
+            "Markdown": "أول مقال على مدونة ترافو تيك."
+          },
           "BlogPost": {
-            "Subtitle": { "Text": "أخبار وتحديثات الشركة" },
-            "PublishedOn": { "Value": "2026-01-01T00:00:00Z" },
+            "Subtitle": {
+              "Text": "أخبار وتحديثات الشركة"
+            },
+            "PublishedOn": {
+              "Value": "2026-01-01T00:00:00Z"
+            },
             "Categories": {
               "TaxonomyContentItemId": "trafotechblogcategories000",
-              "TermContentItemIds": [ "trafotechcategorynews00000" ]
+              "TermContentItemIds": [
+                "trafotechcategorynews00000"
+              ]
             }
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "trafotechpagehome000000000",
+          "ContentItemVersionId": "trafotechpagehomev01000000",
+          "DisplayText": "Home",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Home"
+          },
+          "AutoroutePart": {
+            "Path": "home",
+            "SetHomepage": true
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-home"
+          },
+          "Seo": {
+            "MetaTitle": {
+              "Text": "ترافو تيك — حلول المحولات الكهربائية"
+            },
+            "MetaDescription": {
+              "Text": "تصميم وتوريد وصيانة محولات التوزيع والقدرة في الأردن والمنطقة."
+            },
+            "MetaKeywords": {
+              "Text": "محولات, كهرباء, صيانة, الأردن"
+            },
+            "NoIndex": {
+              "Value": false
+            }
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomehero000000000000000",
+                "ContentItemVersionId": "sechomeherov10000000000000",
+                "DisplayText": "Hero",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Hero"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "hero"
+                  },
+                  "Background": {
+                    "Text": "brand"
+                  },
+                  "Width": {
+                    "Text": "full"
+                  },
+                  "Spacing": {
+                    "Text": "none"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "HeroBlock",
+                      "ContentItemId": "heroblock00000000000000000",
+                      "ContentItemVersionId": "heroblockv1000000000000000",
+                      "DisplayText": "Hero block",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Hero block"
+                      },
+                      "HeroBlock": {
+                        "Heading": {
+                          "Text": "حلول المحولات الكهربائية"
+                        },
+                        "Subheading": {
+                          "Text": "تصميم وتوريد وصيانة محولات التوزيع والقدرة."
+                        },
+                        "PrimaryButtonText": {
+                          "Text": "خدماتنا"
+                        },
+                        "PrimaryButtonLink": {
+                          "Url": "/services",
+                          "Text": "خدماتنا"
+                        },
+                        "SecondaryButtonText": {
+                          "Text": "اتصل بنا"
+                        },
+                        "SecondaryButtonLink": {
+                          "Url": "/contact",
+                          "Text": "اتصل بنا"
+                        },
+                        "Alignment": {
+                          "Text": "center"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomeintro00000000000000",
+                "ContentItemVersionId": "sechomeintrov1000000000000",
+                "DisplayText": "Intro",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Intro"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "intro"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "RichTextBlock",
+                      "ContentItemId": "introtext00000000000000000",
+                      "ContentItemVersionId": "introtextv1000000000000000",
+                      "DisplayText": "Intro text",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Intro text"
+                      },
+                      "RichTextBlock": {
+                        "Body": {
+                          "Html": "<h2>من نحن</h2><p>ترافو تيك شركة متخصصة في حلول المحولات الكهربائية، تخدم قطاعات الطاقة والصناعة والبنية التحتية.</p>"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "StatsBlock",
+                      "ContentItemId": "keynumbers0000000000000000",
+                      "ContentItemVersionId": "keynumbersv100000000000000",
+                      "DisplayText": "Key numbers",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Key numbers"
+                      },
+                      "StatsBlock": {
+                        "Heading": {
+                          "Text": "أرقامنا"
+                        }
+                      },
+                      "Stats": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "سنواتالخبرة000000000000000",
+                            "ContentItemVersionId": "سنواتالخبرةv10000000000000",
+                            "DisplayText": "سنوات الخبرة",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "سنوات الخبرة"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "15"
+                              },
+                              "Suffix": {
+                                "Text": "+"
+                              },
+                              "Label": {
+                                "Text": "سنة خبرة"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "مشروعمنجز00000000000000000",
+                            "ContentItemVersionId": "مشروعمنجزv1000000000000000",
+                            "DisplayText": "مشروع منجز",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "مشروع منجز"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "450"
+                              },
+                              "Suffix": {
+                                "Text": "+"
+                              },
+                              "Label": {
+                                "Text": "مشروع منجز"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "StatItem",
+                            "ContentItemId": "عملاء000000000000000000000",
+                            "ContentItemVersionId": "عملاءv10000000000000000000",
+                            "DisplayText": "عملاء",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "عملاء"
+                            },
+                            "StatItem": {
+                              "Value": {
+                                "Text": "120"
+                              },
+                              "Suffix": {
+                                "Text": "+"
+                              },
+                              "Label": {
+                                "Text": "عميل"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomecards00000000000000",
+                "ContentItemVersionId": "sechomecardsv1000000000000",
+                "DisplayText": "Services cards",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Services cards"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "services"
+                  },
+                  "Background": {
+                    "Text": "alt"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "CardsBlock",
+                      "ContentItemId": "servicecards00000000000000",
+                      "ContentItemVersionId": "servicecardsv1000000000000",
+                      "DisplayText": "Service cards",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Service cards"
+                      },
+                      "CardsBlock": {
+                        "Heading": {
+                          "Text": "ما نقدمه"
+                        },
+                        "Intro": {
+                          "Text": "خدمات متكاملة من التصميم حتى التشغيل."
+                        },
+                        "ColumnsPerRow": {
+                          "Value": 3.0
+                        }
+                      },
+                      "Cards": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "CardItem",
+                            "ContentItemId": "الصيانة0000000000000000000",
+                            "ContentItemVersionId": "الصيانةv100000000000000000",
+                            "DisplayText": "الصيانة",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "الصيانة"
+                            },
+                            "CardItem": {
+                              "Description": {
+                                "Text": "صيانة دورية وطارئة للمحولات."
+                              },
+                              "Link": {
+                                "Url": "/services/transformer-maintenance",
+                                "Text": "التفاصيل"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "CardItem",
+                            "ContentItemId": "التوريد0000000000000000000",
+                            "ContentItemVersionId": "التوريدv100000000000000000",
+                            "DisplayText": "التوريد",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "التوريد"
+                            },
+                            "CardItem": {
+                              "Description": {
+                                "Text": "توريد محولات بمواصفات مخصصة."
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "CardItem",
+                            "ContentItemId": "الفحصوالاختبار000000000000",
+                            "ContentItemVersionId": "الفحصوالاختبارv10000000000",
+                            "DisplayText": "الفحص والاختبار",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "الفحص والاختبار"
+                            },
+                            "CardItem": {
+                              "Description": {
+                                "Text": "اختبارات الجودة والسلامة في الموقع."
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomefaq0000000000000000",
+                "ContentItemVersionId": "sechomefaqv100000000000000",
+                "DisplayText": "FAQ",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "FAQ"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "faq"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FaqBlock",
+                      "ContentItemId": "commonquestions00000000000",
+                      "ContentItemVersionId": "commonquestionsv1000000000",
+                      "DisplayText": "Common questions",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Common questions"
+                      },
+                      "FaqBlock": {
+                        "Heading": {
+                          "Text": "أسئلة شائعة"
+                        }
+                      },
+                      "Questions": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "FaqItem",
+                            "ContentItemId": "مامدةتنفيذالمشروع000000000",
+                            "ContentItemVersionId": "مامدةتنفيذالمشروعv10000000",
+                            "DisplayText": "ما مدة تنفيذ المشروع؟",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "ما مدة تنفيذ المشروع؟"
+                            },
+                            "FaqItem": {
+                              "Answer": {
+                                "Html": "<p>تعتمد على حجم المشروع، وتتراوح عادة بين 4 و 12 أسبوعاً.</p>"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "FaqItem",
+                            "ContentItemId": "هلتقدمونصيانةطارئة00000000",
+                            "ContentItemVersionId": "هلتقدمونصيانةطارئةv1000000",
+                            "DisplayText": "هل تقدمون صيانة طارئة؟",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "هل تقدمون صيانة طارئة؟"
+                            },
+                            "FaqItem": {
+                              "Answer": {
+                                "Html": "<p>نعم، لدينا فريق استجابة على مدار الساعة.</p>"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "sechomecta0000000000000000",
+                "ContentItemVersionId": "sechomectav100000000000000",
+                "DisplayText": "CTA",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "CTA"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "cta"
+                  },
+                  "Background": {
+                    "Text": "brand"
+                  },
+                  "Width": {
+                    "Text": "wide"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "CtaBlock",
+                      "ContentItemId": "contactcta0000000000000000",
+                      "ContentItemVersionId": "contactctav100000000000000",
+                      "DisplayText": "Contact CTA",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Contact CTA"
+                      },
+                      "CtaBlock": {
+                        "Heading": {
+                          "Text": "جاهزون لمشروعك القادم"
+                        },
+                        "Text": {
+                          "Text": "تواصل معنا للحصول على استشارة وعرض سعر."
+                        },
+                        "ButtonText": {
+                          "Text": "اطلب عرض سعر"
+                        },
+                        "ButtonLink": {
+                          "Url": "/contact",
+                          "Text": "اطلب عرض سعر"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          "Page": {
+            "Body": {
+              "Html": "<p>مرحباً بكم في ترافو تيك.</p>"
+            },
+            "MetaDescription": {
+              "Text": "ترافو تيك — حلول ومنتجات المحولات الكهربائية."
+            }
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "pagecontact000000000000000",
+          "ContentItemVersionId": "pagecontactv10000000000000",
+          "DisplayText": "Contact",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Contact"
+          },
+          "AutoroutePart": {
+            "Path": "contact"
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-contact"
+          },
+          "Seo": {
+            "MetaTitle": {
+              "Text": "اتصل بنا — ترافو تيك"
+            },
+            "MetaDescription": {
+              "Text": "تواصل مع فريق ترافو تيك."
+            },
+            "NoIndex": {
+              "Value": false
+            }
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentType": "Section",
+                "ContentItemId": "seccontactmain000000000000",
+                "ContentItemVersionId": "seccontactmainv10000000000",
+                "DisplayText": "Contact",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Contact"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "contact"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "normal"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "ContactFormBlock",
+                      "ContentItemId": "contactform000000000000000",
+                      "ContentItemVersionId": "contactformv10000000000000",
+                      "DisplayText": "Contact form",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Contact form"
+                      },
+                      "ContactFormBlock": {
+                        "Heading": {
+                          "Text": "راسلنا"
+                        },
+                        "Intro": {
+                          "Text": "املأ النموذج وسنعاود التواصل معك."
+                        },
+                        "RecipientEmail": {
+                          "Text": "info@trafotech.local"
+                        },
+                        "SubmitButtonText": {
+                          "Text": "إرسال"
+                        },
+                        "SuccessMessage": {
+                          "Text": "تم استلام رسالتك، شكراً لتواصلك معنا."
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "MapBlock",
+                      "ContentItemId": "locations00000000000000000",
+                      "ContentItemVersionId": "locationsv1000000000000000",
+                      "DisplayText": "Locations",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Locations"
+                      },
+                      "MapBlock": {
+                        "Heading": {
+                          "Text": "مواقعنا"
+                        },
+                        "Addresses": {
+                          "ContentItemIds": [
+                            "addrmain000000000000000000"
+                          ]
+                        },
+                        "ZoomLevel": {
+                          "Value": 13.0
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]
