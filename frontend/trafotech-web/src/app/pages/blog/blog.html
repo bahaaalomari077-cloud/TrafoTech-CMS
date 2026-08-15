@@ -1,0 +1,46 @@
+<section class="section">
+  <div class="container">
+    <h1>{{ 'blog.title' | t }}</h1>
+
+    @if (loading()) {
+      <p class="state">{{ 'common.loading' | t }}</p>
+    } @else if (error()) {
+      <div class="state state-error">
+        <p>{{ 'common.error' | t }}</p>
+        <button type="button" class="btn" (click)="load()">{{ 'common.retry' | t }}</button>
+      </div>
+    } @else if (!posts().length) {
+      <p class="state">{{ 'blog.empty' | t }}</p>
+    } @else {
+      <div class="grid">
+        @for (post of posts(); track post.contentItemId) {
+          <article class="card">
+            @if (coverUrl(post); as cover) {
+              <img [src]="cover" [alt]="post.displayText" />
+            }
+            <h3>
+              <a [routerLink]="routeFor(post.path)">{{ post.displayText }}</a>
+            </h3>
+            @if (dateFor(post); as date) {
+              <p class="muted">
+                <small>{{ date | date: 'longDate' : undefined : i18n.lang() }}</small>
+              </p>
+            }
+            <div class="card-body">
+              <p class="muted">{{ post.subtitle }}</p>
+            </div>
+            @if (post.categories?.termContentItems?.length) {
+              <p class="muted">
+                <small>
+                  @for (term of post.categories!.termContentItems; track term.contentItemId) {
+                    <span>{{ term.displayText }}</span>
+                  }
+                </small>
+              </p>
+            }
+          </article>
+        }
+      </div>
+    }
+  </div>
+</section>

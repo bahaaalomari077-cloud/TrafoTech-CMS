@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OrchardCore.Theme.Targets" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="2.1.4" />
+  </ItemGroup>
+
+  <!--
+    Recipes\**\*.json is embedded automatically by the Orchard theme targets, which is how the
+    setup-recipe harvester finds trafotech.recipe.json — no explicit EmbeddedResource needed.
+  -->
+
+</Project>

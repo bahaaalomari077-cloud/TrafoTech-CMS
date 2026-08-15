@@ -1,0 +1,27 @@
+<section class="section">
+  <div class="container">
+    @if (loading()) {
+      <p class="state">{{ 'common.loading' | t }}</p>
+    } @else if (error()) {
+      <p class="state state-error">{{ 'common.error' | t }}</p>
+    } @else if (!service()) {
+      <div class="state">
+        <p>{{ 'common.notFound' | t }}</p>
+        <a class="btn" routerLink="/services">{{ 'nav.services' | t }}</a>
+      </div>
+    } @else {
+      <article>
+        @if (iconUrl(service()); as icon) {
+          <img [src]="icon" [alt]="service()!.displayText" width="72" height="72" />
+        }
+        <h1>{{ service()!.displayText }}</h1>
+        @if (service()!.summary) {
+          <p class="muted">{{ service()!.summary }}</p>
+        }
+        @if (service()!.description?.html; as html) {
+          <div class="rich-text" [innerHTML]="html | safeHtml"></div>
+        }
+      </article>
+    }
+  </div>
+</section>

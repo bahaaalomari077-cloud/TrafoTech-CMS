@@ -1,0 +1,39 @@
+<section class="section">
+  <div class="container">
+    @if (loading()) {
+      <p class="state">{{ 'common.loading' | t }}</p>
+    } @else if (error()) {
+      <p class="state state-error">{{ 'common.error' | t }}</p>
+    } @else if (!post()) {
+      <div class="state">
+        <p>{{ 'common.notFound' | t }}</p>
+        <a class="btn" routerLink="/blog">{{ 'blog.title' | t }}</a>
+      </div>
+    } @else {
+      <article>
+        <h1>{{ post()!.displayText }}</h1>
+
+        @if (post()!.subtitle) {
+          <p class="muted">{{ post()!.subtitle }}</p>
+        }
+
+        @if (dateFor(post()); as date) {
+          <p class="muted">
+            <small>
+              {{ 'blog.publishedOn' | t }}
+              {{ date | date: 'longDate' : undefined : i18n.lang() }}
+            </small>
+          </p>
+        }
+
+        @if (coverUrl(post()); as cover) {
+          <img [src]="cover" [alt]="post()!.displayText" />
+        }
+
+        @if (post()!.markdownBody?.html; as html) {
+          <div class="rich-text" [innerHTML]="html | safeHtml"></div>
+        }
+      </article>
+    }
+  </div>
+</section>

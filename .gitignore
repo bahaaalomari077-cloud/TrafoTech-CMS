@@ -1,0 +1,20 @@
+# .NET
+bin/
+obj/
+*.user
+
+# Orchard Core runtime state: tenant settings, SQLite database, logs, media uploads.
+# Setup is reproducible from the recipe, so this never belongs in source control.
+backend/**/App_Data/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# Editors / OS
+.vs/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store

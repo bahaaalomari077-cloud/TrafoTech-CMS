@@ -1,0 +1,551 @@
+{
+  "name": "TrafoTech.Headless",
+  "displayName": "TrafoTech Headless",
+  "description": "Headless CMS for the TrafoTech corporate site: pages, services and blog, exposed over GraphQL in Arabic and English.",
+  "author": "TrafoTech",
+  "website": "https://trafotech.local",
+  "version": "1.0.0",
+  "issetuprecipe": true,
+  "categories": [ "headless" ],
+  "tags": [ "headless", "graphql", "api", "localization" ],
+
+  "steps": [
+    {
+      "name": "feature",
+      "enable": [
+        "OrchardCore.Contents",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.ContentFields",
+        "OrchardCore.ContentPreview",
+        "OrchardCore.Title",
+        "OrchardCore.Autoroute",
+        "OrchardCore.Alias",
+        "OrchardCore.Html",
+        "OrchardCore.Markdown",
+        "OrchardCore.Media",
+        "OrchardCore.Menu",
+        "OrchardCore.Taxonomies",
+        "OrchardCore.Lists",
+        "OrchardCore.Flows",
+        "OrchardCore.Indexing",
+        "OrchardCore.Search.Lucene",
+        "OrchardCore.Localization",
+        "OrchardCore.ContentLocalization",
+        "OrchardCore.Apis.GraphQL",
+        "OrchardCore.Queries",
+        "OrchardCore.Liquid",
+        "OrchardCore.Settings",
+        "OrchardCore.Recipes",
+        "OrchardCore.Deployment",
+        "OrchardCore.Roles",
+        "OrchardCore.Users",
+        "OrchardCore.OpenId",
+        "OrchardCore.OpenId.Management",
+        "OrchardCore.OpenId.Server",
+        "OrchardCore.OpenId.Validation",
+        "OrchardCore.AdminMenu",
+        "OrchardCore.Diagnostics",
+        "OrchardCore.Resources",
+        "OrchardCore.Admin",
+        "OrchardCore.Themes",
+        "TheAdmin"
+      ]
+    },
+
+    {
+      "name": "themes",
+      "admin": "TheAdmin"
+    },
+
+    {
+      "name": "settings",
+      "HomeRoute": {
+        "Action": "Index",
+        "Controller": "Admin",
+        "Area": "OrchardCore.Admin"
+      },
+      "LocalizationSettings": {
+        "DefaultCulture": "ar",
+        "SupportedCultures": [ "ar", "en" ]
+      }
+    },
+
+    {
+      "name": "ContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "Page",
+          "DisplayName": "Page",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": { "Position": "1" },
+                "AutoroutePartSettings": {
+                  "Pattern": "{{ ContentItem.DisplayText | slugify }}",
+                  "AllowCustomPath": true,
+                  "ShowHomepageOption": false
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": { "ContentTypePartSettings": { "Position": "2" } }
+            },
+            {
+              "PartName": "Page",
+              "Name": "Page",
+              "Settings": { "ContentTypePartSettings": { "Position": "3" } }
+            }
+          ]
+        },
+
+        {
+          "Name": "Service",
+          "DisplayName": "Service",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": { "Position": "1" },
+                "AutoroutePartSettings": {
+                  "Pattern": "services/{{ ContentItem.DisplayText | slugify }}",
+                  "AllowCustomPath": true
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": { "ContentTypePartSettings": { "Position": "2" } }
+            },
+            {
+              "PartName": "Service",
+              "Name": "Service",
+              "Settings": { "ContentTypePartSettings": { "Position": "3" } }
+            }
+          ]
+        },
+
+        {
+          "Name": "BlogPost",
+          "DisplayName": "Blog Post",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": { "Position": "1" },
+                "AutoroutePartSettings": {
+                  "Pattern": "blog/{{ ContentItem.DisplayText | slugify }}",
+                  "AllowCustomPath": true
+                }
+              }
+            },
+            {
+              "PartName": "LocalizationPart",
+              "Name": "LocalizationPart",
+              "Settings": { "ContentTypePartSettings": { "Position": "2" } }
+            },
+            {
+              "PartName": "MarkdownBodyPart",
+              "Name": "MarkdownBodyPart",
+              "Settings": { "ContentTypePartSettings": { "Position": "4" } }
+            },
+            {
+              "PartName": "BlogPost",
+              "Name": "BlogPost",
+              "Settings": { "ContentTypePartSettings": { "Position": "3" } }
+            }
+          ]
+        },
+
+        {
+          "Name": "Category",
+          "DisplayName": "Category",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": false,
+              "Listable": false,
+              "Draftable": false,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "TaxonomyTerm"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": { "Position": "1" },
+                "AutoroutePartSettings": {
+                  "Pattern": "blog/category/{{ ContentItem.DisplayText | slugify }}",
+                  "AllowCustomPath": true
+                }
+              }
+            }
+          ]
+        },
+
+        {
+          "Name": "BlogCategories",
+          "DisplayName": "Blog Categories",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": { "ContentTypePartSettings": { "Position": "0" } }
+            },
+            {
+              "PartName": "TaxonomyPart",
+              "Name": "TaxonomyPart",
+              "Settings": { "ContentTypePartSettings": { "Position": "1" } }
+            }
+          ]
+        }
+      ],
+
+      "ContentParts": [
+        {
+          "Name": "Page",
+          "Settings": { "ContentPartSettings": { "Attachable": true } },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Body",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "0", "DisplayName": "Body" },
+                "HtmlFieldSettings": { "Hint": "Main page content." }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "MetaDescription",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "1", "DisplayName": "Meta description" },
+                "TextFieldSettings": { "Hint": "Shown by search engines. Around 155 characters." }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "HeroImage",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "2", "DisplayName": "Hero image" },
+                "MediaFieldSettings": { "Multiple": false }
+              }
+            }
+          ]
+        },
+
+        {
+          "Name": "Service",
+          "Settings": { "ContentPartSettings": { "Attachable": true } },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Summary",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "0", "DisplayName": "Summary" },
+                "TextFieldSettings": { "Hint": "One or two lines shown on the services listing." },
+                "TextFieldEditorSettings": { "Editor": "TextArea" }
+              }
+            },
+            {
+              "FieldName": "HtmlField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "1", "DisplayName": "Description" }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Icon",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "2", "DisplayName": "Icon" },
+                "MediaFieldSettings": { "Multiple": false, "Hint": "Square SVG or PNG." }
+              }
+            },
+            {
+              "FieldName": "NumericField",
+              "Name": "Order",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "3", "DisplayName": "Sort order" },
+                "NumericFieldSettings": { "Scale": 0, "DefaultValue": "0" }
+              }
+            }
+          ]
+        },
+
+        {
+          "Name": "BlogPost",
+          "Settings": { "ContentPartSettings": { "Attachable": true } },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Subtitle",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "0", "DisplayName": "Subtitle" }
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "CoverImage",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "1", "DisplayName": "Cover image" },
+                "MediaFieldSettings": { "Multiple": false }
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "Categories",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "2", "DisplayName": "Categories" },
+                "TaxonomyFieldSettings": { "TaxonomyContentItemId": "", "Unique": false },
+                "TaxonomyFieldTagsEditorSettings": { "Open": false }
+              }
+            },
+            {
+              "FieldName": "DateTimeField",
+              "Name": "PublishedOn",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "3", "DisplayName": "Published on" }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "MetaDescription",
+              "Settings": {
+                "ContentPartFieldSettings": { "Position": "4", "DisplayName": "Meta description" },
+                "TextFieldEditorSettings": { "Editor": "TextArea" }
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "name": "Roles",
+      "Roles": [
+        {
+          "Name": "Anonymous",
+          "Description": "Anonymous role",
+          "Permissions": [
+            "ViewContent",
+            "ExecuteGraphQL",
+            "QueryLuceneApi"
+          ]
+        },
+        {
+          "Name": "Authenticated",
+          "Description": "Authenticated role",
+          "Permissions": [
+            "ViewContent",
+            "ExecuteGraphQL",
+            "QueryLuceneApi"
+          ]
+        },
+        {
+          "Name": "Editor",
+          "Description": "Creates and publishes site content",
+          "Permissions": [
+            "ViewContent",
+            "PublishContent",
+            "EditContent",
+            "DeleteContent",
+            "PreviewContent",
+            "ManageMedia",
+            "ManageOwnMedia",
+            "ExecuteGraphQL"
+          ]
+        }
+      ]
+    },
+
+    {
+      "name": "lucene-index",
+      "Indices": [
+        {
+          "Search": {
+            "AnalyzerName": "standard",
+            "IndexLatest": false,
+            "IndexedContentTypes": [ "Page", "Service", "BlogPost" ],
+            "Culture": "any",
+            "StoreSourceData": true
+          }
+        }
+      ]
+    },
+
+    {
+      "name": "content",
+      "data": [
+        {
+          "ContentType": "BlogCategories",
+          "ContentItemId": "trafotechblogcategories000",
+          "ContentItemVersionId": "trafotechblogcategoriesv01",
+          "DisplayText": "Blog Categories",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": { "Title": "Blog Categories" },
+          "TaxonomyPart": {
+            "TermContentType": "Category",
+            "Terms": [
+              {
+                "ContentType": "Category",
+                "ContentItemId": "trafotechcategorynews00000",
+                "DisplayText": "News",
+                "Published": true,
+                "Latest": true,
+                "TitlePart": { "Title": "News" },
+                "AutoroutePart": { "Path": "blog/category/news" }
+              },
+              {
+                "ContentType": "Category",
+                "ContentItemId": "trafotechcategoryprojects0",
+                "DisplayText": "Projects",
+                "Published": true,
+                "Latest": true,
+                "TitlePart": { "Title": "Projects" },
+                "AutoroutePart": { "Path": "blog/category/projects" }
+              }
+            ]
+          }
+        },
+
+        {
+          "ContentType": "Page",
+          "ContentItemId": "trafotechpagehome000000000",
+          "ContentItemVersionId": "trafotechpagehomev010000000",
+          "DisplayText": "Home",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": { "Title": "Home" },
+          "AutoroutePart": { "Path": "home" },
+          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-home" },
+          "Page": {
+            "Body": { "Html": "<p>مرحباً بكم في ترافو تيك.</p>" },
+            "MetaDescription": { "Text": "ترافو تيك — حلول ومنتجات المحولات الكهربائية." }
+          }
+        },
+
+        {
+          "ContentType": "Page",
+          "ContentItemId": "trafotechpageabout00000000",
+          "ContentItemVersionId": "trafotechpageaboutv01000000",
+          "DisplayText": "About",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": { "Title": "About" },
+          "AutoroutePart": { "Path": "about" },
+          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-about" },
+          "Page": {
+            "Body": { "Html": "<p>عن شركة ترافو تيك.</p>" },
+            "MetaDescription": { "Text": "نبذة عن شركة ترافو تيك." }
+          }
+        },
+
+        {
+          "ContentType": "Service",
+          "ContentItemId": "trafotechservicesample0001",
+          "ContentItemVersionId": "trafotechservicesamplev001",
+          "DisplayText": "Transformer Maintenance",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": { "Title": "Transformer Maintenance" },
+          "AutoroutePart": { "Path": "services/transformer-maintenance" },
+          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-svc-maintenance" },
+          "Service": {
+            "Summary": { "Text": "صيانة دورية وطارئة لمحولات التوزيع والقدرة." },
+            "Description": { "Html": "<p>فريق متخصص لصيانة المحولات في الموقع.</p>" },
+            "Order": { "Value": 1.0 }
+          }
+        },
+
+        {
+          "ContentType": "BlogPost",
+          "ContentItemId": "trafotechblogpostsample001",
+          "ContentItemVersionId": "trafotechblogpostsamplev01",
+          "DisplayText": "Welcome to the TrafoTech blog",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": { "Title": "Welcome to the TrafoTech blog" },
+          "AutoroutePart": { "Path": "blog/welcome-to-the-trafotech-blog" },
+          "LocalizationPart": { "Culture": "ar", "LocalizationSet": "trafotech-post-welcome" },
+          "MarkdownBodyPart": { "Markdown": "أول مقال على مدونة ترافو تيك." },
+          "BlogPost": {
+            "Subtitle": { "Text": "أخبار وتحديثات الشركة" },
+            "PublishedOn": { "Value": "2026-01-01T00:00:00Z" },
+            "Categories": {
+              "TaxonomyContentItemId": "trafotechblogcategories000",
+              "TermContentItemIds": [ "trafotechcategorynews00000" ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

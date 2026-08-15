@@ -1,0 +1,31 @@
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" routerLink="/">
+      <span class="brand-mark" aria-hidden="true">⚡</span>
+      <span class="brand-name">TrafoTech</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        {{ 'nav.home' | t }}
+      </a>
+      <a routerLink="/about" routerLinkActive="active">{{ 'nav.about' | t }}</a>
+      <a routerLink="/services" routerLinkActive="active">{{ 'nav.services' | t }}</a>
+      <a routerLink="/blog" routerLinkActive="active">{{ 'nav.blog' | t }}</a>
+    </nav>
+
+    <button type="button" class="lang-toggle" (click)="i18n.toggle()">
+      {{ 'lang.switch' | t }}
+    </button>
+  </div>
+</header>
+
+<main class="site-main">
+  <router-outlet />
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; {{ year }} TrafoTech — {{ 'footer.rights' | t }}</p>
+  </div>
+</footer>

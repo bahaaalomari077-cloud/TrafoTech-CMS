@@ -1,0 +1,70 @@
+@if (loading()) {
+  <p class="state">{{ 'common.loading' | t }}</p>
+} @else if (error()) {
+  <div class="state state-error">
+    <p>{{ 'common.error' | t }}</p>
+    <button type="button" class="btn" (click)="load()">{{ 'common.retry' | t }}</button>
+  </div>
+} @else {
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <h1>{{ page()?.displayText ?? 'TrafoTech' }}</h1>
+        @if (page()?.metaDescription) {
+          <p class="hero-lead">{{ page()!.metaDescription }}</p>
+        }
+        <a class="btn" routerLink="/services">{{ 'nav.services' | t }}</a>
+      </div>
+
+      @if (heroImage(page()); as img) {
+        <img class="hero-image" [src]="img" [alt]="page()?.displayText ?? ''" />
+      }
+    </div>
+  </section>
+
+  @if (page()?.body?.html; as bodyHtml) {
+    <section class="section">
+      <div class="container rich-text" [innerHTML]="bodyHtml | safeHtml"></div>
+    </section>
+  }
+
+  @if (services().length) {
+    <section class="section section-alt">
+      <div class="container">
+        <h2>{{ 'services.title' | t }}</h2>
+        <div class="grid">
+          @for (service of services(); track service.contentItemId) {
+            <article class="card">
+              <h3>
+                <a [routerLink]="routeFor(service.path)">{{ service.displayText }}</a>
+              </h3>
+              <div class="card-body">
+                <p class="muted">{{ service.summary }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
+  @if (posts().length) {
+    <section class="section">
+      <div class="container">
+        <h2>{{ 'blog.title' | t }}</h2>
+        <div class="grid">
+          @for (post of posts(); track post.contentItemId) {
+            <article class="card">
+              <h3>
+                <a [routerLink]="routeFor(post.path)">{{ post.displayText }}</a>
+              </h3>
+              <div class="card-body">
+                <p class="muted">{{ post.subtitle }}</p>
+              </div>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+  }
+}

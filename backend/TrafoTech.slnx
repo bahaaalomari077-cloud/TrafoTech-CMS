@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="TrafoTech.Cms/TrafoTech.Cms.csproj" />
+  <Project Path="TrafoTech.Setup/TrafoTech.Setup.csproj" />
+</Solution>
