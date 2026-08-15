@@ -15,6 +15,28 @@ frontend/
 `TrafoTech.Setup` معرّف كـ **theme** وليس module — مُحصِّل وصفات الإعداد في Orchard
 يفحص الثيمات فقط، فوصفة داخل module لا تظهر في شاشة الإعداد أبداً.
 
+## قاعدة البيانات
+
+المشروع يستخدم **PostgreSQL**. مزوّد القاعدة مثبّت في `appsettings.json` تحت
+`OrchardCore:Default`، أما سلسلة الاتصال (وفيها كلمة السر) فتُمرَّر خارج المستودع:
+
+```bash
+cd backend/TrafoTech.Cms
+dotnet user-secrets set "OrchardCore:Default:ConnectionString" \
+  "Server=localhost;Port=5433;Database=trafotech;User Id=postgres;Password=<كلمة السر>;"
+```
+
+في الإنتاج استخدم متغيّر البيئة `OrchardCore__Default__ConnectionString` بدلاً من ذلك.
+
+أنشئ القاعدة قبل أول تشغيل:
+
+```sql
+CREATE DATABASE trafotech WITH ENCODING = 'UTF8';
+```
+
+> **مزوّد القاعدة يُحدَّد وقت الإعداد ولا يمكن تغييره بعده.** للتحويل لمزوّد آخر:
+> أفرغ سكيما القاعدة، احذف `App_Data/Sites` و `App_Data/tenants.json`، ثم أعد الإعداد.
+
 ## التشغيل
 
 ### 1. الـ CMS
@@ -24,13 +46,17 @@ cd backend/TrafoTech.Cms
 dotnet run
 ```
 
-يعمل على `http://localhost:5000`. عند أول تشغيل تظهر شاشة الإعداد:
+يعمل على `http://localhost:5000`. عند أول تشغيل تظهر شاشة الإعداد — وحقول قاعدة
+البيانات لا تظهر فيها لأنها مقروءة من الإعدادات. يبقى عليك:
 
 - **Recipe:** اختر `TrafoTech Headless`
-- **Database:** Sqlite (للتطوير)
 - أنشئ حساب المدير
 
 الوصفة تفعّل GraphQL وتعرّف أنواع المحتوى وتمنح `ExecuteGraphQL` للزوار المجهولين.
+
+> **مهم عند تحرير الوصفة:** كل `ContentItemId` و `ContentItemVersionId` يجب أن يكون
+> **26 حرفاً بالضبط** — العمود `varchar(26)`. SQLite يتجاهل تجاوز الطول بصمت،
+> أما PostgreSQL فيرفضه بخطأ `22001` ويسقط عناصر المحتوى دون إيقاف الإعداد.
 
 ### 2. الواجهة
 
