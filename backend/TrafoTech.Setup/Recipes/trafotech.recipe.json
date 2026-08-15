@@ -72,10 +72,10 @@
         "Area": "OrchardCore.Admin"
       },
       "LocalizationSettings": {
-        "DefaultCulture": "ar",
+        "DefaultCulture": "en",
         "SupportedCultures": [
-          "ar",
-          "en"
+          "en",
+          "ar"
         ]
       }
     },

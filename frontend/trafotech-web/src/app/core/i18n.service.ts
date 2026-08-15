@@ -92,6 +92,8 @@ export class I18nService {
     } catch {
       // Ignore and fall through to the default.
     }
-    return 'ar';
+    // Matches the CMS default culture, so an unvisited browser and a fresh
+    // content item start in the same language.
+    return 'en';
   }
 }
