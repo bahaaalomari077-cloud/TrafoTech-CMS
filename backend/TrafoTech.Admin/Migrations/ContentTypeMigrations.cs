@@ -37,6 +37,28 @@ public sealed class ContentTypeMigrations : DataMigration
         return 1;
     }
 
+    /// <summary>
+    /// Switches the rich-text fields to the WYSIWYG editor.
+    ///
+    /// HtmlField defaults to a code editor, so authors were shown raw markup
+    /// (&lt;h2&gt;…&lt;/h2&gt;) instead of formatted text. Wysiwyg gives them the usual
+    /// toolbar — headings, bold, lists, links — and stores the same HTML.
+    /// </summary>
+    public async Task<int> UpdateFrom1Async()
+    {
+        await _contentDefinitionManager.AlterPartDefinitionAsync("RichTextBlock", part => part
+            .WithField("Body", f => f
+                .OfType("HtmlField").WithDisplayName("Body").WithPosition("0")
+                .WithEditor("Wysiwyg")));
+
+        await _contentDefinitionManager.AlterPartDefinitionAsync("FaqItem", part => part
+            .WithField("Answer", f => f
+                .OfType("HtmlField").WithDisplayName("Answer").WithPosition("0")
+                .WithEditor("Wysiwyg")));
+
+        return 2;
+    }
+
     // ---------------------------------------------------------------- parts
 
     private async Task DefineFieldPartsAsync()
@@ -182,7 +204,9 @@ public sealed class ContentTypeMigrations : DataMigration
                 })));
 
         await SimpleWidgetAsync("FaqItem", "Question", part => part
-            .WithField("Answer", f => f.OfType("HtmlField").WithDisplayName("Answer").WithPosition("0")));
+            .WithField("Answer", f => f
+                .OfType("HtmlField").WithDisplayName("Answer").WithPosition("0")
+                .WithEditor("Wysiwyg")));
 
         // --- Composite blocks ---
 
@@ -217,7 +241,9 @@ public sealed class ContentTypeMigrations : DataMigration
             .WithField("Lead", f => f.OfType("TextField").WithDisplayName("Lead paragraph").WithPosition("2").WithEditor("TextArea")));
 
         await SimpleWidgetAsync("RichTextBlock", "Rich text", part => part
-            .WithField("Body", f => f.OfType("HtmlField").WithDisplayName("Body").WithPosition("0")));
+            .WithField("Body", f => f
+                .OfType("HtmlField").WithDisplayName("Body").WithPosition("0")
+                .WithEditor("Wysiwyg")));
 
         await SimpleWidgetAsync("MediaBlock", "Image / Video", part => part
             .WithField("Media", f => f
