@@ -946,6 +946,8 @@
                 },
                 "BagPartSettings": {
                   "ContainedContentTypes": [
+                    "ProductListBlock",
+                    "PageHeaderBlock",
                     "ProductGridBlock",
                     "FeatureGridBlock",
                     "PageHeroBlock",
@@ -1467,7 +1469,7 @@
           "DisplayName": "Point",
           "Settings": {
             "ContentTypeSettings": {
-              "Creatable": false,
+              "Creatable": true,
               "Listable": false,
               "Draftable": false,
               "Versionable": true,
@@ -1516,6 +1518,190 @@
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "PageHeaderBlock",
+          "DisplayName": "Page header",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "PageHeaderBlock",
+              "Name": "PageHeaderBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductListBlock",
+          "DisplayName": "Product list",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ProductListBlock",
+              "Name": "ProductListBlock",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Categories",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:2#Categories;0",
+                  "DisplayName": "Categories"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ProductCategory"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Rows",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:3#Products;0",
+                  "DisplayName": "Products"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ProductRow"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductCategory",
+          "DisplayName": "Product category",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ProductCategory",
+              "Name": "ProductCategory",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductRow",
+          "DisplayName": "Product",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "ProductRow",
+              "Name": "ProductRow",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "Points",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:2#Points;0",
+                  "DisplayName": "Points"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "ProductPoint"
+                  ],
+                  "DisplayType": "Detail"
                 }
               }
             }
@@ -3302,6 +3488,204 @@
               }
             }
           ]
+        },
+        {
+          "Name": "PageHeaderBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Eyebrow",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Eyebrow"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Heading",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Heading"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Lead",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Lead paragraph"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductListBlock",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "AllLabel",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "\"All\" filter label"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "ShowFilters",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Show category filters"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductCategory",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Key",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Key (matches a product's category)"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ProductRow",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Icon",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Icon"
+                },
+                "TextFieldPredefinedListEditorSettings": {
+                  "Editor": "PredefinedList",
+                  "Options": [
+                    {
+                      "name": "Activity",
+                      "value": "activity"
+                    },
+                    {
+                      "name": "Bolt",
+                      "value": "bolt"
+                    },
+                    {
+                      "name": "Wallet",
+                      "value": "wallet"
+                    },
+                    {
+                      "name": "Check",
+                      "value": "check"
+                    },
+                    {
+                      "name": "Hub",
+                      "value": "hub"
+                    },
+                    {
+                      "name": "Card",
+                      "value": "card"
+                    },
+                    {
+                      "name": "Shield",
+                      "value": "shield"
+                    },
+                    {
+                      "name": "Growth",
+                      "value": "growth"
+                    }
+                  ],
+                  "DefaultValue": "activity"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Category",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "1",
+                  "DisplayName": "Category key"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "CategoryLabel",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "2",
+                  "DisplayName": "Category label"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "3",
+                  "DisplayName": "Description"
+                },
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
+                }
+              }
+            },
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Link"
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -3429,7 +3813,7 @@
                 },
                 "NavLink": {
                   "Link": {
-                    "Url": "/services",
+                    "Url": "/products",
                     "Text": "المنتجات"
                   }
                 }
@@ -3537,7 +3921,7 @@
                 },
                 "NavLink": {
                   "Link": {
-                    "Url": "/services",
+                    "Url": "/en/products",
                     "Text": "Products"
                   }
                 }
@@ -3659,7 +4043,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/products",
                           "Text": "المنتجات"
                         }
                       }
@@ -3725,7 +4109,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/products",
                           "Text": "التسوية الإجمالية الفورية"
                         }
                       }
@@ -3742,7 +4126,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/products",
                           "Text": "منصة الدفع الفوري"
                         }
                       }
@@ -3759,7 +4143,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/products",
                           "Text": "المحفظة الرقمية"
                         }
                       }
@@ -3776,7 +4160,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/products",
                           "Text": "المقاصة الإلكترونية"
                         }
                       }
@@ -3916,7 +4300,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/en/products",
                           "Text": "Products"
                         }
                       }
@@ -3982,7 +4366,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/en/products",
                           "Text": "Real-Time Gross Settlement"
                         }
                       }
@@ -3999,7 +4383,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/en/products",
                           "Text": "Instant Payments Platform"
                         }
                       }
@@ -4016,7 +4400,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/en/products",
                           "Text": "Digital Wallet"
                         }
                       }
@@ -4033,7 +4417,7 @@
                       },
                       "FooterLink": {
                         "Link": {
-                          "Url": "/services",
+                          "Url": "/en/products",
                           "Text": "Electronic Clearing"
                         }
                       }
@@ -5942,6 +6326,1302 @@
             "MetaDescription": {
               "Text": "TrafoTech — electrical transformer solutions and products."
             }
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "pageproducts00000000000000",
+          "ContentItemVersionId": "pageproductsv1000000000000",
+          "DisplayText": "Products",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Products"
+          },
+          "AutoroutePart": {
+            "Path": "products"
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-products"
+          },
+          "Seo": {
+            "MetaTitle": {
+              "Text": "المنتجات — ترافو تيك"
+            },
+            "MetaDescription": {
+              "Text": "منظومة دفع متكاملة من ترافو تيك."
+            },
+            "NoIndex": {
+              "Value": false
+            }
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secprodhead000000000000000",
+                "ContentItemVersionId": "secprodheadv10000000000000",
+                "DisplayText": "Header",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Header"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "top"
+                  },
+                  "Background": {
+                    "Text": "dark"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "PageHeaderBlock",
+                      "ContentItemId": "blkprodhead000000000000000",
+                      "ContentItemVersionId": "blkprodheadv10000000000000",
+                      "DisplayText": "Header",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Header"
+                      },
+                      "PageHeaderBlock": {
+                        "Eyebrow": {
+                          "Text": "المنتجات"
+                        },
+                        "Heading": {
+                          "Text": "منظومة دفع متكاملة"
+                        },
+                        "Lead": {
+                          "Text": "من التسوية بين البنوك إلى المحفظة في جيب العميل — كل طبقة مبنية لتعمل وحدها أو مع البقية."
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secprodlist000000000000000",
+                "ContentItemVersionId": "secprodlistv10000000000000",
+                "DisplayText": "Products",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Products"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "list"
+                  },
+                  "Background": {
+                    "Text": "alt"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "ProductListBlock",
+                      "ContentItemId": "blkprodlist000000000000000",
+                      "ContentItemVersionId": "blkprodlistv10000000000000",
+                      "DisplayText": "Products",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Products"
+                      },
+                      "ProductListBlock": {
+                        "AllLabel": {
+                          "Text": "الكل"
+                        },
+                        "ShowFilters": {
+                          "Value": true
+                        }
+                      },
+                      "Categories": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "ProductCategory",
+                            "ContentItemId": "pccentral00000000000000000",
+                            "ContentItemVersionId": "pccentralv1000000000000000",
+                            "DisplayText": "البنوك المركزية",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "البنوك المركزية"
+                            },
+                            "ProductCategory": {
+                              "Key": {
+                                "Text": "central"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "ProductCategory",
+                            "ContentItemId": "pccommercial00000000000000",
+                            "ContentItemVersionId": "pccommercialv1000000000000",
+                            "DisplayText": "البنوك التجارية",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "البنوك التجارية"
+                            },
+                            "ProductCategory": {
+                              "Key": {
+                                "Text": "commercial"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "ProductCategory",
+                            "ContentItemId": "pcpsp000000000000000000000",
+                            "ContentItemVersionId": "pcpspv10000000000000000000",
+                            "DisplayText": "مزودو خدمات الدفع",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "مزودو خدمات الدفع"
+                            },
+                            "ProductCategory": {
+                              "Key": {
+                                "Text": "psp"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "Rows": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prrtgs00000000000000000000",
+                            "ContentItemVersionId": "prrtgsv1000000000000000000",
+                            "DisplayText": "التسوية الإجمالية الفورية",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "التسوية الإجمالية الفورية"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "activity"
+                              },
+                              "Category": {
+                                "Text": "central"
+                              },
+                              "CategoryLabel": {
+                                "Text": "البنوك المركزية"
+                              },
+                              "Description": {
+                                "Text": "تسوية نهائية لا رجعة فيها للمدفوعات عالية القيمة، مع إدارة سيولة لحظية ونافذة تشغيل ممتدة."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "التسوية الإجمالية الفورية"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plprtgs0000000000000000000",
+                                  "ContentItemVersionId": "plprtgs0v10000000000000000",
+                                  "DisplayText": "تسوية نهائية خلال ثوانٍ",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "تسوية نهائية خلال ثوانٍ"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plprtgs1000000000000000000",
+                                  "ContentItemVersionId": "plprtgs1v10000000000000000",
+                                  "DisplayText": "إدارة طوابير وسيولة ذكية",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "إدارة طوابير وسيولة ذكية"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plprtgs2000000000000000000",
+                                  "ContentItemVersionId": "plprtgs2v10000000000000000",
+                                  "DisplayText": "توافق كامل مع ISO 20022",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "توافق كامل مع ISO 20022"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prinst00000000000000000000",
+                            "ContentItemVersionId": "prinstv1000000000000000000",
+                            "DisplayText": "منصة الدفع الفوري",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "منصة الدفع الفوري"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "bolt"
+                              },
+                              "Category": {
+                                "Text": "central"
+                              },
+                              "CategoryLabel": {
+                                "Text": "البنوك المركزية"
+                              },
+                              "Description": {
+                                "Text": "تحويلات على مدار الساعة تصل خلال أقل من خمس ثوانٍ، مبنية للتشغيل البيني بين كل بنوك السوق."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "منصة الدفع الفوري"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpinst0000000000000000000",
+                                  "ContentItemVersionId": "plpinst0v10000000000000000",
+                                  "DisplayText": "متاح ٢٤/٧ طوال أيام السنة",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "متاح ٢٤/٧ طوال أيام السنة"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpinst1000000000000000000",
+                                  "ContentItemVersionId": "plpinst1v10000000000000000",
+                                  "DisplayText": "عناوين اسمية بدل أرقام الحسابات",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "عناوين اسمية بدل أرقام الحسابات"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpinst2000000000000000000",
+                                  "ContentItemVersionId": "plpinst2v10000000000000000",
+                                  "DisplayText": "طلب الدفع والتحقق من المستفيد",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "طلب الدفع والتحقق من المستفيد"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prwallet000000000000000000",
+                            "ContentItemVersionId": "prwalletv10000000000000000",
+                            "DisplayText": "المحفظة الرقمية",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "المحفظة الرقمية"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "wallet"
+                              },
+                              "Category": {
+                                "Text": "commercial"
+                              },
+                              "CategoryLabel": {
+                                "Text": "البنوك التجارية"
+                              },
+                              "Description": {
+                                "Text": "محفظة بعلامتك التجارية للأفراد والتجار، مع تعريف رقمي بالهوية وحدود مرنة حسب مستوى العميل."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "المحفظة الرقمية"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpwallet00000000000000000",
+                                  "ContentItemVersionId": "plpwallet0v100000000000000",
+                                  "DisplayText": "تعريف رقمي بالهوية خلال دقائق",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "تعريف رقمي بالهوية خلال دقائق"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpwallet10000000000000000",
+                                  "ContentItemVersionId": "plpwallet1v100000000000000",
+                                  "DisplayText": "دفع بالرمز الموحّد QR",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "دفع بالرمز الموحّد QR"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpwallet20000000000000000",
+                                  "ContentItemVersionId": "plpwallet2v100000000000000",
+                                  "DisplayText": "محافظ فرعية ورقابة على الإنفاق",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "محافظ فرعية ورقابة على الإنفاق"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prclearing0000000000000000",
+                            "ContentItemVersionId": "prclearingv100000000000000",
+                            "DisplayText": "المقاصة الإلكترونية",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "المقاصة الإلكترونية"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "check"
+                              },
+                              "Category": {
+                                "Text": "commercial"
+                              },
+                              "CategoryLabel": {
+                                "Text": "البنوك التجارية"
+                              },
+                              "Description": {
+                                "Text": "مقاصة الشيكات والخصم المباشر والرواتب في دورة واحدة، مع أرشفة صور وتحقق آلي من التوقيع."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "المقاصة الإلكترونية"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpclearing000000000000000",
+                                  "ContentItemVersionId": "plpclearing0v1000000000000",
+                                  "DisplayText": "أرشيف صور بحث فوري",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "أرشيف صور بحث فوري"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpclearing100000000000000",
+                                  "ContentItemVersionId": "plpclearing1v1000000000000",
+                                  "DisplayText": "تحقق آلي من التوقيع",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "تحقق آلي من التوقيع"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpclearing200000000000000",
+                                  "ContentItemVersionId": "plpclearing2v1000000000000",
+                                  "DisplayText": "معالجة الرواتب بالجملة",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "معالجة الرواتب بالجملة"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prhub000000000000000000000",
+                            "ContentItemVersionId": "prhubv10000000000000000000",
+                            "DisplayText": "مركز المدفوعات",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "مركز المدفوعات"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "hub"
+                              },
+                              "Category": {
+                                "Text": "psp"
+                              },
+                              "CategoryLabel": {
+                                "Text": "مزودو خدمات الدفع"
+                              },
+                              "Description": {
+                                "Text": "طبقة واحدة توجّه كل رسائل الدفع بين أنظمتك والشبكات الخارجية، وتترجم بين المعايير تلقائياً."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "مركز المدفوعات"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plphub00000000000000000000",
+                                  "ContentItemVersionId": "plphub0v100000000000000000",
+                                  "DisplayText": "تحويل MT إلى MX تلقائياً",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "تحويل MT إلى MX تلقائياً"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plphub10000000000000000000",
+                                  "ContentItemVersionId": "plphub1v100000000000000000",
+                                  "DisplayText": "توجيه ذكي حسب القواعد",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "توجيه ذكي حسب القواعد"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plphub20000000000000000000",
+                                  "ContentItemVersionId": "plphub2v100000000000000000",
+                                  "DisplayText": "سجل مركزي لكل رسالة",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "سجل مركزي لكل رسالة"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prbnpl00000000000000000000",
+                            "ContentItemVersionId": "prbnplv1000000000000000000",
+                            "DisplayText": "اشترِ الآن وادفع لاحقاً",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "اشترِ الآن وادفع لاحقاً"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "card"
+                              },
+                              "Category": {
+                                "Text": "psp"
+                              },
+                              "CategoryLabel": {
+                                "Text": "مزودو خدمات الدفع"
+                              },
+                              "Description": {
+                                "Text": "تقسيط لحظي عند نقطة البيع مع تقييم ائتماني آني وربط مباشر مع بوابة التاجر."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "اشترِ الآن وادفع لاحقاً"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpbnpl0000000000000000000",
+                                  "ContentItemVersionId": "plpbnpl0v10000000000000000",
+                                  "DisplayText": "قرار ائتماني خلال ثوانٍ",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "قرار ائتماني خلال ثوانٍ"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpbnpl1000000000000000000",
+                                  "ContentItemVersionId": "plpbnpl1v10000000000000000",
+                                  "DisplayText": "خطط سداد مرنة",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "خطط سداد مرنة"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpbnpl2000000000000000000",
+                                  "ContentItemVersionId": "plpbnpl2v10000000000000000",
+                                  "DisplayText": "بوابة تاجر متكاملة",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "بوابة تاجر متكاملة"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secprodcta0000000000000000",
+                "ContentItemVersionId": "secprodctav100000000000000",
+                "DisplayText": "CTA",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "CTA"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "cta"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "CtaBlock",
+                      "ContentItemId": "blkprodcta0000000000000000",
+                      "ContentItemVersionId": "blkprodctav100000000000000",
+                      "DisplayText": "CTA",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "CTA"
+                      },
+                      "CtaBlock": {
+                        "Heading": {
+                          "Text": "لم تجد ما تبحث عنه؟"
+                        },
+                        "Text": {
+                          "Text": "معظم أنظمتنا مبنية على قياس. تحدّث إلينا عن حالتك وسنخبرك بصراحة إن كنا الخيار المناسب."
+                        },
+                        "ButtonText": {
+                          "Text": "تواصل معنا"
+                        },
+                        "ButtonLink": {
+                          "Url": "/contact",
+                          "Text": "تواصل معنا"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentType": "Page",
+          "ContentItemId": "pageproductsen000000000000",
+          "ContentItemVersionId": "pageproductsenv10000000000",
+          "DisplayText": "Products",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Products"
+          },
+          "AutoroutePart": {
+            "Path": "en/products"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-products"
+          },
+          "Seo": {
+            "MetaTitle": {
+              "Text": "Products — Travotek"
+            },
+            "MetaDescription": {
+              "Text": "A complete payments ecosystem from Travotek."
+            },
+            "NoIndex": {
+              "Value": false
+            }
+          },
+          "Sections": {
+            "ContentItems": [
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secprodheaden0000000000000",
+                "ContentItemVersionId": "secprodheadenv100000000000",
+                "DisplayText": "Header",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Header"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "top"
+                  },
+                  "Background": {
+                    "Text": "dark"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "PageHeaderBlock",
+                      "ContentItemId": "blkprodheaden0000000000000",
+                      "ContentItemVersionId": "blkprodheadenv100000000000",
+                      "DisplayText": "Header",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Header"
+                      },
+                      "PageHeaderBlock": {
+                        "Eyebrow": {
+                          "Text": "Products"
+                        },
+                        "Heading": {
+                          "Text": "A complete payments ecosystem"
+                        },
+                        "Lead": {
+                          "Text": "From interbank settlement to the wallet in your customer's pocket — every layer is built to run on its own or with the rest."
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secprodlisten0000000000000",
+                "ContentItemVersionId": "secprodlistenv100000000000",
+                "DisplayText": "Products",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Products"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "list"
+                  },
+                  "Background": {
+                    "Text": "alt"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "ProductListBlock",
+                      "ContentItemId": "blkprodlisten0000000000000",
+                      "ContentItemVersionId": "blkprodlistenv100000000000",
+                      "DisplayText": "Products",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Products"
+                      },
+                      "ProductListBlock": {
+                        "AllLabel": {
+                          "Text": "All"
+                        },
+                        "ShowFilters": {
+                          "Value": true
+                        }
+                      },
+                      "Categories": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "ProductCategory",
+                            "ContentItemId": "pccentralen000000000000000",
+                            "ContentItemVersionId": "pccentralenv10000000000000",
+                            "DisplayText": "Central banks",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Central banks"
+                            },
+                            "ProductCategory": {
+                              "Key": {
+                                "Text": "central"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "ProductCategory",
+                            "ContentItemId": "pccommercialen000000000000",
+                            "ContentItemVersionId": "pccommercialenv10000000000",
+                            "DisplayText": "Commercial banks",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Commercial banks"
+                            },
+                            "ProductCategory": {
+                              "Key": {
+                                "Text": "commercial"
+                              }
+                            }
+                          },
+                          {
+                            "ContentType": "ProductCategory",
+                            "ContentItemId": "pcpspen0000000000000000000",
+                            "ContentItemVersionId": "pcpspenv100000000000000000",
+                            "DisplayText": "Payment service providers",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Payment service providers"
+                            },
+                            "ProductCategory": {
+                              "Key": {
+                                "Text": "psp"
+                              }
+                            }
+                          }
+                        ]
+                      },
+                      "Rows": {
+                        "ContentItems": [
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prrtgsen000000000000000000",
+                            "ContentItemVersionId": "prrtgsenv10000000000000000",
+                            "DisplayText": "Real-Time Gross Settlement",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Real-Time Gross Settlement"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "activity"
+                              },
+                              "Category": {
+                                "Text": "central"
+                              },
+                              "CategoryLabel": {
+                                "Text": "Central banks"
+                              },
+                              "Description": {
+                                "Text": "Irrevocable final settlement for high-value payments, with real-time liquidity management and an extended operating window."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "Real-Time Gross Settlement"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plprtgs0en0000000000000000",
+                                  "ContentItemVersionId": "plprtgs0env100000000000000",
+                                  "DisplayText": "Final settlement in seconds",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Final settlement in seconds"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plprtgs1en0000000000000000",
+                                  "ContentItemVersionId": "plprtgs1env100000000000000",
+                                  "DisplayText": "Smart queue and liquidity management",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Smart queue and liquidity management"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plprtgs2en0000000000000000",
+                                  "ContentItemVersionId": "plprtgs2env100000000000000",
+                                  "DisplayText": "Full ISO 20022 compliance",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Full ISO 20022 compliance"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prinsten000000000000000000",
+                            "ContentItemVersionId": "prinstenv10000000000000000",
+                            "DisplayText": "Instant Payments Platform",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Instant Payments Platform"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "bolt"
+                              },
+                              "Category": {
+                                "Text": "central"
+                              },
+                              "CategoryLabel": {
+                                "Text": "Central banks"
+                              },
+                              "Description": {
+                                "Text": "Round-the-clock transfers arriving in under five seconds, built for interoperability across every bank in the market."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "Instant Payments Platform"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpinst0en0000000000000000",
+                                  "ContentItemVersionId": "plpinst0env100000000000000",
+                                  "DisplayText": "Available 24/7, every day of the year",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Available 24/7, every day of the year"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpinst1en0000000000000000",
+                                  "ContentItemVersionId": "plpinst1env100000000000000",
+                                  "DisplayText": "Aliases instead of account numbers",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Aliases instead of account numbers"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpinst2en0000000000000000",
+                                  "ContentItemVersionId": "plpinst2env100000000000000",
+                                  "DisplayText": "Request to pay and payee verification",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Request to pay and payee verification"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prwalleten0000000000000000",
+                            "ContentItemVersionId": "prwalletenv100000000000000",
+                            "DisplayText": "Digital Wallet",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Digital Wallet"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "wallet"
+                              },
+                              "Category": {
+                                "Text": "commercial"
+                              },
+                              "CategoryLabel": {
+                                "Text": "Commercial banks"
+                              },
+                              "Description": {
+                                "Text": "A white-label wallet for consumers and merchants, with digital identity verification and flexible limits by customer tier."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "Digital Wallet"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpwallet0en00000000000000",
+                                  "ContentItemVersionId": "plpwallet0env1000000000000",
+                                  "DisplayText": "Digital identity verification in minutes",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Digital identity verification in minutes"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpwallet1en00000000000000",
+                                  "ContentItemVersionId": "plpwallet1env1000000000000",
+                                  "DisplayText": "Unified QR code payments",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Unified QR code payments"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpwallet2en00000000000000",
+                                  "ContentItemVersionId": "plpwallet2env1000000000000",
+                                  "DisplayText": "Sub-wallets and spending controls",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Sub-wallets and spending controls"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prclearingen00000000000000",
+                            "ContentItemVersionId": "prclearingenv1000000000000",
+                            "DisplayText": "Electronic Clearing",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Electronic Clearing"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "check"
+                              },
+                              "Category": {
+                                "Text": "commercial"
+                              },
+                              "CategoryLabel": {
+                                "Text": "Commercial banks"
+                              },
+                              "Description": {
+                                "Text": "Cheques, direct debits and payroll cleared in a single cycle, with image archiving and automated signature verification."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "Electronic Clearing"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpclearing0en000000000000",
+                                  "ContentItemVersionId": "plpclearing0env10000000000",
+                                  "DisplayText": "Instantly searchable image archive",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Instantly searchable image archive"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpclearing1en000000000000",
+                                  "ContentItemVersionId": "plpclearing1env10000000000",
+                                  "DisplayText": "Automated signature verification",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Automated signature verification"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpclearing2en000000000000",
+                                  "ContentItemVersionId": "plpclearing2env10000000000",
+                                  "DisplayText": "Bulk payroll processing",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Bulk payroll processing"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prhuben0000000000000000000",
+                            "ContentItemVersionId": "prhubenv100000000000000000",
+                            "DisplayText": "Payments Hub",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Payments Hub"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "hub"
+                              },
+                              "Category": {
+                                "Text": "psp"
+                              },
+                              "CategoryLabel": {
+                                "Text": "Payment service providers"
+                              },
+                              "Description": {
+                                "Text": "A single layer routing every payment message between your systems and external networks, translating between standards automatically."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "Payments Hub"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plphub0en00000000000000000",
+                                  "ContentItemVersionId": "plphub0env1000000000000000",
+                                  "DisplayText": "Automatic MT to MX conversion",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Automatic MT to MX conversion"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plphub1en00000000000000000",
+                                  "ContentItemVersionId": "plphub1env1000000000000000",
+                                  "DisplayText": "Rule-based smart routing",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Rule-based smart routing"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plphub2en00000000000000000",
+                                  "ContentItemVersionId": "plphub2env1000000000000000",
+                                  "DisplayText": "A central log for every message",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "A central log for every message"
+                                  }
+                                }
+                              ]
+                            }
+                          },
+                          {
+                            "ContentType": "ProductRow",
+                            "ContentItemId": "prbnplen000000000000000000",
+                            "ContentItemVersionId": "prbnplenv10000000000000000",
+                            "DisplayText": "Buy Now, Pay Later",
+                            "Latest": true,
+                            "Published": true,
+                            "TitlePart": {
+                              "Title": "Buy Now, Pay Later"
+                            },
+                            "ProductRow": {
+                              "Icon": {
+                                "Text": "card"
+                              },
+                              "Category": {
+                                "Text": "psp"
+                              },
+                              "CategoryLabel": {
+                                "Text": "Payment service providers"
+                              },
+                              "Description": {
+                                "Text": "Instant point-of-sale instalments with real-time credit assessment and a direct merchant gateway integration."
+                              },
+                              "Link": {
+                                "Url": "/contact",
+                                "Text": "Buy Now, Pay Later"
+                              }
+                            },
+                            "Points": {
+                              "ContentItems": [
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpbnpl0en0000000000000000",
+                                  "ContentItemVersionId": "plpbnpl0env100000000000000",
+                                  "DisplayText": "Credit decisions in seconds",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Credit decisions in seconds"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpbnpl1en0000000000000000",
+                                  "ContentItemVersionId": "plpbnpl1env100000000000000",
+                                  "DisplayText": "Flexible repayment plans",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Flexible repayment plans"
+                                  }
+                                },
+                                {
+                                  "ContentType": "ProductPoint",
+                                  "ContentItemId": "plpbnpl2en0000000000000000",
+                                  "ContentItemVersionId": "plpbnpl2env100000000000000",
+                                  "DisplayText": "Integrated merchant gateway",
+                                  "Latest": true,
+                                  "Published": true,
+                                  "TitlePart": {
+                                    "Title": "Integrated merchant gateway"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "Section",
+                "ContentItemId": "secprodctaen00000000000000",
+                "ContentItemVersionId": "secprodctaenv1000000000000",
+                "DisplayText": "CTA",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "CTA"
+                },
+                "Section": {
+                  "Anchor": {
+                    "Text": "cta"
+                  },
+                  "Background": {
+                    "Text": "default"
+                  },
+                  "Width": {
+                    "Text": "container"
+                  },
+                  "Spacing": {
+                    "Text": "spacious"
+                  },
+                  "Hidden": {
+                    "Value": false
+                  }
+                },
+                "Blocks": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "CtaBlock",
+                      "ContentItemId": "blkprodctaen00000000000000",
+                      "ContentItemVersionId": "blkprodctaenv1000000000000",
+                      "DisplayText": "CTA",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "CTA"
+                      },
+                      "CtaBlock": {
+                        "Heading": {
+                          "Text": "Not finding what you need?"
+                        },
+                        "Text": {
+                          "Text": "Most of our systems are built to order. Tell us about your case and we will tell you honestly whether we are the right fit."
+                        },
+                        "ButtonText": {
+                          "Text": "Contact us"
+                        },
+                        "ButtonLink": {
+                          "Url": "/contact",
+                          "Text": "Contact us"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         }
       ]

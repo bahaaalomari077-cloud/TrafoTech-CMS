@@ -35,6 +35,19 @@ const BLOCK_FIELDS = `
       }
     }
   }
+  ... on PageHeaderBlock { eyebrow heading lead }
+  ... on ProductListBlock {
+    allLabel showFilters
+    categories { contentItems { ... on ProductCategory { contentItemId displayText key } } }
+    rows {
+      contentItems {
+        ... on ProductRow {
+          contentItemId displayText icon category categoryLabel description link { url text }
+          points { contentItems { contentItemId displayText } }
+        }
+      }
+    }
+  }
   ... on CtaBlock { heading text buttonText buttonLink { url text } }
   ... on RichTextBlock { body { html } }
 `;

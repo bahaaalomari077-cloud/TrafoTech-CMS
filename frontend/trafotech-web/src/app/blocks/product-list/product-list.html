@@ -1,0 +1,66 @@
+@if (block().showFilters !== false && categories().length) {
+  <div class="filters" role="tablist">
+    <button
+      type="button"
+      role="tab"
+      class="chip"
+      [class.active]="activeCategory() === ''"
+      [attr.aria-selected]="activeCategory() === ''"
+      (click)="select('')"
+    >
+      {{ block().allLabel || 'All' }}
+    </button>
+
+    @for (cat of categories(); track cat.contentItemId) {
+      <button
+        type="button"
+        role="tab"
+        class="chip"
+        [class.active]="activeCategory() === cat.key"
+        [attr.aria-selected]="activeCategory() === cat.key"
+        (click)="select(cat.key || '')"
+      >
+        {{ cat.displayText }}
+      </button>
+    }
+  </div>
+}
+
+<ul class="rows">
+  @for (row of rows(); track row.contentItemId) {
+    <li class="row">
+      <div class="row-rail">
+        <span class="row-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path [attr.d]="glyph(row.icon)" />
+          </svg>
+        </span>
+        @if (row.categoryLabel) {
+          <span class="row-cat">{{ row.categoryLabel }}</span>
+        }
+      </div>
+
+      <div class="row-body">
+        <h3>
+          @if (row.link?.url) {
+            <a [routerLink]="href(row.link?.url)">{{ row.displayText }}</a>
+          } @else {
+            {{ row.displayText }}
+          }
+        </h3>
+        <p class="row-desc">{{ row.description }}</p>
+
+        @if (row.points?.contentItems?.length) {
+          <ul class="points">
+            @for (point of row.points!.contentItems; track point.contentItemId) {
+              <li>{{ point.displayText }}</li>
+            }
+          </ul>
+        }
+      </div>
+    </li>
+  } @empty {
+    <li class="empty">—</li>
+  }
+</ul>

@@ -31,12 +31,15 @@ import { CtaBlock } from '../../core/models/blocks.models';
       margin-inline: auto;
     }
 
+    /* Inherit from the section so the block reads correctly on light and dark
+       backgrounds alike — the section sets the colour, the block never assumes. */
     h2 {
-      color: #fff;
+      color: inherit;
     }
 
     p {
-      color: var(--navy-300);
+      color: inherit;
+      opacity: 0.78;
       margin-bottom: 1.5rem;
     }
   `,

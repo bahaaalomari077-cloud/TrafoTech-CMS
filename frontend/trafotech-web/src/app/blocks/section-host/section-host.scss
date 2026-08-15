@@ -18,9 +18,16 @@
   color: #fff;
 }
 
+/* Dark sections set the colour once; blocks inherit rather than hardcoding,
+   which is what lets the same block sit on a light or dark background. */
 .bg-brand :is(h1, h2, h3),
 .bg-dark :is(h1, h2, h3) {
   color: #fff;
+}
+
+.bg-default :is(h1, h2, h3),
+.bg-alt :is(h1, h2, h3) {
+  color: var(--ink);
 }
 
 /* Vertical rhythm */

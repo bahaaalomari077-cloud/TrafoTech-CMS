@@ -3,13 +3,17 @@ import {
   Block,
   CtaBlock,
   FeatureGridBlock,
+  PageHeaderBlock,
   PageHeroBlock,
   ProductGridBlock,
+  ProductListBlock,
   RichTextBlock,
 } from '../../core/models/blocks.models';
 import { HeroBlockComponent } from '../hero-block/hero-block';
 import { FeatureGridComponent } from '../feature-grid/feature-grid';
 import { ProductGridComponent } from '../product-grid/product-grid';
+import { PageHeaderComponent } from '../page-header/page-header';
+import { ProductListComponent } from '../product-list/product-list';
 import { CtaBlockComponent } from '../cta-block/cta-block';
 import { SafeHtmlPipe } from '../../core/safe-html.pipe';
 
@@ -24,6 +28,8 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
     HeroBlockComponent,
     FeatureGridComponent,
     ProductGridComponent,
+    PageHeaderComponent,
+    ProductListComponent,
     CtaBlockComponent,
     SafeHtmlPipe,
   ],
@@ -37,6 +43,12 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
       }
       @case ('ProductGridBlock') {
         <app-product-grid [block]="asProducts(block())" />
+      }
+      @case ('PageHeaderBlock') {
+        <app-page-header [block]="asPageHeader(block())" />
+      }
+      @case ('ProductListBlock') {
+        <app-product-list [block]="asProductList(block())" />
       }
       @case ('CtaBlock') {
         <app-cta-block [block]="asCta(block())" />
@@ -59,6 +71,12 @@ export class BlockHostComponent {
   }
   protected asProducts(b: Block): ProductGridBlock {
     return b as ProductGridBlock;
+  }
+  protected asPageHeader(b: Block): PageHeaderBlock {
+    return b as PageHeaderBlock;
+  }
+  protected asProductList(b: Block): ProductListBlock {
+    return b as ProductListBlock;
   }
   protected asCta(b: Block): CtaBlock {
     return b as CtaBlock;

@@ -93,10 +93,44 @@ export interface RichTextBlock extends BlockBase {
   body?: { html: string } | null;
 }
 
+export interface PageHeaderBlock extends BlockBase {
+  __typename: 'PageHeaderBlock';
+  eyebrow?: string | null;
+  heading?: string | null;
+  lead?: string | null;
+}
+
+export interface ProductCategoryItem {
+  contentItemId: string;
+  displayText: string;
+  key?: string | null;
+}
+
+export interface ProductRow {
+  contentItemId: string;
+  displayText: string;
+  icon?: string | null;
+  category?: string | null;
+  categoryLabel?: string | null;
+  description?: string | null;
+  link?: LinkValue | null;
+  points?: { contentItems: ProductPoint[] } | null;
+}
+
+export interface ProductListBlock extends BlockBase {
+  __typename: 'ProductListBlock';
+  allLabel?: string | null;
+  showFilters?: boolean | null;
+  categories?: { contentItems: ProductCategoryItem[] } | null;
+  rows?: { contentItems: ProductRow[] } | null;
+}
+
 export type Block =
   | PageHeroBlock
   | FeatureGridBlock
   | ProductGridBlock
+  | PageHeaderBlock
+  | ProductListBlock
   | CtaBlock
   | RichTextBlock
   | BlockBase;
