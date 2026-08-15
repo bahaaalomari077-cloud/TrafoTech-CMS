@@ -54,6 +54,39 @@
   --container: 1200px;
   --shadow-sm: 0 1px 2px rgb(12 18 38 / 6%), 0 4px 14px rgb(12 18 38 / 5%);
   --shadow-md: 0 2px 6px rgb(12 18 38 / 8%), 0 18px 44px rgb(12 18 38 / 8%);
+
+  /* Header chrome, themed separately so it can sit dark over a light page. */
+  --header-bg: rgb(255 255 255 / 88%);
+  --header-line: var(--line);
+  --header-ink: var(--ink);
+  --header-ink-muted: var(--ink-muted);
+  --header-accent: var(--navy-700);
+}
+
+/* Dark theme: only the tokens change, never the rules that use them. */
+:root[data-theme='dark'] {
+  --bg: #060b1c;
+  --bg-subtle: #0a1226;
+  --bg-raised: #0d1730;
+
+  --ink: #eef1f8;
+  --ink-muted: #b9c4de;
+  --ink-faint: #8a92a8;
+
+  --line: #1c2947;
+  --line-strong: #2a3a63;
+
+  --accent: #b9c4de;
+  --accent-soft: #8fa2cc;
+
+  --header-bg: rgb(6 11 28 / 88%);
+  --header-line: #1c2947;
+  --header-ink: #ffffff;
+  --header-ink-muted: #b9c4de;
+  --header-accent: #b9c4de;
+
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 30%), 0 4px 14px rgb(0 0 0 / 25%);
+  --shadow-md: 0 2px 6px rgb(0 0 0 / 35%), 0 18px 44px rgb(0 0 0 / 30%);
 }
 
 * {

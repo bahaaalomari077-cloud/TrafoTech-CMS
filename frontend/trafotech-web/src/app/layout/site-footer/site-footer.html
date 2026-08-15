@@ -1,0 +1,56 @@
+<footer class="site-footer">
+  <div class="container container-wide">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="brand">
+          @if (logoUrl(); as logo) {
+            <img class="brand-logo" [src]="logo" [alt]="footer()?.brandName || ''" />
+          } @else {
+            <span class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 18L10 7l4 6 2-3 4 8z" />
+              </svg>
+            </span>
+          }
+          <span class="brand-name">{{ footer()?.brandName }}</span>
+        </div>
+
+        @if (footer()?.tagline) {
+          <p class="tagline">{{ footer()?.tagline }}</p>
+        }
+      </div>
+
+      @for (col of columns(); track col.contentItemId; let lastCol = $last) {
+        <nav class="footer-col" [attr.aria-label]="col.displayText">
+          <h3>{{ col.displayText }}</h3>
+          <ul>
+            @for (link of col.links?.contentItems || []; track link.contentItemId) {
+              <li>
+                @if (isExternal(link.link?.url)) {
+                  <a [href]="link.link?.url">{{ link.link?.text || link.displayText }}</a>
+                } @else {
+                  <a [routerLink]="href(link.link?.url)">{{ link.link?.text || link.displayText }}</a>
+                }
+              </li>
+            }
+            <!-- The location rides along in the last column, as in the reference. -->
+            @if (lastCol && footer()?.location) {
+              <li class="location">{{ footer()?.location }}</li>
+            }
+          </ul>
+        </nav>
+      }
+
+    </div>
+
+    <div class="footer-bottom">
+      @if (footer()?.copyright) {
+        <p>{{ footer()?.copyright }}</p>
+      }
+      @if (footer()?.complianceNote) {
+        <p class="compliance">{{ footer()?.complianceNote }}</p>
+      }
+    </div>
+  </div>
+</footer>

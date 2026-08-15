@@ -1022,6 +1022,22 @@
                   "DisplayType": "Detail"
                 }
               }
+            },
+            {
+              "PartName": "BagPart",
+              "Name": "NavLinks",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "Parts:5#Navigation;0",
+                  "DisplayName": "Navigation"
+                },
+                "BagPartSettings": {
+                  "ContainedContentTypes": [
+                    "NavLink"
+                  ],
+                  "DisplayType": "Detail"
+                }
+              }
             }
           ]
         },
@@ -1466,6 +1482,40 @@
               "Settings": {
                 "ContentTypePartSettings": {
                   "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "NavLink",
+          "DisplayName": "Navigation link",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": false,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": false,
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "NavLink",
+              "Name": "NavLink",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
                 }
               }
             }
@@ -2625,11 +2675,21 @@
           },
           "ContentPartFieldDefinitionRecords": [
             {
+              "FieldName": "TextField",
+              "Name": "BrandName",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Brand name"
+                }
+              }
+            },
+            {
               "FieldName": "MediaField",
               "Name": "Logo",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "0",
+                  "Position": "1",
                   "DisplayName": "Logo"
                 },
                 "MediaFieldSettings": {
@@ -2638,54 +2698,11 @@
               }
             },
             {
-              "FieldName": "MediaField",
-              "Name": "LogoDark",
-              "Settings": {
-                "ContentPartFieldSettings": {
-                  "Position": "1",
-                  "DisplayName": "Logo (dark background)"
-                },
-                "MediaFieldSettings": {
-                  "Multiple": false
-                }
-              }
-            },
-            {
-              "FieldName": "TextField",
-              "Name": "MenuName",
-              "Settings": {
-                "ContentPartFieldSettings": {
-                  "Position": "2",
-                  "DisplayName": "Navigation menu name"
-                }
-              }
-            },
-            {
-              "FieldName": "TextField",
-              "Name": "Phone",
-              "Settings": {
-                "ContentPartFieldSettings": {
-                  "Position": "3",
-                  "DisplayName": "Top bar phone"
-                }
-              }
-            },
-            {
-              "FieldName": "TextField",
-              "Name": "Email",
-              "Settings": {
-                "ContentPartFieldSettings": {
-                  "Position": "4",
-                  "DisplayName": "Top bar email"
-                }
-              }
-            },
-            {
               "FieldName": "TextField",
               "Name": "CtaText",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "5",
+                  "Position": "2",
                   "DisplayName": "CTA button text"
                 }
               }
@@ -2695,7 +2712,7 @@
               "Name": "CtaLink",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "6",
+                  "Position": "3",
                   "DisplayName": "CTA button link"
                 }
               }
@@ -2705,8 +2722,18 @@
               "Name": "ShowLanguageSwitcher",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "7",
+                  "Position": "4",
                   "DisplayName": "Show language switcher"
+                }
+              }
+            },
+            {
+              "FieldName": "BooleanField",
+              "Name": "ShowThemeToggle",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "Show theme toggle"
                 }
               }
             },
@@ -2715,7 +2742,7 @@
               "Name": "Sticky",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "8",
+                  "Position": "6",
                   "DisplayName": "Sticky header"
                 }
               }
@@ -2732,11 +2759,21 @@
           },
           "ContentPartFieldDefinitionRecords": [
             {
+              "FieldName": "TextField",
+              "Name": "BrandName",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Brand name"
+                }
+              }
+            },
+            {
               "FieldName": "MediaField",
               "Name": "Logo",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "0",
+                  "Position": "1",
                   "DisplayName": "Logo"
                 },
                 "MediaFieldSettings": {
@@ -2746,40 +2783,14 @@
             },
             {
               "FieldName": "TextField",
-              "Name": "About",
-              "Settings": {
-                "ContentPartFieldSettings": {
-                  "Position": "1",
-                  "DisplayName": "Short about text"
-                },
-                "TextFieldEditorSettings": {
-                  "Editor": "TextArea"
-                }
-              }
-            },
-            {
-              "FieldName": "ContentPickerField",
-              "Name": "Addresses",
+              "Name": "Tagline",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "Position": "2",
-                  "DisplayName": "Addresses"
+                  "DisplayName": "Tagline"
                 },
-                "ContentPickerFieldSettings": {
-                  "Multiple": true,
-                  "DisplayedContentTypes": [
-                    "Address"
-                  ]
-                }
-              }
-            },
-            {
-              "FieldName": "TextField",
-              "Name": "Phone",
-              "Settings": {
-                "ContentPartFieldSettings": {
-                  "Position": "3",
-                  "DisplayName": "Phone"
+                "TextFieldEditorSettings": {
+                  "Editor": "TextArea"
                 }
               }
             },
@@ -2788,8 +2799,28 @@
               "Name": "Email",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "4",
+                  "Position": "3",
                   "DisplayName": "Email"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Phone",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "4",
+                  "DisplayName": "Phone"
+                }
+              }
+            },
+            {
+              "FieldName": "TextField",
+              "Name": "Location",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "5",
+                  "DisplayName": "Location"
                 }
               }
             },
@@ -2798,28 +2829,18 @@
               "Name": "Copyright",
               "Settings": {
                 "ContentPartFieldSettings": {
-                  "Position": "5",
+                  "Position": "6",
                   "DisplayName": "Copyright text"
                 }
               }
             },
             {
-              "FieldName": "BooleanField",
-              "Name": "ShowNewsletter",
-              "Settings": {
-                "ContentPartFieldSettings": {
-                  "Position": "6",
-                  "DisplayName": "Show newsletter signup"
-                }
-              }
-            },
-            {
               "FieldName": "TextField",
-              "Name": "NewsletterHeading",
+              "Name": "ComplianceNote",
               "Settings": {
                 "ContentPartFieldSettings": {
                   "Position": "7",
-                  "DisplayName": "Newsletter heading"
+                  "DisplayName": "Compliance note"
                 }
               }
             }
@@ -3260,6 +3281,27 @@
               }
             }
           ]
+        },
+        {
+          "Name": "NavLink",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": false
+            }
+          },
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "LinkField",
+              "Name": "Link",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "Position": "0",
+                  "DisplayName": "Link"
+                }
+              }
+            }
+          ]
         }
       ]
     },
@@ -3322,6 +3364,736 @@
       "name": "content",
       "data": [
         {
+          "ContentType": "SiteHeader",
+          "ContentItemId": "siteheader0000000000000000",
+          "ContentItemVersionId": "siteheaderv100000000000000",
+          "DisplayText": "Site header",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site header"
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-siteheader"
+          },
+          "SiteHeader": {
+            "BrandName": {
+              "Text": "ترافو تيك"
+            },
+            "CtaText": {
+              "Text": "اطلب عرضاً"
+            },
+            "CtaLink": {
+              "Url": "/contact",
+              "Text": "اطلب عرضاً"
+            },
+            "ShowLanguageSwitcher": {
+              "Value": true
+            },
+            "ShowThemeToggle": {
+              "Value": true
+            },
+            "Sticky": {
+              "Value": true
+            }
+          },
+          "NavLinks": {
+            "ContentItems": [
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvhome00000000000000000000",
+                "ContentItemVersionId": "nvhomev1000000000000000000",
+                "DisplayText": "الرئيسية",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "الرئيسية"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/",
+                    "Text": "الرئيسية"
+                  }
+                }
+              },
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvprod00000000000000000000",
+                "ContentItemVersionId": "nvprodv1000000000000000000",
+                "DisplayText": "المنتجات",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "المنتجات"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/services",
+                    "Text": "المنتجات"
+                  }
+                }
+              },
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvabout0000000000000000000",
+                "ContentItemVersionId": "nvaboutv100000000000000000",
+                "DisplayText": "عن الشركة",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "عن الشركة"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/about",
+                    "Text": "عن الشركة"
+                  }
+                }
+              },
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvcontact00000000000000000",
+                "ContentItemVersionId": "nvcontactv1000000000000000",
+                "DisplayText": "تواصل معنا",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "تواصل معنا"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/contact",
+                    "Text": "تواصل معنا"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentType": "SiteHeader",
+          "ContentItemId": "siteheaderen00000000000000",
+          "ContentItemVersionId": "siteheaderenv1000000000000",
+          "DisplayText": "Site header",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site header"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-siteheader"
+          },
+          "SiteHeader": {
+            "BrandName": {
+              "Text": "Travotek"
+            },
+            "CtaText": {
+              "Text": "Request a demo"
+            },
+            "CtaLink": {
+              "Url": "/contact",
+              "Text": "Request a demo"
+            },
+            "ShowLanguageSwitcher": {
+              "Value": true
+            },
+            "ShowThemeToggle": {
+              "Value": true
+            },
+            "Sticky": {
+              "Value": true
+            }
+          },
+          "NavLinks": {
+            "ContentItems": [
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvhomeen000000000000000000",
+                "ContentItemVersionId": "nvhomeenv10000000000000000",
+                "DisplayText": "Home",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Home"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/",
+                    "Text": "Home"
+                  }
+                }
+              },
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvproden000000000000000000",
+                "ContentItemVersionId": "nvprodenv10000000000000000",
+                "DisplayText": "Products",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Products"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/services",
+                    "Text": "Products"
+                  }
+                }
+              },
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvabouten00000000000000000",
+                "ContentItemVersionId": "nvaboutenv1000000000000000",
+                "DisplayText": "About",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "About"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/about",
+                    "Text": "About"
+                  }
+                }
+              },
+              {
+                "ContentType": "NavLink",
+                "ContentItemId": "nvcontacten000000000000000",
+                "ContentItemVersionId": "nvcontactenv10000000000000",
+                "DisplayText": "Contact",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "Contact"
+                },
+                "NavLink": {
+                  "Link": {
+                    "Url": "/contact",
+                    "Text": "Contact"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentType": "SiteFooter",
+          "ContentItemId": "sitefooter0000000000000000",
+          "ContentItemVersionId": "sitefooterv100000000000000",
+          "DisplayText": "Site footer",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site footer"
+          },
+          "LocalizationPart": {
+            "Culture": "ar",
+            "LocalizationSet": "trafotech-sitefooter"
+          },
+          "SiteFooter": {
+            "BrandName": {
+              "Text": "ترافو تيك"
+            },
+            "Tagline": {
+              "Text": "بنية الدفع الفوري للاقتصاد الرقمي"
+            },
+            "Email": {
+              "Text": "hello@travotek.com"
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Location": {
+              "Text": "عمّان، الأردن"
+            },
+            "Copyright": {
+              "Text": "© 2026 ترافو تيك. جميع الحقوق محفوظة."
+            },
+            "ComplianceNote": {
+              "Text": "متوافق مع ISO 20022"
+            }
+          },
+          "LinkColumns": {
+            "ContentItems": [
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "fcomp000000000000000000000",
+                "ContentItemVersionId": "fcompv10000000000000000000",
+                "DisplayText": "الشركة",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "الشركة"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompl00000000000000000000",
+                      "ContentItemVersionId": "fcompl0v100000000000000000",
+                      "DisplayText": "الرئيسية",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "الرئيسية"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/",
+                          "Text": "الرئيسية"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompl10000000000000000000",
+                      "ContentItemVersionId": "fcompl1v100000000000000000",
+                      "DisplayText": "المنتجات",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "المنتجات"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "المنتجات"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompl20000000000000000000",
+                      "ContentItemVersionId": "fcompl2v100000000000000000",
+                      "DisplayText": "عن الشركة",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "عن الشركة"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/about",
+                          "Text": "عن الشركة"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompl30000000000000000000",
+                      "ContentItemVersionId": "fcompl3v100000000000000000",
+                      "DisplayText": "تواصل معنا",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "تواصل معنا"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/contact",
+                          "Text": "تواصل معنا"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "fprod000000000000000000000",
+                "ContentItemVersionId": "fprodv10000000000000000000",
+                "DisplayText": "المنتجات",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "المنتجات"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodl00000000000000000000",
+                      "ContentItemVersionId": "fprodl0v100000000000000000",
+                      "DisplayText": "التسوية الإجمالية الفورية",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "التسوية الإجمالية الفورية"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "التسوية الإجمالية الفورية"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodl10000000000000000000",
+                      "ContentItemVersionId": "fprodl1v100000000000000000",
+                      "DisplayText": "منصة الدفع الفوري",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "منصة الدفع الفوري"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "منصة الدفع الفوري"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodl20000000000000000000",
+                      "ContentItemVersionId": "fprodl2v100000000000000000",
+                      "DisplayText": "المحفظة الرقمية",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "المحفظة الرقمية"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "المحفظة الرقمية"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodl30000000000000000000",
+                      "ContentItemVersionId": "fprodl3v100000000000000000",
+                      "DisplayText": "المقاصة الإلكترونية",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "المقاصة الإلكترونية"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "المقاصة الإلكترونية"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "fcont000000000000000000000",
+                "ContentItemVersionId": "fcontv10000000000000000000",
+                "DisplayText": "تواصل",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "تواصل"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcontl00000000000000000000",
+                      "ContentItemVersionId": "fcontl0v100000000000000000",
+                      "DisplayText": "hello@travotek.com",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "hello@travotek.com"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "mailto:hello@travotek.com",
+                          "Text": "hello@travotek.com"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcontl10000000000000000000",
+                      "ContentItemVersionId": "fcontl1v100000000000000000",
+                      "DisplayText": "+962 6 000 0000",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "+962 6 000 0000"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "tel:+96260000000",
+                          "Text": "+962 6 000 0000"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
+          "ContentType": "SiteFooter",
+          "ContentItemId": "sitefooteren00000000000000",
+          "ContentItemVersionId": "sitefooterenv1000000000000",
+          "DisplayText": "Site footer",
+          "Latest": true,
+          "Published": true,
+          "TitlePart": {
+            "Title": "Site footer"
+          },
+          "LocalizationPart": {
+            "Culture": "en",
+            "LocalizationSet": "trafotech-sitefooter"
+          },
+          "SiteFooter": {
+            "BrandName": {
+              "Text": "Travotek"
+            },
+            "Tagline": {
+              "Text": "Real-time payment infrastructure for the digital economy"
+            },
+            "Email": {
+              "Text": "hello@travotek.com"
+            },
+            "Phone": {
+              "Text": "+962 6 000 0000"
+            },
+            "Location": {
+              "Text": "Amman, Jordan"
+            },
+            "Copyright": {
+              "Text": "© 2026 Travotek. All rights reserved."
+            },
+            "ComplianceNote": {
+              "Text": "ISO 20022 compliant"
+            }
+          },
+          "LinkColumns": {
+            "ContentItems": [
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "fcompen0000000000000000000",
+                "ContentItemVersionId": "fcompenv100000000000000000",
+                "DisplayText": "COMPANY",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "COMPANY"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompenl000000000000000000",
+                      "ContentItemVersionId": "fcompenl0v1000000000000000",
+                      "DisplayText": "Home",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Home"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/",
+                          "Text": "Home"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompenl100000000000000000",
+                      "ContentItemVersionId": "fcompenl1v1000000000000000",
+                      "DisplayText": "Products",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Products"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "Products"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompenl200000000000000000",
+                      "ContentItemVersionId": "fcompenl2v1000000000000000",
+                      "DisplayText": "About",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "About"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/about",
+                          "Text": "About"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcompenl300000000000000000",
+                      "ContentItemVersionId": "fcompenl3v1000000000000000",
+                      "DisplayText": "Contact",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Contact"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/contact",
+                          "Text": "Contact"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "fproden0000000000000000000",
+                "ContentItemVersionId": "fprodenv100000000000000000",
+                "DisplayText": "PRODUCTS",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "PRODUCTS"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodenl000000000000000000",
+                      "ContentItemVersionId": "fprodenl0v1000000000000000",
+                      "DisplayText": "Real-Time Gross Settlement",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Real-Time Gross Settlement"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "Real-Time Gross Settlement"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodenl100000000000000000",
+                      "ContentItemVersionId": "fprodenl1v1000000000000000",
+                      "DisplayText": "Instant Payments Platform",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Instant Payments Platform"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "Instant Payments Platform"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodenl200000000000000000",
+                      "ContentItemVersionId": "fprodenl2v1000000000000000",
+                      "DisplayText": "Digital Wallet",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Digital Wallet"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "Digital Wallet"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fprodenl300000000000000000",
+                      "ContentItemVersionId": "fprodenl3v1000000000000000",
+                      "DisplayText": "Electronic Clearing",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "Electronic Clearing"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "/services",
+                          "Text": "Electronic Clearing"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "ContentType": "FooterLinkColumn",
+                "ContentItemId": "fconten0000000000000000000",
+                "ContentItemVersionId": "fcontenv100000000000000000",
+                "DisplayText": "CONTACT",
+                "Latest": true,
+                "Published": true,
+                "TitlePart": {
+                  "Title": "CONTACT"
+                },
+                "Links": {
+                  "ContentItems": [
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcontenl000000000000000000",
+                      "ContentItemVersionId": "fcontenl0v1000000000000000",
+                      "DisplayText": "hello@travotek.com",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "hello@travotek.com"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "mailto:hello@travotek.com",
+                          "Text": "hello@travotek.com"
+                        }
+                      }
+                    },
+                    {
+                      "ContentType": "FooterLink",
+                      "ContentItemId": "fcontenl100000000000000000",
+                      "ContentItemVersionId": "fcontenl1v1000000000000000",
+                      "DisplayText": "+962 6 000 0000",
+                      "Latest": true,
+                      "Published": true,
+                      "TitlePart": {
+                        "Title": "+962 6 000 0000"
+                      },
+                      "FooterLink": {
+                        "Link": {
+                          "Url": "tel:+96260000000",
+                          "Text": "+962 6 000 0000"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        {
           "ContentType": "Address",
           "ContentItemId": "addrmain000000000000000000",
           "ContentItemVersionId": "addrmainv10000000000000000",
@@ -3372,252 +4144,6 @@
           "LocalizationPart": {
             "Culture": "ar",
             "LocalizationSet": "trafotech-address"
-          }
-        },
-        {
-          "ContentType": "SiteHeader",
-          "ContentItemId": "siteheader0000000000000000",
-          "ContentItemVersionId": "siteheaderv100000000000000",
-          "DisplayText": "Site header",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": {
-            "Title": "Site header"
-          },
-          "SiteHeader": {
-            "MenuName": {
-              "Text": "Main Menu"
-            },
-            "Phone": {
-              "Text": "+962 6 000 0000"
-            },
-            "Email": {
-              "Text": "info@trafotech.local"
-            },
-            "CtaText": {
-              "Text": "اطلب عرض سعر"
-            },
-            "CtaLink": {
-              "Url": "/contact",
-              "Text": "اطلب عرض سعر"
-            },
-            "ShowLanguageSwitcher": {
-              "Value": true
-            },
-            "Sticky": {
-              "Value": true
-            }
-          },
-          "SocialLinks": {
-            "ContentItems": [
-              {
-                "ContentType": "SocialLink",
-                "ContentItemId": "linkedin000000000000000000",
-                "ContentItemVersionId": "linkedinv10000000000000000",
-                "DisplayText": "LinkedIn",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "LinkedIn"
-                },
-                "SocialLink": {
-                  "Network": {
-                    "Text": "linkedin"
-                  },
-                  "Url": {
-                    "Text": "https://linkedin.com/company/trafotech"
-                  }
-                }
-              },
-              {
-                "ContentType": "SocialLink",
-                "ContentItemId": "facebook000000000000000000",
-                "ContentItemVersionId": "facebookv10000000000000000",
-                "DisplayText": "Facebook",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Facebook"
-                },
-                "SocialLink": {
-                  "Network": {
-                    "Text": "facebook"
-                  },
-                  "Url": {
-                    "Text": "https://facebook.com/trafotech"
-                  }
-                }
-              }
-            ]
-          },
-          "LocalizationPart": {
-            "Culture": "ar",
-            "LocalizationSet": "trafotech-siteheader"
-          }
-        },
-        {
-          "ContentType": "SiteFooter",
-          "ContentItemId": "sitefooter0000000000000000",
-          "ContentItemVersionId": "sitefooterv100000000000000",
-          "DisplayText": "Site footer",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": {
-            "Title": "Site footer"
-          },
-          "SiteFooter": {
-            "About": {
-              "Text": "ترافو تيك — حلول ومنتجات المحولات الكهربائية في الأردن والمنطقة."
-            },
-            "Addresses": {
-              "ContentItemIds": [
-                "addrmain000000000000000000"
-              ]
-            },
-            "Phone": {
-              "Text": "+962 6 000 0000"
-            },
-            "Email": {
-              "Text": "info@trafotech.local"
-            },
-            "Copyright": {
-              "Text": "© 2026 TrafoTech. جميع الحقوق محفوظة."
-            },
-            "ShowNewsletter": {
-              "Value": true
-            },
-            "NewsletterHeading": {
-              "Text": "اشترك بالنشرة البريدية"
-            }
-          },
-          "LinkColumns": {
-            "ContentItems": [
-              {
-                "ContentType": "FooterLinkColumn",
-                "ContentItemId": "footcolcompany000000000000",
-                "ContentItemVersionId": "footcolcompanyv10000000000",
-                "DisplayText": "الشركة",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "الشركة"
-                },
-                "Links": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "مننحن000000000000000000000",
-                      "ContentItemVersionId": "مننحنv10000000000000000000",
-                      "DisplayText": "من نحن",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "من نحن"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/about",
-                          "Text": "من نحن"
-                        }
-                      }
-                    },
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "خدماتنا0000000000000000000",
-                      "ContentItemVersionId": "خدماتناv100000000000000000",
-                      "DisplayText": "خدماتنا",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "خدماتنا"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/services",
-                          "Text": "خدماتنا"
-                        }
-                      }
-                    },
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "المدونة0000000000000000000",
-                      "ContentItemVersionId": "المدونةv100000000000000000",
-                      "DisplayText": "المدونة",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "المدونة"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/blog",
-                          "Text": "المدونة"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentType": "FooterLinkColumn",
-                "ContentItemId": "footcolsupport000000000000",
-                "ContentItemVersionId": "footcolsupportv10000000000",
-                "DisplayText": "الدعم",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "الدعم"
-                },
-                "Links": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "اتصلبنا0000000000000000000",
-                      "ContentItemVersionId": "اتصلبناv100000000000000000",
-                      "DisplayText": "اتصل بنا",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "اتصل بنا"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/contact",
-                          "Text": "اتصل بنا"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "SocialLinks": {
-            "ContentItems": [
-              {
-                "ContentType": "SocialLink",
-                "ContentItemId": "linkedinfooter000000000000",
-                "ContentItemVersionId": "linkedinfooterv10000000000",
-                "DisplayText": "LinkedIn footer",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "LinkedIn footer"
-                },
-                "SocialLink": {
-                  "Network": {
-                    "Text": "linkedin"
-                  },
-                  "Url": {
-                    "Text": "https://linkedin.com/company/trafotech"
-                  }
-                }
-              }
-            ]
-          },
-          "LocalizationPart": {
-            "Culture": "ar",
-            "LocalizationSet": "trafotech-sitefooter"
           }
         },
         {
@@ -4565,252 +5091,6 @@
           "LocalizationPart": {
             "Culture": "en",
             "LocalizationSet": "trafotech-address"
-          }
-        },
-        {
-          "ContentType": "SiteHeader",
-          "ContentItemId": "siteheader0000000000en0000",
-          "ContentItemVersionId": "siteheaderv1000000env10000",
-          "DisplayText": "Site header",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": {
-            "Title": "Site header"
-          },
-          "SiteHeader": {
-            "MenuName": {
-              "Text": "Main Menu"
-            },
-            "Phone": {
-              "Text": "+962 6 000 0000"
-            },
-            "Email": {
-              "Text": "info@trafotech.local"
-            },
-            "CtaText": {
-              "Text": "Request a Quote"
-            },
-            "CtaLink": {
-              "Url": "/contact",
-              "Text": "Request a Quote"
-            },
-            "ShowLanguageSwitcher": {
-              "Value": true
-            },
-            "Sticky": {
-              "Value": true
-            }
-          },
-          "SocialLinks": {
-            "ContentItems": [
-              {
-                "ContentType": "SocialLink",
-                "ContentItemId": "linkedin000000000000en0000",
-                "ContentItemVersionId": "linkedinv100000000env10000",
-                "DisplayText": "LinkedIn",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "LinkedIn"
-                },
-                "SocialLink": {
-                  "Network": {
-                    "Text": "linkedin"
-                  },
-                  "Url": {
-                    "Text": "https://linkedin.com/company/trafotech"
-                  }
-                }
-              },
-              {
-                "ContentType": "SocialLink",
-                "ContentItemId": "facebook000000000000en0000",
-                "ContentItemVersionId": "facebookv100000000env10000",
-                "DisplayText": "Facebook",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Facebook"
-                },
-                "SocialLink": {
-                  "Network": {
-                    "Text": "facebook"
-                  },
-                  "Url": {
-                    "Text": "https://facebook.com/trafotech"
-                  }
-                }
-              }
-            ]
-          },
-          "LocalizationPart": {
-            "Culture": "en",
-            "LocalizationSet": "trafotech-siteheader"
-          }
-        },
-        {
-          "ContentType": "SiteFooter",
-          "ContentItemId": "sitefooter0000000000en0000",
-          "ContentItemVersionId": "sitefooterv1000000env10000",
-          "DisplayText": "Site footer",
-          "Latest": true,
-          "Published": true,
-          "TitlePart": {
-            "Title": "Site footer"
-          },
-          "SiteFooter": {
-            "About": {
-              "Text": "TrafoTech — electrical transformer solutions and products in Jordan and the region."
-            },
-            "Addresses": {
-              "ContentItemIds": [
-                "addrmain000000000000en0000"
-              ]
-            },
-            "Phone": {
-              "Text": "+962 6 000 0000"
-            },
-            "Email": {
-              "Text": "info@trafotech.local"
-            },
-            "Copyright": {
-              "Text": "© 2026 TrafoTech. All rights reserved."
-            },
-            "ShowNewsletter": {
-              "Value": true
-            },
-            "NewsletterHeading": {
-              "Text": "Subscribe to our newsletter"
-            }
-          },
-          "LinkColumns": {
-            "ContentItems": [
-              {
-                "ContentType": "FooterLinkColumn",
-                "ContentItemId": "footcolcompany000000en0000",
-                "ContentItemVersionId": "footcolcompanyv100env10000",
-                "DisplayText": "Company",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Company"
-                },
-                "Links": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "مننحن000000000000000en0000",
-                      "ContentItemVersionId": "مننحنv100000000000env10000",
-                      "DisplayText": "About Us",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "About Us"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/about",
-                          "Text": "About Us"
-                        }
-                      }
-                    },
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "خدماتنا0000000000000en0000",
-                      "ContentItemVersionId": "خدماتناv1000000000env10000",
-                      "DisplayText": "Our Services",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Our Services"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/services",
-                          "Text": "Our Services"
-                        }
-                      }
-                    },
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "المدونة0000000000000en0000",
-                      "ContentItemVersionId": "المدونةv1000000000env10000",
-                      "DisplayText": "Blog",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Blog"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/blog",
-                          "Text": "Blog"
-                        }
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "ContentType": "FooterLinkColumn",
-                "ContentItemId": "footcolsupport000000en0000",
-                "ContentItemVersionId": "footcolsupportv100env10000",
-                "DisplayText": "Support",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "Support"
-                },
-                "Links": {
-                  "ContentItems": [
-                    {
-                      "ContentType": "FooterLink",
-                      "ContentItemId": "اتصلبنا0000000000000en0000",
-                      "ContentItemVersionId": "اتصلبناv1000000000env10000",
-                      "DisplayText": "Contact Us",
-                      "Latest": true,
-                      "Published": true,
-                      "TitlePart": {
-                        "Title": "Contact Us"
-                      },
-                      "FooterLink": {
-                        "Link": {
-                          "Url": "/contact",
-                          "Text": "Contact Us"
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          },
-          "SocialLinks": {
-            "ContentItems": [
-              {
-                "ContentType": "SocialLink",
-                "ContentItemId": "linkedinfooter000000en0000",
-                "ContentItemVersionId": "linkedinfooterv100env10000",
-                "DisplayText": "LinkedIn footer",
-                "Latest": true,
-                "Published": true,
-                "TitlePart": {
-                  "Title": "LinkedIn footer"
-                },
-                "SocialLink": {
-                  "Network": {
-                    "Text": "linkedin"
-                  },
-                  "Url": {
-                    "Text": "https://linkedin.com/company/trafotech"
-                  }
-                }
-              }
-            ]
-          },
-          "LocalizationPart": {
-            "Culture": "en",
-            "LocalizationSet": "trafotech-sitefooter"
           }
         },
         {

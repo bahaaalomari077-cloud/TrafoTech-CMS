@@ -1,15 +1,28 @@
-import { Component, inject } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { I18nService } from './core/i18n.service';
-import { TranslatePipe } from './core/translate.pipe';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+import { SiteHeaderComponent } from './layout/site-header/site-header';
+import { SiteFooterComponent } from './layout/site-footer/site-footer';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, RouterLink, RouterLinkActive, TranslatePipe],
-  templateUrl: './app.html',
-  styleUrl: './app.scss',
+  imports: [RouterOutlet, SiteHeaderComponent, SiteFooterComponent],
+  template: `
+    <app-site-header />
+    <main class="site-main">
+      <router-outlet />
+    </main>
+    <app-site-footer />
+  `,
+  styles: `
+    :host {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .site-main {
+      flex: 1;
+    }
+  `,
 })
-export class App {
-  protected readonly i18n = inject(I18nService);
-  protected readonly year = new Date().getFullYear();
-}
+export class App {}
