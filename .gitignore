@@ -7,6 +7,11 @@ obj/
 # Setup is reproducible from the recipe, so this never belongs in source control.
 backend/**/App_Data/
 
+# Admin translation catalogues are copied in from OrchardCore.Translations.All on every
+# build, so they are build output rather than source. The Arabic one is dropped by the
+# RemoveArabicAdminTranslations target to keep the admin UI English-only.
+backend/**/Localization/
+
 # Node / Angular
 node_modules/
 dist/

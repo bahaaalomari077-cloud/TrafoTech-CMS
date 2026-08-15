@@ -23,6 +23,25 @@
     <PackageReference Include="OrchardCore.Application.Cms.Targets" Version="2.1.4" />
   </ItemGroup>
 
+  <!--
+    The admin UI is English-only. OrchardCore.Translations.All copies a .po catalogue per
+    language into Localization/, and Orchard serves admin strings from whichever one matches
+    the visitor's .AspNetCore.Culture cookie - regardless of the site's default culture, so an
+    editor who once picked Arabic keeps getting Arabic screens.
+
+    Dropping the Arabic catalogue before it is copied leaves nothing to translate against, so
+    the admin falls back to its source English strings for everyone. Content localization is
+    unaffected: that comes from LocalizationPart on content items, not from these catalogues.
+  -->
+  <Target Name="RemoveArabicAdminTranslations" BeforeTargets="CopyPackageTranslationFiles">
+    <ItemGroup>
+      <PackageTranslationFiles Remove="@(PackageTranslationFiles)"
+                               Condition="$([System.String]::Copy('%(Identity)').Contains('Localization\ar\'))" />
+    </ItemGroup>
+    <!-- Also clear any catalogue copied by an earlier build. -->
+    <RemoveDir Directories="Localization\ar" ContinueOnError="true" />
+  </Target>
+
   <ItemGroup>
     <ProjectReference Include="..\TrafoTech.Setup\TrafoTech.Setup.csproj" />
   </ItemGroup>
