@@ -1,0 +1,14 @@
+<div class="cta-inner">
+  @if (block().heading) {
+    <h2>{{ block().heading }}</h2>
+  }
+  @if (block().text) {
+    <p>{{ block().text }}</p>
+  }
+  @if (block().buttonText) {
+    <a class="btn" [routerLink]="block().buttonLink?.url || '/'">
+      {{ block().buttonText }}
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  }
+</div>

@@ -1,0 +1,36 @@
+<aside class="info">
+  @if (block().heading) {
+    <h2>{{ block().heading }}</h2>
+  }
+
+  <dl class="rows">
+    @if (block().email) {
+      <div class="row">
+        <dt>{{ 'contact.email' | t }}</dt>
+        <dd><a [href]="'mailto:' + block().email">{{ block().email }}</a></dd>
+      </div>
+    }
+    @if (block().phone) {
+      <div class="row">
+        <dt>{{ 'contact.phone' | t }}</dt>
+        <dd><a [href]="'tel:' + block().phone">{{ block().phone }}</a></dd>
+      </div>
+    }
+    @if (block().address) {
+      <div class="row">
+        <dt>{{ 'contact.address' | t }}</dt>
+        <dd>{{ block().address }}</dd>
+      </div>
+    }
+    @if (block().hours) {
+      <div class="row">
+        <dt>{{ 'contact.hours' | t }}</dt>
+        <dd>{{ block().hours }}</dd>
+      </div>
+    }
+  </dl>
+
+  @if (block().note) {
+    <p class="note">{{ block().note }}</p>
+  }
+</aside>

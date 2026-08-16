@@ -23,19 +23,20 @@
       </label>
 
       @if (block().showOrganisation) {
-        <label class="full">
+        <label>
           <span>{{ 'form.organisation' | t }}</span>
           <input type="text" name="organisation" [(ngModel)]="organisation" />
         </label>
       }
 
-      <label class="full">
+      <label>
         <span>{{ 'form.message' | t }}</span>
-        <textarea name="message" rows="5" required [(ngModel)]="message"></textarea>
+        <textarea name="message" rows="6" required [(ngModel)]="message"></textarea>
       </label>
 
       <button type="submit" class="btn">
         {{ block().submitButtonText || ('form.send' | t) }}
+        <span class="arrow" aria-hidden="true">→</span>
       </button>
     </form>
   }

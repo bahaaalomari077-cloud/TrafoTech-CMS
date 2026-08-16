@@ -49,7 +49,7 @@ const BLOCK_FIELDS = `
     }
   }
   ... on ContactFormBlock { heading intro recipientEmail submitButtonText successMessage showOrganisation }
-  ... on ContactInfoBlock { heading email phone note }
+  ... on ContactInfoBlock { heading email phone address hours note }
   ... on StoryBlock {
     eyebrow heading body { html }
     stats { contentItems { ... on StatItem { contentItemId displayText value suffix label } } }

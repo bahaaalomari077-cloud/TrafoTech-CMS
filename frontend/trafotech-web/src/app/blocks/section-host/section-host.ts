@@ -10,22 +10,7 @@ import { BlockHostComponent } from '../block-host/block-host';
 @Component({
   selector: 'app-section-host',
   imports: [BlockHostComponent],
-  template: `
-    <section
-      [class]="sectionClass()"
-      [attr.id]="section().anchor || null"
-    >
-      <div [class]="innerClass()">
-        <!-- Two blocks in one section sit side by side (form + details); any
-             other count stacks, so the common single-block case is unaffected. -->
-        <div [class.block-pair]="blockCount() === 2">
-          @for (block of section().blocks?.contentItems || []; track block.contentItemId) {
-            <app-block-host [block]="block" />
-          }
-        </div>
-      </div>
-    </section>
-  `,
+  templateUrl: './section-host.html',
   styleUrl: './section-host.scss',
 })
 export class SectionHostComponent implements AfterViewInit, OnDestroy {

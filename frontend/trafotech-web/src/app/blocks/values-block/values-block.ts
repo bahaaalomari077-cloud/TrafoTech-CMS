@@ -3,28 +3,7 @@ import { ValuesBlock } from '../../core/models/blocks.models';
 
 @Component({
   selector: 'app-values-block',
-  template: `
-    <header class="section-head">
-      @if (block().eyebrow) {
-        <span class="eyebrow">{{ block().eyebrow }}</span>
-      }
-      @if (block().heading) {
-        <h2>{{ block().heading }}</h2>
-      }
-    </header>
-
-    @if (block().values?.contentItems?.length) {
-      <ol class="values">
-        @for (v of block().values!.contentItems; track v.contentItemId; let i = $index) {
-          <li class="value">
-            <span class="num" aria-hidden="true">{{ i + 1 }}</span>
-            <h3>{{ v.displayText }}</h3>
-            <p>{{ v.description }}</p>
-          </li>
-        }
-      </ol>
-    }
-  `,
+  templateUrl: './values-block.html',
   styleUrl: './values-block.scss',
 })
 export class ValuesBlockComponent {

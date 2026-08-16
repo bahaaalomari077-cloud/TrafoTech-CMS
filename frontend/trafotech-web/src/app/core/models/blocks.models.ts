@@ -108,6 +108,8 @@ export interface ContactInfoBlock extends BlockBase {
   heading?: string | null;
   email?: string | null;
   phone?: string | null;
+  address?: string | null;
+  hours?: string | null;
   note?: string | null;
 }
 

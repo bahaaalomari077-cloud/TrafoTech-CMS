@@ -6,23 +6,7 @@ import { SiteFooterComponent } from './layout/site-footer/site-footer';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, SiteHeaderComponent, SiteFooterComponent],
-  template: `
-    <app-site-header />
-    <main class="site-main">
-      <router-outlet />
-    </main>
-    <app-site-footer />
-  `,
-  styles: `
-    :host {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-
-    .site-main {
-      flex: 1;
-    }
-  `,
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
 export class App {}

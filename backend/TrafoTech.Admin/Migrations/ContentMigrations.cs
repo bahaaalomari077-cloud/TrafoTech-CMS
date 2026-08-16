@@ -92,6 +92,28 @@ public sealed class ContentMigrations : DataMigration
         return 4;
     }
 
+    /// <summary>
+    /// Reseeds Contact so the details card picks up its address and working
+    /// hours. SeedContactFullAsync already ran, so the pages must be removed
+    /// for the new fields to land.
+    /// </summary>
+    public async Task<int> UpdateFrom4Async()
+    {
+        foreach (var id in new[] { "trafotechcontact0000000000", "trafotechcontacten00000000" })
+        {
+            var existing = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (existing is not null)
+            {
+                await _contentManager.RemoveAsync(existing);
+            }
+        }
+
+        await SeedContactFullAsync("ar");
+        await SeedContactFullAsync("en");
+
+        return 5;
+    }
+
     private async Task SeedAboutFullAsync(string culture)
     {
         var ar = culture == "ar";
@@ -270,6 +292,10 @@ public sealed class ContentMigrations : DataMigration
                 Text(child, "ContactInfoBlock", "Heading", ar ? "معلومات التواصل" : "Contact details");
                 Text(child, "ContactInfoBlock", "Email", "hello@travotek.com");
                 Text(child, "ContactInfoBlock", "Phone", "+962 6 000 0000");
+                Text(child, "ContactInfoBlock", "Address", ar ? "عمّان، الأردن" : "Amman, Jordan");
+                Text(child, "ContactInfoBlock", "Hours", ar
+                    ? "الأحد إلى الخميس، ٩ صباحاً – ٦ مساءً"
+                    : "Sunday to Thursday, 9 AM – 6 PM");
                 Text(child, "ContactInfoBlock", "Note", ar
                     ? "للاستفسارات التقنية العاجلة من العملاء الحاليين، استخدم قناة الدعم المخصصة في اتفاقية الخدمة."
                     : "For urgent technical enquiries from existing clients, use the dedicated support channel in your service agreement.");

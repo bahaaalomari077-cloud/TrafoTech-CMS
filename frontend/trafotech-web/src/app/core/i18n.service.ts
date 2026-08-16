@@ -30,6 +30,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'form.organisation': 'الجهة (اختياري)',
     'form.message': 'رسالتك',
     'form.send': 'إرسال',
+    'contact.email': 'البريد',
+    'contact.phone': 'الهاتف',
+    'contact.address': 'العنوان',
+    'contact.hours': 'ساعات العمل',
   },
   en: {
     'nav.home': 'Home',
@@ -55,6 +59,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'form.organisation': 'Organisation (optional)',
     'form.message': 'Your message',
     'form.send': 'Send',
+    'contact.email': 'Email',
+    'contact.phone': 'Phone',
+    'contact.address': 'Address',
+    'contact.hours': 'Working hours',
   },
 };
 

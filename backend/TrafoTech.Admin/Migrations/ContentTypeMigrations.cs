@@ -154,6 +154,21 @@ public sealed class ContentTypeMigrations : DataMigration
         return 3;
     }
 
+    /// <summary>
+    /// Adds the address and working-hours rows to the contact details card.
+    /// </summary>
+    public async Task<int> UpdateFrom3Async()
+    {
+        await _contentDefinitionManager.AlterPartDefinitionAsync("ContactInfoBlock", part => part
+            .WithField("Address", f => f
+                .OfType("TextField").WithDisplayName("Address").WithPosition("3"))
+            .WithField("Hours", f => f
+                .OfType("TextField").WithDisplayName("Working hours").WithPosition("4")
+                .WithEditor("TextArea")));
+
+        return 4;
+    }
+
     // ---------------------------------------------------------------- parts
 
     private async Task DefineFieldPartsAsync()

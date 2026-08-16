@@ -48,46 +48,7 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
     CtaBlockComponent,
     SafeHtmlPipe,
   ],
-  template: `
-    @switch (block().__typename) {
-      @case ('PageHeroBlock') {
-        <app-hero-block [block]="asHero(block())" />
-      }
-      @case ('FeatureGridBlock') {
-        <app-feature-grid [block]="asFeatures(block())" />
-      }
-      @case ('ProductGridBlock') {
-        <app-product-grid [block]="asProducts(block())" />
-      }
-      @case ('PageHeaderBlock') {
-        <app-page-header [block]="asPageHeader(block())" />
-      }
-      @case ('ProductListBlock') {
-        <app-product-list [block]="asProductList(block())" />
-      }
-      @case ('ContactFormBlock') {
-        <app-contact-form [block]="asContactForm(block())" />
-      }
-      @case ('ContactInfoBlock') {
-        <app-contact-info [block]="asContactInfo(block())" />
-      }
-      @case ('StoryBlock') {
-        <app-story-block [block]="asStory(block())" />
-      }
-      @case ('TimelineBlock') {
-        <app-timeline-block [block]="asTimeline(block())" />
-      }
-      @case ('ValuesBlock') {
-        <app-values-block [block]="asValues(block())" />
-      }
-      @case ('CtaBlock') {
-        <app-cta-block [block]="asCta(block())" />
-      }
-      @case ('RichTextBlock') {
-        <div class="rich-text" [innerHTML]="asRichText(block()).body?.html | safeHtml"></div>
-      }
-    }
-  `,
+  templateUrl: './block-host.html',
 })
 export class BlockHostComponent {
   readonly block = input.required<Block>();
