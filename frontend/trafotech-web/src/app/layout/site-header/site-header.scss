@@ -6,9 +6,15 @@
   color: var(--header-ink);
 }
 
+/*
+ * Fixed, not sticky. The sections below establish 3D contexts for the page
+ * flip, and a sticky element cannot stay pinned across one — it scrolls away
+ * with its container. Fixed positioning sits outside that entirely.
+ */
 .site-header.is-sticky {
-  position: sticky;
-  top: 0;
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
   backdrop-filter: blur(12px);
 }
 

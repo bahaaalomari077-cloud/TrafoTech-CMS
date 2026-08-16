@@ -13,6 +13,8 @@ import {
   TimelineBlock,
   ValuesBlock,
   RichTextBlock,
+  MediaBlock,
+  FaqBlock,
 } from '../../core/models/blocks.models';
 import { HeroBlockComponent } from '../hero-block/hero-block';
 import { FeatureGridComponent } from '../feature-grid/feature-grid';
@@ -25,6 +27,8 @@ import { StoryBlockComponent } from '../story-block/story-block';
 import { TimelineBlockComponent } from '../timeline-block/timeline-block';
 import { ValuesBlockComponent } from '../values-block/values-block';
 import { CtaBlockComponent } from '../cta-block/cta-block';
+import { MediaBlockComponent } from '../media-block/media-block';
+import { FaqBlockComponent } from '../faq-block/faq-block';
 import { SafeHtmlPipe } from '../../core/safe-html.pipe';
 
 /**
@@ -46,6 +50,8 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
     TimelineBlockComponent,
     ValuesBlockComponent,
     CtaBlockComponent,
+    MediaBlockComponent,
+    FaqBlockComponent,
     SafeHtmlPipe,
   ],
   templateUrl: './block-host.html',
@@ -89,5 +95,11 @@ export class BlockHostComponent {
   }
   protected asRichText(b: Block): RichTextBlock {
     return b as RichTextBlock;
+  }
+  protected asMedia(b: Block): MediaBlock {
+    return b as MediaBlock;
+  }
+  protected asFaq(b: Block): FaqBlock {
+    return b as FaqBlock;
   }
 }

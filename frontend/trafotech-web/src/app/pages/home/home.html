@@ -6,7 +6,9 @@
     <button type="button" class="btn" (click)="load()">{{ 'common.retry' | t }}</button>
   </div>
 } @else {
+  <div class="flip-scene">
   @for (section of page()?.sections?.contentItems || []; track section.contentItemId) {
-    <app-section-host [section]="section" />
-  }
+      <app-section-host [section]="section" />
+    }
+</div>
 }

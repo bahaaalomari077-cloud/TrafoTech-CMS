@@ -1,0 +1,12 @@
+@if (file(); as f) {
+  <figure class="media-block">
+    @if (isVideo()) {
+      <video class="media-block__asset" [src]="f.url" controls playsinline></video>
+    } @else {
+      <img class="media-block__asset" [src]="f.url" [alt]="alt()" loading="lazy" />
+    }
+    @if (block().caption) {
+      <figcaption class="media-block__caption">{{ block().caption }}</figcaption>
+    }
+  </figure>
+}

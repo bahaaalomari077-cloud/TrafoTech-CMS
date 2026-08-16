@@ -64,6 +64,11 @@ const BLOCK_FIELDS = `
   }
   ... on CtaBlock { heading text buttonText buttonLink { url text } }
   ... on RichTextBlock { body { html } }
+  ... on MediaBlock { caption media { files { url mediaText } } }
+  ... on FaqBlock {
+    heading
+    questions { contentItems { ... on FaqItem { contentItemId displayText answer { html } } } }
+  }
 `;
 
 const SECTION_FIELDS = `

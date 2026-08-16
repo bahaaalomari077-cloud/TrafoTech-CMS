@@ -29,7 +29,6 @@
         "OrchardCore.Html",
         "OrchardCore.Markdown",
         "OrchardCore.Media",
-        "OrchardCore.Menu",
         "OrchardCore.Taxonomies",
         "OrchardCore.Lists",
         "OrchardCore.Flows",

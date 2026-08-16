@@ -1,0 +1,18 @@
+<div class="faq">
+  @if (block().heading) {
+    <h2 class="faq__heading">{{ block().heading }}</h2>
+  }
+
+  <div class="faq__list">
+    @for (item of block().questions?.contentItems || []; track item.contentItemId) {
+      <!-- Native disclosure: keyboard- and screen-reader-accessible, and it
+           still opens if scripting is unavailable. -->
+      <details class="faq__item card-surface">
+        <summary class="faq__question">{{ item.displayText }}</summary>
+        @if (item.answer?.html) {
+          <div class="faq__answer" [innerHTML]="item.answer!.html | safeHtml"></div>
+        }
+      </details>
+    }
+  </div>
+</div>

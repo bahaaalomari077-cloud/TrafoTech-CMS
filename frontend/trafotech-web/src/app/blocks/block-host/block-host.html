@@ -32,6 +32,12 @@
   @case ('CtaBlock') {
     <app-cta-block [block]="asCta(block())" />
   }
+  @case ('MediaBlock') {
+    <app-media-block [block]="asMedia(block())" />
+  }
+  @case ('FaqBlock') {
+    <app-faq-block [block]="asFaq(block())" />
+  }
   @case ('RichTextBlock') {
     <div class="rich-text" [innerHTML]="asRichText(block()).body?.html | safeHtml"></div>
   }

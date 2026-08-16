@@ -8,9 +8,9 @@
 </header>
 
 @if (block().values?.contentItems?.length) {
-  <ol class="values">
+  <ol class="values stagger">
     @for (v of block().values!.contentItems; track v.contentItemId; let i = $index) {
-      <li class="value">
+      <li class="value card-surface" [attr.style]="'--i:' + i">
         <span class="num" aria-hidden="true">{{ i + 1 }}</span>
         <h3>{{ v.displayText }}</h3>
         <p>{{ v.description }}</p>

@@ -17,9 +17,9 @@
 </header>
 
 @if (block().products?.contentItems?.length) {
-  <ul class="product-grid">
-    @for (product of block().products!.contentItems; track product.contentItemId) {
-      <li class="product">
+  <ul class="product-grid stagger">
+    @for (product of block().products!.contentItems; track product.contentItemId; let i = $index) {
+      <li class="product card-surface" [attr.style]="'--i:' + i">
         @if (product.badge) {
           <span class="badge">{{ product.badge }}</span>
         }

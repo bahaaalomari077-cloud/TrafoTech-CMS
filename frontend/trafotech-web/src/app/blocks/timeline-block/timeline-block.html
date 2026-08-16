@@ -8,11 +8,11 @@
 </header>
 
 @if (block().milestones?.contentItems?.length) {
-  <ol class="timeline">
-    @for (m of block().milestones!.contentItems; track m.contentItemId) {
-      <li class="milestone">
+  <ol class="timeline stagger">
+    @for (m of block().milestones!.contentItems; track m.contentItemId; let i = $index) {
+      <li class="milestone" [attr.style]="'--i:' + i">
         <span class="year">{{ m.year }}</span>
-        <div class="card">
+        <div class="card card-surface">
           <h3>{{ m.displayText }}</h3>
           <p>{{ m.description }}</p>
         </div>

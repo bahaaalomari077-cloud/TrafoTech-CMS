@@ -49,6 +49,13 @@
   --step-3: clamp(1.68rem, 1.38rem + 1.45vw, 2.55rem);
   --step-4: clamp(2rem, 1.5rem + 2.4vw, 3.4rem);
 
+  /* Motion — the reference's two curves and its timing scale. */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.2s;
+  --dur: 0.4s;
+  --dur-slow: 0.9s;
+
   --radius: 14px;
   --radius-lg: 22px;
   --container: 1200px;
@@ -106,6 +113,38 @@ body {
   font-size: var(--step-0);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
+  /* A long unbroken string in CMS copy — a pasted URL or reference number —
+     would otherwise widen the page and force horizontal scrolling. */
+  overflow-wrap: break-word;
+}
+
+/* Nothing an editor types should be able to widen the document. */
+html {
+  overflow-x: hidden;
+}
+
+/*
+ * A raised card keeps its light surface whatever section it sits in, so it must
+ * restate the on-surface tokens for its own contents. Without this, dropping a
+ * card block onto a dark section left white headings on a white card.
+ */
+.card-surface {
+  --on-surface: var(--ink);
+  --on-surface-muted: var(--ink-muted);
+  --on-surface-faint: var(--ink-faint);
+  --on-surface-line: var(--line);
+  color: var(--on-surface);
+}
+
+.card-surface :is(h1, h2, h3, h4) {
+  color: var(--on-surface);
+}
+
+:is(h1, h2, h3, h4, p, li, dd, dt, span, a, td, th) {
+  overflow-wrap: break-word;
+  /* overflow-wrap alone only breaks at existing opportunities. Headings are
+     set large, so one long token still outruns the viewport without this. */
+  word-break: break-word;
 }
 
 html[dir='rtl'] body {
@@ -146,6 +185,17 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+}
+
+/*
+ * An unusually tall upload (say 400x5000) would otherwise stretch its card to
+ * thousands of pixels. Capping the height and cropping to the centre keeps any
+ * aspect ratio presentable without the editor having to prepare the file.
+ */
+.card-surface img,
+.rich-text img {
+  max-height: 60vh;
+  object-fit: cover;
 }
 
 .container {
@@ -259,12 +309,67 @@ html[dir='rtl'] .btn .arrow {
   overflow-x: auto;
 }
 
+/* ---------------------------------------------------------------- Motion --
+ *
+ * Matches the reference: sections rise as they enter, their children follow in
+ * a short stagger, and each section also rotates in 3D as it scrolls up the
+ * viewport. Every effect is disabled under prefers-reduced-motion.
+ */
+
+@keyframes rise {
+  0% { opacity: 0; transform: translateY(26px); }
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes word-in {
+  100% { opacity: 1; transform: none; }
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(4%, -3%) scale(1.06); }
+  66% { transform: translate(-3%, 4%) scale(0.96); }
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* The orbit track and its cards: the track turns, each card turns back by the
+   same amount so it rides around the core while staying upright. */
+@keyframes spin-track {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes spin-back {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+@keyframes pulse-ring {
+  70% { box-shadow: 0 0 0 12px rgb(34 57 122 / 0%); }
+  100% { box-shadow: 0 0 0 0 rgb(34 57 122 / 0%); }
+}
+
+@keyframes shimmer {
+  100% { background-position: 200% center; }
+}
+
 /* --- Scroll reveal --- */
 
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(30px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out-expo),
+    transform var(--dur-slow) var(--ease-out-expo);
+  will-change: opacity, transform;
 }
 
 .reveal.is-visible {
@@ -272,11 +377,192 @@ html[dir='rtl'] .btn .arrow {
   transform: none;
 }
 
+/*
+ * Children of a revealed section arrive in sequence. The delay is read from an
+ * --i index set per child, so the cascade works for any number of items.
+ */
+/*
+ * Written with doubled specificity so it wins against the component styles on
+ * the same elements — a card's own `transition: transform, box-shadow` would
+ * otherwise replace this one and drop the delay.
+ */
+.stagger.stagger > * {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s var(--ease-out-expo) calc(var(--i, 0) * 0.09s),
+    transform 0.7s var(--ease-out-expo) calc(var(--i, 0) * 0.09s),
+    box-shadow var(--dur) var(--ease);
+}
+
+.is-visible .stagger.stagger > * {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+ * Scroll-driven 3D flip. --flip-p runs 0 to 1 as the section crosses the
+ * viewport; the transform and opacity are derived from it, so no JS touches
+ * style properties per frame beyond that single variable.
+ */
+/*
+ * The pages turn inside a shared perspective. Without it a rotateY renders as a
+ * flat horizontal squash — the depth, and with it the whole page-turning read,
+ * comes from this single declaration on the scroll container.
+ */
+.flip-scene {
+  perspective: 1800px;
+  perspective-origin: 50% 50%;
+}
+
+/*
+ * No top offset for the fixed header: like the reference, the dark hero band on
+ * every page is meant to run behind the translucent bar. Each hero already
+ * carries the top padding that keeps its text clear of it.
+ */
+
+/*
+ * Turning page. Three layers together sell it: the rotation itself, a shadow
+ * gradient across the leading 42% that deepens toward the hinge, and a bright
+ * 3px spine at the hinge edge. All three fade out as the turn completes.
+ */
+.page-flip {
+  --flip-p: 1;
+  --flip-start: 34deg;
+  position: relative;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform:
+    rotateY(calc(var(--flip-start) * (1 - var(--flip-p))))
+    translateZ(calc(-90px * (1 - var(--flip-p))));
+  opacity: calc(0.25 + 0.75 * var(--flip-p));
+  will-change: transform, opacity;
+}
+
+/* The page's own shadow, heaviest at the hinge. */
+.page-flip::before {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 42%;
+  pointer-events: none;
+  z-index: 2;
+  opacity: calc(1 - var(--flip-p));
+  background: linear-gradient(
+    to right,
+    rgb(3 6 15 / 42%) 0%,
+    rgb(3 6 15 / 16%) 42%,
+    transparent 100%
+  );
+}
+
+/* The lit spine along the fold. */
+.page-flip::after {
+  content: '';
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 3px;
+  pointer-events: none;
+  z-index: 3;
+  opacity: calc(1 - var(--flip-p));
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--navy-400) 14%,
+    var(--navy-300) 50%,
+    var(--navy-400) 86%,
+    transparent
+  );
+}
+
+html[dir='rtl'] .page-flip {
+  /* Mirror the hinge so pages turn from the reading edge. */
+  transform-origin: right center;
+  transform:
+    rotateY(calc(var(--flip-start) * -1 * (1 - var(--flip-p))))
+    translateZ(calc(-90px * (1 - var(--flip-p))));
+}
+
+html[dir='rtl'] .page-flip::before {
+  background: linear-gradient(
+    to left,
+    rgb(3 6 15 / 42%) 0%,
+    rgb(3 6 15 / 16%) 42%,
+    transparent 100%
+  );
+}
+
+/*
+ * Once a section has finished turning, every trace of the 3D layer is dropped.
+ * A settled `rotateY(0)` still promotes the element to its own GPU layer, and
+ * text composited that way renders soft and appears to shimmer while scrolling.
+ */
+.page-flip.is-settled {
+  transform: none;
+  transform-style: flat;
+  opacity: 1;
+  will-change: auto;
+}
+
+.page-flip.is-settled::before,
+.page-flip.is-settled::after {
+  opacity: 0;
+}
+
+/* --- Headline words --- */
+
+.word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.7em) rotate(2deg);
+  animation: word-in 0.95s var(--ease-out-expo) forwards;
+  animation-delay: calc(var(--i, 0) * 0.09s);
+}
+
+/* --- Ambient motion --- */
+
+.floats {
+  animation: float-y 7s var(--ease) infinite;
+}
+
+.spins {
+  animation: spin 26s linear infinite;
+}
+
+.spins-reverse {
+  animation: spin 18s linear infinite reverse;
+}
+
+.pulses {
+  animation: pulse-ring 2.6s var(--ease) infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .reveal {
+  .reveal,
+  .stagger > * {
     opacity: 1;
     transform: none;
     transition: none;
+  }
+
+  .page-flip {
+    transform: none;
+    opacity: 1;
+  }
+
+  .word {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .floats,
+  .spins,
+  .spins-reverse,
+  .pulses {
+    animation: none;
   }
 }
 

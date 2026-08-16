@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnDestroy, AfterViewInit, inject, input } from '@angular/core';
 import { Section } from '../../core/models/blocks.models';
 import { BlockHostComponent } from '../block-host/block-host';
+import { ScrollFlipDirective } from '../../core/scroll-flip.directive';
 
 /**
  * Renders a Section: the CMS supplies layout choices (background, width,
@@ -9,7 +10,7 @@ import { BlockHostComponent } from '../block-host/block-host';
  */
 @Component({
   selector: 'app-section-host',
-  imports: [BlockHostComponent],
+  imports: [BlockHostComponent, ScrollFlipDirective],
   templateUrl: './section-host.html',
   styleUrl: './section-host.scss',
 })
@@ -29,21 +30,28 @@ export class SectionHostComponent implements AfterViewInit, OnDestroy {
       'section',
       `bg-${s.background || 'default'}`,
       `space-${s.spacing || 'normal'}`,
-      'reveal',
+      'page-flip',
     ].join(' ');
   }
 
   protected innerClass(): string {
     const width = this.section().width || 'container';
     // A full-bleed section still needs its blocks to manage their own gutters.
-    if (width === 'full') {
-      return 'section-inner-full';
-    }
-    return width === 'wide' ? 'container container-wide' : 'container';
+    // 'reveal' rides on the inner wrapper rather than the section, so the
+    // content's fade-in does not fight the section's own flip opacity.
+    const base =
+      width === 'full'
+        ? 'section-inner-full'
+        : width === 'wide'
+          ? 'container container-wide'
+          : 'container';
+    return `${base} reveal`;
   }
 
   ngAfterViewInit(): void {
-    const el = this.host.nativeElement.querySelector('section');
+    // The reveal now lives on the inner wrapper, not the section, so the class
+    // must land there — the section's opacity belongs to the flip alone.
+    const el = this.host.nativeElement.querySelector('.reveal');
     if (!el) {
       return;
     }

@@ -3,7 +3,7 @@
     <button
       type="button"
       role="tab"
-      class="chip"
+      class="chip card-surface"
       [class.active]="activeCategory() === ''"
       [attr.aria-selected]="activeCategory() === ''"
       (click)="select('')"
@@ -15,7 +15,7 @@
       <button
         type="button"
         role="tab"
-        class="chip"
+        class="chip card-surface"
         [class.active]="activeCategory() === cat.key"
         [attr.aria-selected]="activeCategory() === cat.key"
         (click)="select(cat.key || '')"
@@ -26,9 +26,9 @@
   </div>
 }
 
-<ul class="rows">
-  @for (row of rows(); track row.contentItemId) {
-    <li class="row">
+<ul class="rows stagger">
+  @for (row of rows(); track row.contentItemId; let i = $index) {
+    <li class="row card-surface" [attr.style]="'--i:' + i">
       <div class="row-rail">
         <span class="row-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"

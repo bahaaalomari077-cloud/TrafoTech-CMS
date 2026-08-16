@@ -12,10 +12,10 @@
   </div>
 
   @if (block().stats?.contentItems?.length) {
-    <aside class="stat-panel">
+    <aside class="stat-panel card-surface">
       @for (stat of block().stats!.contentItems; track stat.contentItemId) {
         <div class="stat">
-          <span class="stat-value">{{ stat.value }}{{ stat.suffix }}</span>
+          <span class="stat-value" appCountUp>{{ stat.value }}{{ stat.suffix }}</span>
           <span class="stat-label">{{ stat.label }}</span>
         </div>
       }

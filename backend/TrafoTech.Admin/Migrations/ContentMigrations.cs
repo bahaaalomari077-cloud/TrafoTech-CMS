@@ -114,6 +114,138 @@ public sealed class ContentMigrations : DataMigration
         return 5;
     }
 
+    /// <summary>
+    /// Rebuilds the home page to the reference's four-section rhythm:
+    /// hero, then two consecutive light sections, then a dark closing CTA.
+    ///
+    /// The page previously alternated dark/light/dark, so every boundary read as
+    /// a hard cut. Two light sections in a row make the middle of the page one
+    /// continuous surface, which is what the reference does.
+    /// </summary>
+    public async Task<int> UpdateFrom5Async()
+    {
+        foreach (var id in new[] { "trafotechhome0000000000000", "trafotechhomeen00000000000" })
+        {
+            var existing = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (existing is not null)
+            {
+                await _contentManager.RemoveAsync(existing);
+            }
+        }
+
+        await SeedHomeAsync("ar");
+        await SeedHomeAsync("en");
+
+        return 6;
+    }
+
+    /// <summary>
+    /// Corrects the English brand spelling: Travotek becomes Travotech.
+    ///
+    /// This rewrites the string wherever it appears rather than reseeding the
+    /// pages, so any edits made in the admin survive the rename. The Arabic
+    /// name is a separate string and is deliberately left untouched.
+    /// </summary>
+    public async Task<int> UpdateFrom6Async()
+    {
+        var ids = new[]
+        {
+            "trafotechhome0000000000000", "trafotechhomeen00000000000",
+            "trafotechabout000000000000", "trafotechabouten0000000000",
+            "trafotechcontact0000000000", "trafotechcontacten00000000",
+            "trafotechproducts000000000", "trafotechproductsen0000000",
+            "trafotechheader00000000000", "trafotechheaderen000000000",
+            "trafotechfooter00000000000", "trafotechfooteren000000000",
+        };
+
+        foreach (var id in ids)
+        {
+            var item = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (item is null)
+            {
+                continue;
+            }
+
+            // Content is read-only as a property but is itself a mutable JSON
+            // object, so the rename is applied in place across the whole tree —
+            // including the nested section and block bags.
+            if (item.Content is not JsonObject content || !RenameBrand(content))
+            {
+                continue;
+            }
+
+            if (!string.IsNullOrEmpty(item.DisplayText))
+            {
+                var renamed = item.DisplayText.Replace(OldBrand, NewBrand, StringComparison.Ordinal);
+                if (!string.Equals(renamed, item.DisplayText, StringComparison.Ordinal))
+                {
+                    item.DisplayText = renamed;
+                    item.Alter<TitlePart>(p => p.Title = renamed);
+                }
+            }
+
+            await _contentManager.UpdateAsync(item);
+            await _contentManager.PublishAsync(item);
+        }
+
+        return 7;
+    }
+
+    private const string OldBrand = "Travotek";
+    private const string NewBrand = "Travotech";
+
+    /// <summary>
+    /// Rewrites the brand in every string in the tree. Returns whether anything
+    /// changed, so an item with no occurrences is not republished needlessly.
+    /// </summary>
+    private static bool RenameBrand(JsonNode node)
+    {
+        var changed = false;
+
+        switch (node)
+        {
+            case JsonObject obj:
+                foreach (var (key, value) in obj.ToList())
+                {
+                    if (value is JsonValue v && v.TryGetValue<string>(out var text))
+                    {
+                        if (text.Contains(OldBrand, StringComparison.Ordinal))
+                        {
+                            obj[key] = text.Replace(OldBrand, NewBrand, StringComparison.Ordinal);
+                            changed = true;
+                        }
+                    }
+                    else if (value is not null && RenameBrand(value))
+                    {
+                        changed = true;
+                    }
+                }
+
+                break;
+
+            case JsonArray arr:
+                for (var i = 0; i < arr.Count; i++)
+                {
+                    if (arr[i] is JsonValue v && v.TryGetValue<string>(out var text))
+                    {
+                        if (text.Contains(OldBrand, StringComparison.Ordinal))
+                        {
+                            arr[i] = text.Replace(OldBrand, NewBrand, StringComparison.Ordinal);
+                            changed = true;
+                        }
+                    }
+                    else if (arr[i] is { } child && RenameBrand(child))
+                    {
+                        changed = true;
+                    }
+                }
+
+                break;
+        }
+
+        return changed;
+    }
+
     private async Task SeedAboutFullAsync(string culture)
     {
         var ar = culture == "ar";
@@ -252,10 +384,10 @@ public sealed class ContentMigrations : DataMigration
         {
             Localize(item, culture, "trafotech-about");
             Route(item, ar ? "about" : "en/about");
-            Text(item, "Seo", "MetaTitle", ar ? "عن الشركة — ترافو تيك" : "About — Travotek");
+            Text(item, "Seo", "MetaTitle", ar ? "عن الشركة — ترافو تيك" : "About — Travotech");
             Text(item, "Seo", "MetaDescription", ar
                 ? "نبني ما لا يُرى ولا يتوقف — قصة ترافو تيك ومسيرتها وقيمها."
-                : "We build what is never seen and never stops — the Travotek story, journey and values.");
+                : "We build what is never seen and never stops — the Travotech story, journey and values.");
             Bool(item, "Seo", "NoIndex", false);
             Attach(item, "Sections", sections);
         });
@@ -310,10 +442,10 @@ public sealed class ContentMigrations : DataMigration
             {
                 Localize(item, culture, "trafotech-contact");
                 Route(item, ar ? "contact" : "en/contact");
-                Text(item, "Seo", "MetaTitle", ar ? "تواصل معنا — ترافو تيك" : "Contact — Travotek");
+                Text(item, "Seo", "MetaTitle", ar ? "تواصل معنا — ترافو تيك" : "Contact — Travotech");
                 Text(item, "Seo", "MetaDescription", ar
                     ? "تواصل مع فريق ترافو تيك."
-                    : "Get in touch with the Travotek team.");
+                    : "Get in touch with the Travotech team.");
                 Bool(item, "Seo", "NoIndex", false);
                 Attach(item, "Sections", sections);
             });
@@ -359,10 +491,10 @@ public sealed class ContentMigrations : DataMigration
             {
                 Localize(item, culture, "trafotech-contact");
                 Route(item, ar ? "contact" : "en/contact");
-                Text(item, "Seo", "MetaTitle", ar ? "تواصل معنا — ترافو تيك" : "Contact — Travotek");
+                Text(item, "Seo", "MetaTitle", ar ? "تواصل معنا — ترافو تيك" : "Contact — Travotech");
                 Text(item, "Seo", "MetaDescription", ar
                     ? "تواصل مع فريق ترافو تيك."
-                    : "Get in touch with the Travotek team.");
+                    : "Get in touch with the Travotech team.");
                 Bool(item, "Seo", "NoIndex", false);
                 Attach(item, "Sections", sections);
             });
@@ -415,10 +547,10 @@ public sealed class ContentMigrations : DataMigration
         {
             Localize(item, culture, "trafotech-about");
             Route(item, ar ? "about" : "en/about");
-            Text(item, "Seo", "MetaTitle", ar ? "عن الشركة — ترافو تيك" : "About — Travotek");
+            Text(item, "Seo", "MetaTitle", ar ? "عن الشركة — ترافو تيك" : "About — Travotech");
             Text(item, "Seo", "MetaDescription", ar
                 ? "تعرّف على فريق ترافو تيك."
-                : "Meet the Travotek team.");
+                : "Meet the Travotech team.");
             Bool(item, "Seo", "NoIndex", false);
             Attach(item, "Sections", sections);
         });
@@ -601,7 +733,7 @@ public sealed class ContentMigrations : DataMigration
             "Site header", item =>
             {
                 Localize(item, culture, "trafotech-siteheader");
-                Text(item, "SiteHeader", "BrandName", ar ? "ترافو تيك" : "Travotek");
+                Text(item, "SiteHeader", "BrandName", ar ? "ترافو تيك" : "Travotech");
                 Text(item, "SiteHeader", "CtaText", ar ? "اطلب عرضاً" : "Request a demo");
                 Link(item, "SiteHeader", "CtaLink", ar ? "/contact" : "/en/contact",
                      ar ? "اطلب عرضاً" : "Request a demo");
@@ -652,7 +784,7 @@ public sealed class ContentMigrations : DataMigration
             "Site footer", item =>
             {
                 Localize(item, culture, "trafotech-sitefooter");
-                Text(item, "SiteFooter", "BrandName", ar ? "ترافو تيك" : "Travotek");
+                Text(item, "SiteFooter", "BrandName", ar ? "ترافو تيك" : "Travotech");
                 Text(item, "SiteFooter", "Tagline", ar
                     ? "بنية الدفع الفوري للاقتصاد الرقمي"
                     : "Real-time payment infrastructure for the digital economy");
@@ -661,7 +793,7 @@ public sealed class ContentMigrations : DataMigration
                 Text(item, "SiteFooter", "Location", ar ? "عمّان، الأردن" : "Amman, Jordan");
                 Text(item, "SiteFooter", "Copyright", ar
                     ? "© 2026 ترافو تيك. جميع الحقوق محفوظة."
-                    : "© 2026 Travotek. All rights reserved.");
+                    : "© 2026 Travotech. All rights reserved.");
                 Text(item, "SiteFooter", "ComplianceNote", ar
                     ? "متوافق مع ISO 20022"
                     : "ISO 20022 compliant");
@@ -697,8 +829,8 @@ public sealed class ContentMigrations : DataMigration
         var hero = Section("hero", "dark", "full", "none",
             ("PageHeroBlock", "Hero", child =>
             {
-                Text(child, "PageHeroBlock", "Eyebrow", ar ? "مرحباً بكم في ترافو تيك" : "Welcome to Travotek");
-                Text(child, "PageHeroBlock", "HeadingBefore", ar ? "حلول" : "Travotek");
+                Text(child, "PageHeroBlock", "Eyebrow", ar ? "مرحباً بكم في ترافو تيك" : "Welcome to Travotech");
+                Text(child, "PageHeroBlock", "HeadingBefore", ar ? "حلول" : "Travotech");
                 Text(child, "PageHeroBlock", "HeadingHighlight", ar ? "ترافو تيك" : "solutions");
                 Text(child, "PageHeroBlock", "HeadingAfter", ar ? "لتمويل سلاسل التوريد" : "for supply chain finance");
                 Text(child, "PageHeroBlock", "Lead", ar
@@ -745,7 +877,7 @@ public sealed class ContentMigrations : DataMigration
         var why = Section("why", "alt", "container", "spacious",
             ("FeatureGridBlock", "Why", child =>
             {
-                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "لماذا ترافو تيك" : "Why Travotek");
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "لماذا ترافو تيك" : "Why Travotech");
                 Text(child, "FeatureGridBlock", "Heading", ar
                     ? "بنية تحتية يُبنى عليها اقتصاد"
                     : "Infrastructure an economy can be built on");
@@ -755,7 +887,41 @@ public sealed class ContentMigrations : DataMigration
                 Attach(child, "Features", featuresBag);
             }));
 
-        var cta = Section("cta", "dark", "full", "normal",
+        var productCards = Bag((ar
+            ? new[]
+            {
+                ("البنوك المركزية", "التسوية الإجمالية الفورية", "تسوية نهائية لا رجعة فيها للمدفوعات عالية القيمة، مع إدارة سيولة لحظية ونافذة تشغيل ممتدة."),
+                ("البنوك المركزية", "منصة الدفع الفوري", "تحويلات على مدار الساعة تصل خلال أقل من خمس ثوانٍ، مبنية للتشغيل البيني بين كل بنوك السوق."),
+                ("البنوك التجارية", "المحفظة الرقمية", "محفظة بعلامتك التجارية للأفراد والتجار، مع تعريف رقمي بالهوية وحدود مرنة حسب مستوى العميل."),
+            }
+            : new[]
+            {
+                ("Central banks", "Real-Time Gross Settlement", "Irrevocable final settlement for high-value payments, with real-time liquidity management and an extended operating window."),
+                ("Central banks", "Instant Payments Platform", "Round-the-clock transfers arriving in under five seconds, built for interoperability across every bank in the market."),
+                ("Commercial banks", "Digital Wallet", "A white-label wallet for consumers and merchants, with digital identity verification and flexible limits by customer tier."),
+            })
+            .Select<(string B, string T, string D), (string, string, Action<JsonObject>)>(c =>
+                ("ProductCard", c.T, child =>
+                {
+                    Text(child, "ProductCard", "Badge", c.B);
+                    Text(child, "ProductCard", "Description", c.D);
+                }))
+            .ToArray());
+
+        var products = Section("products", "alt", "container", "spacious",
+            ("ProductGridBlock", "Products", child =>
+            {
+                Text(child, "ProductGridBlock", "Eyebrow", ar ? "منتجاتنا" : "Our products");
+                Text(child, "ProductGridBlock", "Heading", ar
+                    ? "منظومة دفع متكاملة"
+                    : "A complete payments ecosystem");
+                Text(child, "ProductGridBlock", "LinkText", ar ? "كل المنتجات" : "All products");
+                Link(child, "ProductGridBlock", "Link", ar ? "/products" : "/en/products",
+                     ar ? "كل المنتجات" : "All products");
+                Attach(child, "Products", productCards);
+            }));
+
+        var cta = Section("cta", "dark", "container", "normal",
             ("CtaBlock", "CTA", child =>
             {
                 Text(child, "CtaBlock", "Heading", ar
@@ -772,6 +938,7 @@ public sealed class ContentMigrations : DataMigration
         var sections = Bag(
             ("Section", "Hero", hero),
             ("Section", "Why", why),
+            ("Section", "Products", products),
             ("Section", "CTA", cta));
 
         await EnsureAsync($"trafotechhome{suffix}".PadRight(26, '0')[..26], "Page", "Home", item =>
@@ -780,10 +947,10 @@ public sealed class ContentMigrations : DataMigration
             Route(item, ar ? "home" : "en", homepage: ar);
             Text(item, "Seo", "MetaTitle", ar
                 ? "ترافو تيك — بنية الدفع الفوري للاقتصاد الرقمي"
-                : "Travotek — Instant payment infrastructure for the digital economy");
+                : "Travotech — Instant payment infrastructure for the digital economy");
             Text(item, "Seo", "MetaDescription", ar
                 ? "حلول ترافو تيك لتمويل سلاسل التوريد وبنية الدفع الفوري."
-                : "Travotek solutions for supply chain finance and instant payment infrastructure.");
+                : "Travotech solutions for supply chain finance and instant payment infrastructure.");
             Bool(item, "Seo", "NoIndex", false);
             Attach(item, "Sections", sections);
         });
@@ -892,10 +1059,10 @@ public sealed class ContentMigrations : DataMigration
             {
                 Localize(item, culture, "trafotech-products");
                 Route(item, ar ? "products" : "en/products");
-                Text(item, "Seo", "MetaTitle", ar ? "المنتجات — ترافو تيك" : "Products — Travotek");
+                Text(item, "Seo", "MetaTitle", ar ? "المنتجات — ترافو تيك" : "Products — Travotech");
                 Text(item, "Seo", "MetaDescription", ar
                     ? "منظومة دفع متكاملة من ترافو تيك."
-                    : "A complete payments ecosystem from Travotek.");
+                    : "A complete payments ecosystem from Travotech.");
                 Bool(item, "Seo", "NoIndex", false);
                 Attach(item, "Sections", sections);
             });

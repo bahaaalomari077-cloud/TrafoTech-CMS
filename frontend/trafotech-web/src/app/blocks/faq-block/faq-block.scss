@@ -1,0 +1,67 @@
+.faq__heading {
+  max-width: 62ch;
+  margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+  /* Sits on the section itself, so it takes the section's own foreground. */
+  color: var(--on-surface);
+}
+
+.faq__list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.faq__item {
+  padding: 1.15rem 1.4rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-sm);
+}
+
+.faq__question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  /* A long question must wrap rather than push the marker out of the card. */
+  overflow-wrap: anywhere;
+}
+
+.faq__question::-webkit-details-marker {
+  display: none;
+}
+
+/* Own marker, so it can be flipped for RTL and animated independently. */
+.faq__question::after {
+  content: '';
+  flex: 0 0 auto;
+  width: 0.62rem;
+  height: 0.62rem;
+  border-right: 2px solid var(--on-surface-faint, var(--line-strong));
+  border-bottom: 2px solid var(--on-surface-faint, var(--line-strong));
+  transform: rotate(45deg);
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.faq__item[open] .faq__question::after {
+  transform: rotate(-135deg);
+}
+
+.faq__answer {
+  margin: 0.85rem 0 0;
+  color: var(--on-surface-muted);
+  overflow-wrap: anywhere;
+}
+
+.faq__answer > :last-child {
+  margin-bottom: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__question::after {
+    transition: none;
+  }
+}

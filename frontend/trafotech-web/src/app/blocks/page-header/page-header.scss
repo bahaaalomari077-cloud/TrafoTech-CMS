@@ -3,16 +3,16 @@
 }
 
 .eyebrow {
-  color: var(--navy-400);
+  color: var(--on-surface-faint, var(--navy-400));
 }
 
 h1 {
-  color: #fff;
+  color: var(--on-surface, #fff);
   margin-bottom: 0.5em;
 }
 
 .lead {
   font-size: var(--step-1);
-  color: var(--navy-300);
+  color: var(--on-surface-muted, var(--navy-300));
   margin: 0;
 }

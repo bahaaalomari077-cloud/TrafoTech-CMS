@@ -180,6 +180,30 @@ export interface ProductListBlock extends BlockBase {
   rows?: { contentItems: ProductRow[] } | null;
 }
 
+export interface MediaFile {
+  url: string;
+  mediaText?: string | null;
+}
+
+export interface MediaBlock extends BlockBase {
+  __typename: 'MediaBlock';
+  caption?: string | null;
+  media?: { files: MediaFile[] } | null;
+}
+
+export interface FaqItem {
+  contentItemId: string;
+  /* The question itself is the item's title; only the answer is a field. */
+  displayText: string;
+  answer?: { html: string } | null;
+}
+
+export interface FaqBlock extends BlockBase {
+  __typename: 'FaqBlock';
+  heading?: string | null;
+  questions?: { contentItems: FaqItem[] } | null;
+}
+
 export type Block =
   | StoryBlock
   | TimelineBlock
@@ -192,6 +216,8 @@ export type Block =
   | ProductListBlock
   | CtaBlock
   | RichTextBlock
+  | MediaBlock
+  | FaqBlock
   | BlockBase;
 
 export type SectionBackground = 'default' | 'alt' | 'brand' | 'dark';

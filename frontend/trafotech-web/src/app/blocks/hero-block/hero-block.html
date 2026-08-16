@@ -1,29 +1,53 @@
-<div class="hero-inner container container-wide">
+<!-- Ambient background: three blurred colour fields drifting behind the content. -->
+<div class="hero-bg" aria-hidden="true">
+  <span class="aurora aurora-1"></span>
+  <span class="aurora aurora-2"></span>
+  <span class="aurora aurora-3"></span>
+  <span class="hero-noise"></span>
+</div>
+
+<!-- Dissolves the hero into whatever section follows, so the boundary is a
+     gradient rather than a hard edge. -->
+<span class="hero-fade" aria-hidden="true"></span>
+
+<div class="hero-inner container">
   <div class="hero-copy">
     @if (block().eyebrow) {
-      <span class="hero-badge">
-        <span class="dot" aria-hidden="true"></span>
+      <span class="hero-badge rise">
+        <span class="dot pulses" aria-hidden="true"></span>
         {{ block().eyebrow }}
       </span>
     }
 
+    <!--
+      The headline animates per word. Splitting on the component side keeps the
+      CMS field a plain sentence — an editor never types markup.
+    -->
     <h1 class="hero-title">
-      @if (block().headingBefore) {
-        <span>{{ block().headingBefore }}</span>
-      }
-      @if (block().headingHighlight) {
-        <span class="highlight">{{ block().headingHighlight }}</span>
+      @if (block().headingBefore || block().headingHighlight) {
+        <span class="title-row">
+          @for (w of words(block().headingBefore); track $index; let i = $index) {
+            <span class="word" [attr.style]="'--i:' + i">{{ w }}</span>
+          }
+          @if (block().headingHighlight) {
+            <span class="highlight shimmer">{{ block().headingHighlight }}</span>
+          }
+        </span>
       }
       @if (block().headingAfter) {
-        <span>{{ block().headingAfter }}</span>
+        <span class="title-row">
+          @for (w of words(block().headingAfter); track $index; let i = $index) {
+            <span class="word" [attr.style]="'--i:' + (i + 2)">{{ w }}</span>
+          }
+        </span>
       }
     </h1>
 
     @if (block().lead) {
-      <p class="hero-lead">{{ block().lead }}</p>
+      <p class="hero-lead rise rise-2">{{ block().lead }}</p>
     }
 
-    <div class="hero-actions">
+    <div class="hero-actions rise rise-3">
       @if (block().primaryText) {
         <a class="btn" [routerLink]="href(block().primaryLink?.url)">
           {{ block().primaryText }}
@@ -38,38 +62,55 @@
     </div>
   </div>
 
-  <!-- Decorative dial: concentric rings with a value chip at the centre. -->
+  <!--
+    Orbit: two counter-rotating rings around a glass core, with the value cards
+    riding a separate track that spins while each card counter-spins to stay
+    upright — the reference's effect.
+  -->
   <div class="hero-visual" aria-hidden="true">
-    <div class="rings">
-      <span class="ring ring-1"></span>
-      <span class="ring ring-2"></span>
-      <span class="ring ring-3"></span>
-      <span class="node node-1"></span>
-      <span class="node node-2"></span>
-      <span class="node node-3"></span>
+    <div class="orbit">
+      <span class="orbit-ring orbit-ring-1"></span>
+      <span class="orbit-ring orbit-ring-2"></span>
+      <span class="orbit-core">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 12h4l3-9 4 18 3-9h4" />
+        </svg>
+      </span>
+    </div>
 
+    <div class="card-track">
       @if (block().dialValue) {
-        <div class="dial">
-          <span class="dial-value">{{ block().dialValue }}</span>
-          <span class="dial-label">{{ block().dialLabel }}</span>
+        <div class="card-seat card-seat-a">
+          <div class="float-card">
+            <span class="float-dot"></span>
+            <div>
+              <strong dir="ltr">{{ block().dialValue }}</strong>
+              <small>{{ block().dialLabel }}</small>
+            </div>
+          </div>
+        </div>
+      }
+      @if (block().badgeTitle) {
+        <div class="card-seat card-seat-b">
+          <div class="float-card">
+            <span class="float-dot float-dot-alt"></span>
+            <div>
+              <strong dir="ltr">{{ block().badgeTitle }}</strong>
+              <small>{{ block().badgeText }}</small>
+            </div>
+          </div>
         </div>
       }
     </div>
-
-    @if (block().badgeTitle) {
-      <div class="float-badge">
-        <strong>{{ block().badgeTitle }}</strong>
-        <span>{{ block().badgeText }}</span>
-      </div>
-    }
   </div>
 </div>
 
 @if (block().stats?.contentItems?.length) {
-  <div class="hero-stats container container-wide">
+  <div class="hero-stats container rise rise-4">
     @for (stat of block().stats!.contentItems; track stat.contentItemId) {
       <div class="stat">
-        <span class="stat-value">{{ stat.value }}{{ stat.suffix }}</span>
+        <span class="stat-value" appCountUp>{{ stat.value }}{{ stat.suffix }}</span>
         <span class="stat-label">{{ stat.label }}</span>
       </div>
     }

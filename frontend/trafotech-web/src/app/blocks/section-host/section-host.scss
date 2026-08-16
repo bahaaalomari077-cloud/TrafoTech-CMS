@@ -1,4 +1,29 @@
-/* Backgrounds — the dark variants also flip text colour for their children. */
+/* Backgrounds.
+   Each variant republishes the "on this surface" tokens, so a block never names
+   a literal colour and stays legible wherever an editor places it. Without this,
+   a hero moved onto a light section rendered white-on-cream at 1.12 contrast. */
+
+.bg-default,
+.bg-alt {
+  --on-surface: var(--ink);
+  --on-surface-muted: var(--ink-muted);
+  --on-surface-faint: var(--ink-faint);
+  --on-surface-line: var(--line);
+  --on-surface-glass: rgb(12 18 38 / 4%);
+  --glass-solid: var(--bg-raised);
+  color: var(--on-surface);
+}
+
+.bg-brand,
+.bg-dark {
+  --on-surface: #ffffff;
+  --on-surface-muted: var(--navy-300);
+  --on-surface-faint: var(--navy-400);
+  --on-surface-line: var(--glass-line);
+  --on-surface-glass: var(--glass-bg);
+  --glass-solid: rgb(6 11 28 / 72%);
+  color: var(--on-surface);
+}
 
 .bg-default {
   background: var(--bg);
@@ -13,21 +38,19 @@
   color: #fff;
 }
 
+/*
+ * Flat near-black, matching the reference's closing sections. The hero paints
+ * its own gradient, so a dark section here does not need one — and a gradient
+ * made the boundary with the light section above read as a hard seam.
+ */
 .bg-dark {
-  background: linear-gradient(160deg, var(--hero-from), var(--hero-via) 55%, var(--hero-to));
+  background: var(--navy-990);
   color: #fff;
 }
 
-/* Dark sections set the colour once; blocks inherit rather than hardcoding,
-   which is what lets the same block sit on a light or dark background. */
-.bg-brand :is(h1, h2, h3),
-.bg-dark :is(h1, h2, h3) {
-  color: #fff;
-}
-
-.bg-default :is(h1, h2, h3),
-.bg-alt :is(h1, h2, h3) {
-  color: var(--ink);
+/* Headings follow the surface token rather than a fixed colour. */
+.section :is(h1, h2, h3, h4) {
+  color: var(--on-surface);
 }
 
 /* Vertical rhythm */

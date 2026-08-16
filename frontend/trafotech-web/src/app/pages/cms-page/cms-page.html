@@ -8,7 +8,9 @@
     <a class="btn" routerLink="/">{{ 'common.backHome' | t }}</a>
   </div>
 } @else {
+  <div class="flip-scene">
   @for (section of page()!.sections?.contentItems || []; track section.contentItemId) {
-    <app-section-host [section]="section" />
-  }
+      <app-section-host [section]="section" />
+    }
+</div>
 }
