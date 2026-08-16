@@ -49,6 +49,67 @@ public sealed class ContentMigrations : DataMigration
         return 2;
     }
 
+    /// <summary>
+    /// Adds the Contact page. The header and footer already link to /contact,
+    /// so without it those links resolved to nothing.
+    /// </summary>
+    public async Task<int> UpdateFrom2Async()
+    {
+        await SeedContactAsync("ar");
+        await SeedContactAsync("en");
+
+        return 3;
+    }
+
+    private async Task SeedContactAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "تواصل معنا" : "Contact");
+                Text(child, "PageHeaderBlock", "Heading", ar
+                    ? "لنتحدث عن مشروعك"
+                    : "Let's talk about your project");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "أخبرنا عن التحدي الذي تواجهه، وسنعود إليك خلال يوم عمل واحد."
+                    : "Tell us about the challenge you are facing and we will come back to you within one business day.");
+            }));
+
+        var form = Section("form", "alt", "container", "spacious",
+            ("ContactFormBlock", "Form", child =>
+            {
+                Text(child, "ContactFormBlock", "Heading", ar ? "راسلنا" : "Send us a message");
+                Text(child, "ContactFormBlock", "Intro", ar
+                    ? "املأ النموذج وسنعاود التواصل معك."
+                    : "Fill in the form and we will get back to you.");
+                Text(child, "ContactFormBlock", "RecipientEmail", "hello@travotek.com");
+                Text(child, "ContactFormBlock", "SubmitButtonText", ar ? "إرسال" : "Send");
+                Text(child, "ContactFormBlock", "SuccessMessage", ar
+                    ? "تم استلام رسالتك، شكراً لتواصلك معنا."
+                    : "Thanks for reaching out — we have received your message.");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Form", form));
+
+        await EnsureAsync($"trafotechcontact{suffix}".PadRight(26, '0')[..26], "Page",
+            "Contact", item =>
+            {
+                Localize(item, culture, "trafotech-contact");
+                Route(item, ar ? "contact" : "en/contact");
+                Text(item, "Seo", "MetaTitle", ar ? "تواصل معنا — ترافو تيك" : "Contact — Travotek");
+                Text(item, "Seo", "MetaDescription", ar
+                    ? "تواصل مع فريق ترافو تيك."
+                    : "Get in touch with the Travotek team.");
+                Bool(item, "Seo", "NoIndex", false);
+                Attach(item, "Sections", sections);
+            });
+    }
+
     private async Task SeedAboutAsync(string culture)
     {
         var ar = culture == "ar";

@@ -93,6 +93,15 @@ export interface RichTextBlock extends BlockBase {
   body?: { html: string } | null;
 }
 
+export interface ContactFormBlock extends BlockBase {
+  __typename: 'ContactFormBlock';
+  heading?: string | null;
+  intro?: string | null;
+  recipientEmail?: string | null;
+  submitButtonText?: string | null;
+  successMessage?: string | null;
+}
+
 export interface PageHeaderBlock extends BlockBase {
   __typename: 'PageHeaderBlock';
   eyebrow?: string | null;

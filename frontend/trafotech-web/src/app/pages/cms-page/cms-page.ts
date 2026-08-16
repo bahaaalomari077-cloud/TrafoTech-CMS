@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import { ContentService } from '../../core/content.service';
@@ -27,18 +27,31 @@ export class CmsPageComponent {
   protected readonly loading = signal(true);
   protected readonly error = signal(false);
 
+  private slug = '';
+
   constructor() {
     this.route.url.subscribe((segments) => {
-      this.load(segments.map((s) => s.path).join('/'));
+      this.slug = segments.map((s) => s.path).join('/');
+      this.load();
+    });
+
+    // Re-fetch when the language changes, so the toggle swaps the page too.
+    effect(() => {
+      this.i18n.lang();
+      if (this.slug) {
+        this.load();
+      }
     });
   }
 
-  private load(slug: string): void {
+  private load(): void {
     this.loading.set(true);
     this.error.set(false);
 
     const culture = this.i18n.lang();
-    // English pages live under /en, so the CMS path carries that prefix too.
+    // English pages live under /en. The URL already carries that prefix when the
+    // visitor followed an English link, so it is only added when missing.
+    const slug = this.slug;
     const path = culture === 'en' && !slug.startsWith('en/') ? `en/${slug}` : slug;
 
     this.content.getPageWithSections(path, culture).subscribe({

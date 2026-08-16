@@ -7,6 +7,7 @@ import {
   PageHeroBlock,
   ProductGridBlock,
   ProductListBlock,
+  ContactFormBlock,
   RichTextBlock,
 } from '../../core/models/blocks.models';
 import { HeroBlockComponent } from '../hero-block/hero-block';
@@ -14,6 +15,7 @@ import { FeatureGridComponent } from '../feature-grid/feature-grid';
 import { ProductGridComponent } from '../product-grid/product-grid';
 import { PageHeaderComponent } from '../page-header/page-header';
 import { ProductListComponent } from '../product-list/product-list';
+import { ContactFormComponent } from '../contact-form/contact-form';
 import { CtaBlockComponent } from '../cta-block/cta-block';
 import { SafeHtmlPipe } from '../../core/safe-html.pipe';
 
@@ -30,6 +32,7 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
     ProductGridComponent,
     PageHeaderComponent,
     ProductListComponent,
+    ContactFormComponent,
     CtaBlockComponent,
     SafeHtmlPipe,
   ],
@@ -49,6 +52,9 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
       }
       @case ('ProductListBlock') {
         <app-product-list [block]="asProductList(block())" />
+      }
+      @case ('ContactFormBlock') {
+        <app-contact-form [block]="asContactForm(block())" />
       }
       @case ('CtaBlock') {
         <app-cta-block [block]="asCta(block())" />
@@ -77,6 +83,9 @@ export class BlockHostComponent {
   }
   protected asProductList(b: Block): ProductListBlock {
     return b as ProductListBlock;
+  }
+  protected asContactForm(b: Block): ContactFormBlock {
+    return b as ContactFormBlock;
   }
   protected asCta(b: Block): CtaBlock {
     return b as CtaBlock;

@@ -1,0 +1,35 @@
+<div class="contact">
+  <header class="contact-head">
+    @if (block().heading) {
+      <h2>{{ block().heading }}</h2>
+    }
+    @if (block().intro) {
+      <p class="section-lead">{{ block().intro }}</p>
+    }
+  </header>
+
+  @if (sent()) {
+    <p class="success" role="status">{{ block().successMessage }}</p>
+  } @else {
+    <form class="contact-form" (submit)="submit($event)">
+      <label>
+        <span>{{ 'form.name' | t }}</span>
+        <input type="text" name="name" required [(ngModel)]="name" />
+      </label>
+
+      <label>
+        <span>{{ 'form.email' | t }}</span>
+        <input type="email" name="email" required [(ngModel)]="email" />
+      </label>
+
+      <label class="full">
+        <span>{{ 'form.message' | t }}</span>
+        <textarea name="message" rows="5" required [(ngModel)]="message"></textarea>
+      </label>
+
+      <button type="submit" class="btn">
+        {{ block().submitButtonText || ('form.send' | t) }}
+      </button>
+    </form>
+  }
+</div>

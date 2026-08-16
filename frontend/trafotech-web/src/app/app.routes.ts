@@ -28,9 +28,12 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/not-found/not-found').then((m) => m.NotFoundComponent),
   },
   {
-    // Catch-all maps any remaining slug to an Orchard Page by autoroute path.
-    path: ':slug',
+    // Catch-all maps any remaining URL to an Orchard Page by autoroute path.
+    //
+    // It matches every depth rather than a single :slug, because English pages
+    // live under /en (/en/products, /en/about) and a one-segment pattern sent
+    // them to the 404 page instead.
+    path: '**',
     loadComponent: () => import('./pages/cms-page/cms-page').then((m) => m.CmsPageComponent),
   },
-  { path: '**', redirectTo: 'not-found' },
 ];

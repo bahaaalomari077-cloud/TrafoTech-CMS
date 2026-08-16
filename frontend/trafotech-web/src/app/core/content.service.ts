@@ -48,6 +48,7 @@ const BLOCK_FIELDS = `
       }
     }
   }
+  ... on ContactFormBlock { heading intro recipientEmail submitButtonText successMessage }
   ... on CtaBlock { heading text buttonText buttonLink { url text } }
   ... on RichTextBlock { body { html } }
 `;

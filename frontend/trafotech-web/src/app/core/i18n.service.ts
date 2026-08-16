@@ -25,6 +25,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'blog.publishedOn': 'نُشر في',
     'footer.rights': 'جميع الحقوق محفوظة',
     'lang.switch': 'English',
+    'form.name': 'الاسم',
+    'form.email': 'البريد الإلكتروني',
+    'form.message': 'الرسالة',
+    'form.send': 'إرسال',
   },
   en: {
     'nav.home': 'Home',
@@ -45,6 +49,10 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'blog.publishedOn': 'Published on',
     'footer.rights': 'All rights reserved',
     'lang.switch': 'العربية',
+    'form.name': 'Name',
+    'form.email': 'Email',
+    'form.message': 'Message',
+    'form.send': 'Send',
   },
 };
 
