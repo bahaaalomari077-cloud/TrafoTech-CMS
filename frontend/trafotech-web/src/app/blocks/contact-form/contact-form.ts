@@ -21,6 +21,7 @@ export class ContactFormComponent {
 
   protected readonly name = signal('');
   protected readonly email = signal('');
+  protected readonly organisation = signal('');
   protected readonly message = signal('');
   protected readonly sent = signal(false);
 

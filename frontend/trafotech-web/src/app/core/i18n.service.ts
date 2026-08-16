@@ -27,7 +27,8 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'lang.switch': 'English',
     'form.name': 'الاسم',
     'form.email': 'البريد الإلكتروني',
-    'form.message': 'الرسالة',
+    'form.organisation': 'الجهة (اختياري)',
+    'form.message': 'رسالتك',
     'form.send': 'إرسال',
   },
   en: {
@@ -51,7 +52,8 @@ const TRANSLATIONS: Record<Lang, Record<string, string>> = {
     'lang.switch': 'العربية',
     'form.name': 'Name',
     'form.email': 'Email',
-    'form.message': 'Message',
+    'form.organisation': 'Organisation (optional)',
+    'form.message': 'Your message',
     'form.send': 'Send',
   },
 };

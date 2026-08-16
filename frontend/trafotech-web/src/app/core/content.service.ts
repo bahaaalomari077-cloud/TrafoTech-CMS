@@ -48,7 +48,20 @@ const BLOCK_FIELDS = `
       }
     }
   }
-  ... on ContactFormBlock { heading intro recipientEmail submitButtonText successMessage }
+  ... on ContactFormBlock { heading intro recipientEmail submitButtonText successMessage showOrganisation }
+  ... on ContactInfoBlock { heading email phone note }
+  ... on StoryBlock {
+    eyebrow heading body { html }
+    stats { contentItems { ... on StatItem { contentItemId displayText value suffix label } } }
+  }
+  ... on TimelineBlock {
+    eyebrow heading
+    milestones { contentItems { ... on MilestoneItem { contentItemId displayText year description } } }
+  }
+  ... on ValuesBlock {
+    eyebrow heading
+    values { contentItems { ... on ValueItem { contentItemId displayText description } } }
+  }
   ... on CtaBlock { heading text buttonText buttonLink { url text } }
   ... on RichTextBlock { body { html } }
 `;

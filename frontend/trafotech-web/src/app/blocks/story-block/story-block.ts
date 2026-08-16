@@ -1,0 +1,38 @@
+import { Component, input } from '@angular/core';
+import { StoryBlock } from '../../core/models/blocks.models';
+import { SafeHtmlPipe } from '../../core/safe-html.pipe';
+
+@Component({
+  selector: 'app-story-block',
+  imports: [SafeHtmlPipe],
+  template: `
+    <div class="story">
+      <div class="story-copy">
+        @if (block().eyebrow) {
+          <span class="eyebrow">{{ block().eyebrow }}</span>
+        }
+        @if (block().heading) {
+          <h2>{{ block().heading }}</h2>
+        }
+        @if (block().body?.html) {
+          <div class="rich-text" [innerHTML]="block().body!.html | safeHtml"></div>
+        }
+      </div>
+
+      @if (block().stats?.contentItems?.length) {
+        <aside class="stat-panel">
+          @for (stat of block().stats!.contentItems; track stat.contentItemId) {
+            <div class="stat">
+              <span class="stat-value">{{ stat.value }}{{ stat.suffix }}</span>
+              <span class="stat-label">{{ stat.label }}</span>
+            </div>
+          }
+        </aside>
+      }
+    </div>
+  `,
+  styleUrl: './story-block.scss',
+})
+export class StoryBlockComponent {
+  readonly block = input.required<StoryBlock>();
+}

@@ -51,3 +51,18 @@
 .section-inner-full {
   width: 100%;
 }
+
+/* A two-block section lays its blocks out side by side, wider block first. */
+.block-pair {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .block-pair {
+    grid-template-columns: 1.4fr 0.6fr;
+    gap: 3rem;
+  }
+}

@@ -16,9 +16,13 @@ import { BlockHostComponent } from '../block-host/block-host';
       [attr.id]="section().anchor || null"
     >
       <div [class]="innerClass()">
-        @for (block of section().blocks?.contentItems || []; track block.contentItemId) {
-          <app-block-host [block]="block" />
-        }
+        <!-- Two blocks in one section sit side by side (form + details); any
+             other count stacks, so the common single-block case is unaffected. -->
+        <div [class.block-pair]="blockCount() === 2">
+          @for (block of section().blocks?.contentItems || []; track block.contentItemId) {
+            <app-block-host [block]="block" />
+          }
+        </div>
       </div>
     </section>
   `,
@@ -29,6 +33,10 @@ export class SectionHostComponent implements AfterViewInit, OnDestroy {
 
   private readonly host = inject(ElementRef<HTMLElement>);
   private observer?: IntersectionObserver;
+
+  protected blockCount(): number {
+    return this.section().blocks?.contentItems?.length ?? 0;
+  }
 
   protected sectionClass(): string {
     const s = this.section();

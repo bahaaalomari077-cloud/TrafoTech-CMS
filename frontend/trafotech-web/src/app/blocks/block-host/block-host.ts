@@ -8,6 +8,10 @@ import {
   ProductGridBlock,
   ProductListBlock,
   ContactFormBlock,
+  ContactInfoBlock,
+  StoryBlock,
+  TimelineBlock,
+  ValuesBlock,
   RichTextBlock,
 } from '../../core/models/blocks.models';
 import { HeroBlockComponent } from '../hero-block/hero-block';
@@ -16,6 +20,10 @@ import { ProductGridComponent } from '../product-grid/product-grid';
 import { PageHeaderComponent } from '../page-header/page-header';
 import { ProductListComponent } from '../product-list/product-list';
 import { ContactFormComponent } from '../contact-form/contact-form';
+import { ContactInfoComponent } from '../contact-info/contact-info';
+import { StoryBlockComponent } from '../story-block/story-block';
+import { TimelineBlockComponent } from '../timeline-block/timeline-block';
+import { ValuesBlockComponent } from '../values-block/values-block';
 import { CtaBlockComponent } from '../cta-block/cta-block';
 import { SafeHtmlPipe } from '../../core/safe-html.pipe';
 
@@ -33,6 +41,10 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
     PageHeaderComponent,
     ProductListComponent,
     ContactFormComponent,
+    ContactInfoComponent,
+    StoryBlockComponent,
+    TimelineBlockComponent,
+    ValuesBlockComponent,
     CtaBlockComponent,
     SafeHtmlPipe,
   ],
@@ -55,6 +67,18 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
       }
       @case ('ContactFormBlock') {
         <app-contact-form [block]="asContactForm(block())" />
+      }
+      @case ('ContactInfoBlock') {
+        <app-contact-info [block]="asContactInfo(block())" />
+      }
+      @case ('StoryBlock') {
+        <app-story-block [block]="asStory(block())" />
+      }
+      @case ('TimelineBlock') {
+        <app-timeline-block [block]="asTimeline(block())" />
+      }
+      @case ('ValuesBlock') {
+        <app-values-block [block]="asValues(block())" />
       }
       @case ('CtaBlock') {
         <app-cta-block [block]="asCta(block())" />
@@ -86,6 +110,18 @@ export class BlockHostComponent {
   }
   protected asContactForm(b: Block): ContactFormBlock {
     return b as ContactFormBlock;
+  }
+  protected asContactInfo(b: Block): ContactInfoBlock {
+    return b as ContactInfoBlock;
+  }
+  protected asStory(b: Block): StoryBlock {
+    return b as StoryBlock;
+  }
+  protected asTimeline(b: Block): TimelineBlock {
+    return b as TimelineBlock;
+  }
+  protected asValues(b: Block): ValuesBlock {
+    return b as ValuesBlock;
   }
   protected asCta(b: Block): CtaBlock {
     return b as CtaBlock;

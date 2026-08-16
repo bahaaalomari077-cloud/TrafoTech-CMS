@@ -1,15 +1,7 @@
-.contact {
-  max-width: 720px;
-  margin-inline: auto;
-}
-
+/* No max-width or centring here: the section decides whether this block sits
+   alone or beside another, and constraining it would break the paired layout. */
 .contact-head {
   margin-bottom: 2rem;
-  text-align: center;
-}
-
-.contact-head .section-lead {
-  margin-inline: auto;
 }
 
 .contact-form {

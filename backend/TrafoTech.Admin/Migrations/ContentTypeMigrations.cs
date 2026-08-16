@@ -59,6 +59,101 @@ public sealed class ContentTypeMigrations : DataMigration
         return 2;
     }
 
+    /// <summary>
+    /// Adds the blocks the About page needs: a story with a stat panel, a
+    /// milestone timeline, and numbered value cards.
+    /// </summary>
+    public async Task<int> UpdateFrom2Async()
+    {
+        await SimpleWidgetAsync("MilestoneItem", "Milestone", part => part
+            .WithField("Year", f => f.OfType("TextField").WithDisplayName("Year").WithPosition("0"))
+            .WithField("Description", f => f
+                .OfType("TextField").WithDisplayName("Description").WithPosition("1")
+                .WithEditor("TextArea")));
+
+        await SimpleWidgetAsync("ValueItem", "Value", part => part
+            .WithField("Description", f => f
+                .OfType("TextField").WithDisplayName("Description").WithPosition("0")
+                .WithEditor("TextArea")));
+
+        await SimpleWidgetAsync("StoryBlock", "Story with stats", part => part
+            .WithField("Eyebrow", f => f.OfType("TextField").WithDisplayName("Eyebrow").WithPosition("0"))
+            .WithField("Heading", f => f.OfType("TextField").WithDisplayName("Heading").WithPosition("1"))
+            .WithField("Body", f => f
+                .OfType("HtmlField").WithDisplayName("Body").WithPosition("2")
+                .WithEditor("Wysiwyg")));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("StoryBlock", type => type
+            .WithPart("Stats", "BagPart", p => p
+                .WithDisplayName("Stats")
+                .WithPosition("Parts:2#Stats;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes = ["StatItem"],
+                    DisplayType = "Detail",
+                })));
+
+        await SimpleWidgetAsync("TimelineBlock", "Timeline", part => part
+            .WithField("Eyebrow", f => f.OfType("TextField").WithDisplayName("Eyebrow").WithPosition("0"))
+            .WithField("Heading", f => f.OfType("TextField").WithDisplayName("Heading").WithPosition("1")));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("TimelineBlock", type => type
+            .WithPart("Milestones", "BagPart", p => p
+                .WithDisplayName("Milestones")
+                .WithPosition("Parts:2#Milestones;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes = ["MilestoneItem"],
+                    DisplayType = "Detail",
+                })));
+
+        await SimpleWidgetAsync("ValuesBlock", "Values", part => part
+            .WithField("Eyebrow", f => f.OfType("TextField").WithDisplayName("Eyebrow").WithPosition("0"))
+            .WithField("Heading", f => f.OfType("TextField").WithDisplayName("Heading").WithPosition("1")));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("ValuesBlock", type => type
+            .WithPart("Values", "BagPart", p => p
+                .WithDisplayName("Values")
+                .WithPosition("Parts:2#Values;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes = ["ValueItem"],
+                    DisplayType = "Detail",
+                })));
+
+        // Contact details shown beside the form.
+        await SimpleWidgetAsync("ContactInfoBlock", "Contact details", part => part
+            .WithField("Heading", f => f.OfType("TextField").WithDisplayName("Heading").WithPosition("0"))
+            .WithField("Email", f => f.OfType("TextField").WithDisplayName("Email").WithPosition("1"))
+            .WithField("Phone", f => f.OfType("TextField").WithDisplayName("Phone").WithPosition("2"))
+            .WithField("Note", f => f
+                .OfType("TextField").WithDisplayName("Note").WithPosition("3")
+                .WithEditor("TextArea")));
+
+        // The contact form gains an optional organisation field.
+        await _contentDefinitionManager.AlterPartDefinitionAsync("ContactFormBlock", part => part
+            .WithField("ShowOrganisation", f => f
+                .OfType("BooleanField").WithDisplayName("Show organisation field").WithPosition("5")));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("Section", type => type
+            .WithPart("Blocks", "BagPart", p => p
+                .WithDisplayName("Blocks")
+                .WithPosition("Parts:2#Blocks;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes =
+                    [
+                        "PageHeroBlock", "PageHeaderBlock", "RichTextBlock", "MediaBlock",
+                        "FeatureGridBlock", "ProductGridBlock", "ProductListBlock",
+                        "StoryBlock", "TimelineBlock", "ValuesBlock",
+                        "FaqBlock", "CtaBlock", "ContactFormBlock", "ContactInfoBlock",
+                    ],
+                    DisplayType = "Detail",
+                })));
+
+        return 3;
+    }
+
     // ---------------------------------------------------------------- parts
 
     private async Task DefineFieldPartsAsync()

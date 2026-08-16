@@ -61,6 +61,238 @@ public sealed class ContentMigrations : DataMigration
         return 3;
     }
 
+    /// <summary>
+    /// Replaces the placeholder About and Contact pages with the full content.
+    ///
+    /// These two were seeded with short stand-in copy. Deleting and recreating
+    /// them is safe because they are still exactly as seeded; anything an editor
+    /// had changed would be kept by EnsureAsync, so this deliberately removes
+    /// them first to guarantee the new version lands.
+    /// </summary>
+    public async Task<int> UpdateFrom3Async()
+    {
+        foreach (var id in new[]
+                 {
+                     "trafotechabout000000000000", "trafotechabouten0000000000",
+                     "trafotechcontact0000000000", "trafotechcontacten00000000",
+                 })
+        {
+            var existing = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (existing is not null)
+            {
+                await _contentManager.RemoveAsync(existing);
+            }
+        }
+
+        await SeedAboutFullAsync("ar");
+        await SeedAboutFullAsync("en");
+        await SeedContactFullAsync("ar");
+        await SeedContactFullAsync("en");
+
+        return 4;
+    }
+
+    private async Task SeedAboutFullAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var stats = ar
+            ? new[] { ("99.99", "%", "جاهزية النظام"), ("<5", "s", "زمن التحويل"),
+                      ("24/7", "", "تشغيل متواصل"), ("12", "+", "سوقاً نشطاً") }
+            : new[] { ("99.99", "%", "System uptime"), ("<5", "s", "Transfer time"),
+                      ("24/7", "", "Always on"), ("12", "+", "Active markets") };
+
+        var statsBag = Bag(stats
+            .Select<(string V, string S, string L), (string, string, Action<JsonObject>)>(s =>
+                ("StatItem", s.L, child =>
+                {
+                    Text(child, "StatItem", "Value", s.V);
+                    Text(child, "StatItem", "Suffix", s.S);
+                    Text(child, "StatItem", "Label", s.L);
+                }))
+            .ToArray());
+
+        var milestones = ar
+            ? new[]
+            {
+                ("2019", "الانطلاق", "بدأنا بفريق من ثمانية مهندسين وهدف واحد: جعل التحويل الفوري معياراً لا ميزة."),
+                ("2021", "أول بنك مركزي", "تشغيل أول منصة دفع فوري على مستوى دولة كاملة، وربط أربعة عشر بنكاً في سنة واحدة."),
+                ("2023", "التوسع الإقليمي", "وصلنا إلى اثني عشر سوقاً، وأطلقنا مركز المدفوعات كطبقة توجيه موحدة بين الأنظمة."),
+                ("2025", "الجيل الجديد", "أعدنا بناء نواة التسوية لتعالج ضعف الحجم بنصف زمن الاستجابة السابق."),
+            }
+            : new[]
+            {
+                ("2019", "The start", "We began with eight engineers and one goal: make instant transfer the standard, not a feature."),
+                ("2021", "First central bank", "Launched a nationwide instant payment platform, connecting fourteen banks in a single year."),
+                ("2023", "Regional expansion", "Reached twelve markets and launched the payments hub as a unified routing layer between systems."),
+                ("2025", "The next generation", "Rebuilt the settlement core to handle twice the volume at half the previous latency."),
+            };
+
+        var milestonesBag = Bag(milestones
+            .Select<(string Y, string T, string D), (string, string, Action<JsonObject>)>(m =>
+                ("MilestoneItem", m.T, child =>
+                {
+                    Text(child, "MilestoneItem", "Year", m.Y);
+                    Text(child, "MilestoneItem", "Description", m.D);
+                }))
+            .ToArray());
+
+        var values = ar
+            ? new[]
+            {
+                ("الموثوقية أولاً", "حين يتوقف نظام دفع، تتوقف معه رواتب وتجارة وحياة يومية. نحن نبني على هذا الأساس."),
+                ("الوضوح لا التعقيد", "أنظمة الدفع معقّدة بطبيعتها. مهمتنا أن نخفي التعقيد عن المستخدم لا أن نضاعفه."),
+                ("شراكة طويلة", "لا نسلّم مشروعاً ونمضي. نبقى مع عملائنا طوال دورة حياة النظام بالكامل."),
+            }
+            : new[]
+            {
+                ("Reliability first", "When a payment system stops, salaries, trade and daily life stop with it. We build on that premise."),
+                ("Clarity over complexity", "Payment systems are complex by nature. Our job is to hide that complexity, not to double it."),
+                ("A long partnership", "We do not hand over a project and walk away. We stay with our clients for the system's whole life."),
+            };
+
+        var valuesBag = Bag(values
+            .Select<(string T, string D), (string, string, Action<JsonObject>)>(v =>
+                ("ValueItem", v.T, child => Text(child, "ValueItem", "Description", v.D)))
+            .ToArray());
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "عن الشركة" : "About");
+                Text(child, "PageHeaderBlock", "Heading", ar
+                    ? "نبني ما لا يُرى ولا يتوقف"
+                    : "We build what is never seen and never stops");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "أنظمة الدفع تنجح حين لا يلاحظها أحد. هذا المعيار الذي نقيس به أنفسنا منذ اليوم الأول."
+                    : "Payment systems succeed when nobody notices them. That is the standard we have measured ourselves against since day one.");
+            }));
+
+        var story = Section("story", "default", "container", "spacious",
+            ("StoryBlock", "Story", child =>
+            {
+                Text(child, "StoryBlock", "Eyebrow", ar ? "قصتنا" : "Our story");
+                Text(child, "StoryBlock", "Heading", ar
+                    ? "بدأنا من مشكلة واحدة"
+                    : "We started from a single problem");
+                Field(child, "StoryBlock", "Body", new JsonObject
+                {
+                    ["Html"] = ar
+                        ? "<p>في ٢٠١٩ كان تحويل مبلغ بين بنكين في المنطقة يستغرق يومي عمل. لم يكن ذلك قيداً تقنياً بل إرثاً من أنظمة بُنيت لعصر آخر. جلس ثمانية مهندسون وقرروا أن يبنوا البديل من الصفر.</p>"
+                          + "<p>اليوم تعالج منصاتنا مدفوعات في اثني عشر سوقاً، ولا يزال المقياس نفسه: كم ثانية يحتاجها المال ليصل، وكم دقيقة تحتمل النظام من التوقف.</p>"
+                        : "<p>In 2019, moving money between two banks in the region took two business days. That was not a technical limit but an inheritance from systems built for another era. Eight engineers sat down and decided to build the alternative from scratch.</p>"
+                          + "<p>Today our platforms process payments across twelve markets, and the measure has not changed: how many seconds money needs to arrive, and how many minutes of downtime a system can bear.</p>",
+                });
+                Attach(child, "Stats", statsBag);
+            }));
+
+        var timeline = Section("timeline", "alt", "container", "spacious",
+            ("TimelineBlock", "Timeline", child =>
+            {
+                Text(child, "TimelineBlock", "Eyebrow", ar ? "المسيرة" : "The journey");
+                Text(child, "TimelineBlock", "Heading", ar
+                    ? "محطات شكّلت الطريق"
+                    : "Milestones that shaped the path");
+                Attach(child, "Milestones", milestonesBag);
+            }));
+
+        var valuesSection = Section("values", "default", "container", "spacious",
+            ("ValuesBlock", "Values", child =>
+            {
+                Text(child, "ValuesBlock", "Eyebrow", ar ? "قيمنا" : "Our values");
+                Text(child, "ValuesBlock", "Heading", ar
+                    ? "ثلاثة مبادئ لا نساوم عليها"
+                    : "Three principles we do not compromise on");
+                Attach(child, "Values", valuesBag);
+            }));
+
+        var cta = Section("cta", "alt", "container", "spacious",
+            ("CtaBlock", "CTA", child =>
+            {
+                Text(child, "CtaBlock", "Heading", ar ? "تحب تعرف أكثر؟" : "Want to know more?");
+                Text(child, "CtaBlock", "Text", ar
+                    ? "الباب مفتوح للأسئلة التقنية والتجارية على حد سواء."
+                    : "The door is open for technical and commercial questions alike.");
+                Text(child, "CtaBlock", "ButtonText", ar ? "تواصل معنا" : "Contact us");
+                Link(child, "CtaBlock", "ButtonLink", ar ? "/contact" : "/en/contact",
+                     ar ? "تواصل معنا" : "Contact us");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Story", story),
+            ("Section", "Timeline", timeline),
+            ("Section", "Values", valuesSection),
+            ("Section", "CTA", cta));
+
+        await EnsureAsync($"trafotechabout{suffix}".PadRight(26, '0')[..26], "Page", "About", item =>
+        {
+            Localize(item, culture, "trafotech-about");
+            Route(item, ar ? "about" : "en/about");
+            Text(item, "Seo", "MetaTitle", ar ? "عن الشركة — ترافو تيك" : "About — Travotek");
+            Text(item, "Seo", "MetaDescription", ar
+                ? "نبني ما لا يُرى ولا يتوقف — قصة ترافو تيك ومسيرتها وقيمها."
+                : "We build what is never seen and never stops — the Travotek story, journey and values.");
+            Bool(item, "Seo", "NoIndex", false);
+            Attach(item, "Sections", sections);
+        });
+    }
+
+    private async Task SeedContactFullAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "تواصل معنا" : "Contact");
+                Text(child, "PageHeaderBlock", "Heading", ar ? "لنبدأ الحديث" : "Let's start the conversation");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "أخبرنا عن نظامك والتحدي الذي تواجهه. نقرأ كل رسالة ونعود خلال يوم عمل واحد."
+                    : "Tell us about your system and the challenge you are facing. We read every message and reply within one business day.");
+            }));
+
+        var body = Section("form", "default", "container", "spacious",
+            ("ContactFormBlock", "Form", child =>
+            {
+                Text(child, "ContactFormBlock", "Heading", ar ? "راسلنا" : "Send us a message");
+                Text(child, "ContactFormBlock", "RecipientEmail", "hello@travotek.com");
+                Text(child, "ContactFormBlock", "SubmitButtonText", ar ? "إرسال" : "Send");
+                Text(child, "ContactFormBlock", "SuccessMessage", ar
+                    ? "تم استلام رسالتك، شكراً لتواصلك معنا."
+                    : "Thanks for reaching out — we have received your message.");
+                Bool(child, "ContactFormBlock", "ShowOrganisation", true);
+            }),
+            ("ContactInfoBlock", "Details", child =>
+            {
+                Text(child, "ContactInfoBlock", "Heading", ar ? "معلومات التواصل" : "Contact details");
+                Text(child, "ContactInfoBlock", "Email", "hello@travotek.com");
+                Text(child, "ContactInfoBlock", "Phone", "+962 6 000 0000");
+                Text(child, "ContactInfoBlock", "Note", ar
+                    ? "للاستفسارات التقنية العاجلة من العملاء الحاليين، استخدم قناة الدعم المخصصة في اتفاقية الخدمة."
+                    : "For urgent technical enquiries from existing clients, use the dedicated support channel in your service agreement.");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Contact", body));
+
+        await EnsureAsync($"trafotechcontact{suffix}".PadRight(26, '0')[..26], "Page",
+            "Contact", item =>
+            {
+                Localize(item, culture, "trafotech-contact");
+                Route(item, ar ? "contact" : "en/contact");
+                Text(item, "Seo", "MetaTitle", ar ? "تواصل معنا — ترافو تيك" : "Contact — Travotek");
+                Text(item, "Seo", "MetaDescription", ar
+                    ? "تواصل مع فريق ترافو تيك."
+                    : "Get in touch with the Travotek team.");
+                Bool(item, "Seo", "NoIndex", false);
+                Attach(item, "Sections", sections);
+            });
+    }
+
     private async Task SeedContactAsync(string culture)
     {
         var ar = culture == "ar";

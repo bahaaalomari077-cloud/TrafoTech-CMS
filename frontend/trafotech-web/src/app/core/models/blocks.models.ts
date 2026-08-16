@@ -100,6 +100,50 @@ export interface ContactFormBlock extends BlockBase {
   recipientEmail?: string | null;
   submitButtonText?: string | null;
   successMessage?: string | null;
+  showOrganisation?: boolean | null;
+}
+
+export interface ContactInfoBlock extends BlockBase {
+  __typename: 'ContactInfoBlock';
+  heading?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  note?: string | null;
+}
+
+export interface MilestoneItem {
+  contentItemId: string;
+  displayText: string;
+  year?: string | null;
+  description?: string | null;
+}
+
+export interface ValueItem {
+  contentItemId: string;
+  displayText: string;
+  description?: string | null;
+}
+
+export interface StoryBlock extends BlockBase {
+  __typename: 'StoryBlock';
+  eyebrow?: string | null;
+  heading?: string | null;
+  body?: { html: string } | null;
+  stats?: { contentItems: StatItem[] } | null;
+}
+
+export interface TimelineBlock extends BlockBase {
+  __typename: 'TimelineBlock';
+  eyebrow?: string | null;
+  heading?: string | null;
+  milestones?: { contentItems: MilestoneItem[] } | null;
+}
+
+export interface ValuesBlock extends BlockBase {
+  __typename: 'ValuesBlock';
+  eyebrow?: string | null;
+  heading?: string | null;
+  values?: { contentItems: ValueItem[] } | null;
 }
 
 export interface PageHeaderBlock extends BlockBase {
@@ -135,6 +179,10 @@ export interface ProductListBlock extends BlockBase {
 }
 
 export type Block =
+  | StoryBlock
+  | TimelineBlock
+  | ValuesBlock
+  | ContactInfoBlock
   | PageHeroBlock
   | FeatureGridBlock
   | ProductGridBlock
