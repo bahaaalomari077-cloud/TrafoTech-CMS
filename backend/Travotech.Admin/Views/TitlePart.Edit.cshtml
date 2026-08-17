@@ -1,0 +1,33 @@
+@using OrchardCore.Title.ViewModels
+@model TitlePartViewModel
+
+@*
+    Overrides the built-in title editor for one reason: its label is hard-coded
+    to "Title", which reads wrongly on types where the title is something else —
+    a Contact's title is the person's name.
+
+    The view model carries no part definition, so the label is chosen from the
+    content type. Anything not listed keeps the default wording, leaving every
+    other type untouched.
+*@
+@{
+    var label = Model.ContentItem?.ContentType switch
+    {
+        "Contact" => "Name",
+        "ContactGroup" => "Group name",
+        "Campaign" => "Internal name",
+        "NewsItem" => "Headline",
+        "NewsSection" => "Section name",
+        _ => "Title",
+    };
+}
+
+@*
+    The id is set explicitly so the label's "for" still points at the input:
+    without it the label is inert for clicks and for screen readers.
+*@
+<div class="mb-3">
+    <label for="TitlePart_Title" class="form-label">@label</label>
+    <input asp-for="Title" id="TitlePart_Title" class="form-control" />
+    <span asp-validation-for="Title"></span>
+</div>

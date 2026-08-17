@@ -1,0 +1,156 @@
+.site-header {
+  position: relative;
+  z-index: 20;
+  background: var(--header-bg);
+  border-bottom: 1px solid var(--header-line);
+  color: var(--header-ink);
+}
+
+/*
+ * Fixed, not sticky. The sections below establish 3D contexts for the page
+ * flip, and a sticky element cannot stay pinned across one — it scrolls away
+ * with its container. Fixed positioning sits outside that entirely.
+ */
+.site-header.is-sticky {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  backdrop-filter: blur(12px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 72px;
+  flex-wrap: wrap;
+}
+
+/* --- Brand --- */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--header-ink);
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--navy-700), var(--navy-500));
+  color: #fff;
+}
+
+.brand-mark svg {
+  width: 20px;
+  height: 20px;
+}
+
+.brand-logo {
+  height: 48px;
+  width: auto;
+  max-width: 180px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* The logo banner already carries the brand name, so the text would duplicate it. */
+.brand-logo + .brand-name {
+  display: none;
+}
+
+/* --- Nav --- */
+
+.site-nav {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-inline: auto;
+}
+
+.site-nav a {
+  position: relative;
+  padding-block: 0.4rem;
+  color: var(--header-ink-muted);
+  font-weight: 500;
+}
+
+.site-nav a:hover,
+.site-nav a:focus-visible {
+  color: var(--header-ink);
+  text-decoration: none;
+}
+
+.site-nav a.active {
+  color: var(--header-ink);
+  font-weight: 600;
+}
+
+/* Underline sits on a pseudo-element so it does not shift layout. */
+.site-nav a.active::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  bottom: -2px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--header-accent);
+}
+
+/* --- Actions --- */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.icon-btn,
+.lang-btn {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--header-line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--header-ink-muted);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.icon-btn:hover,
+.icon-btn:focus-visible,
+.lang-btn:hover,
+.lang-btn:focus-visible {
+  color: var(--header-ink);
+  border-color: var(--header-ink-muted);
+}
+
+@media (max-width: 720px) {
+  .site-nav {
+    order: 3;
+    width: 100%;
+    margin-inline: 0;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+  }
+}

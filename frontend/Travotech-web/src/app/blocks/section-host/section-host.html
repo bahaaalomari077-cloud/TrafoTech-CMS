@@ -1,0 +1,18 @@
+<section
+  appScrollFlip
+  [class]="sectionClass()"
+  [attr.id]="section().anchor || null"
+>
+  <div [class]="innerClass()">
+    <!-- Blocks sit on a 12-column grid so an editor can size each one. Where
+         no width was chosen the block fills the row, which keeps every page
+         authored before the setting existed looking exactly as it did. -->
+    <div [class]="rowClass()">
+      @for (block of section().blocks?.contentItems || []; track block.contentItemId) {
+        <div [class]="blockClass(block)">
+          <app-block-host [block]="block" />
+        </div>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OrchardCore.Module.Targets" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.Data.Abstractions" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.Flows" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.Media" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.Title" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.ContentLocalization" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.ContentManagement.GraphQL" Version="2.1.4" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="2.1.4" />
+  </ItemGroup>
+
+  <!--
+    placement.json is embedded automatically by the SDK's default EmbeddedResource glob, which
+    is where Orchard's module file provider reads it from.
+  -->
+
+</Project>

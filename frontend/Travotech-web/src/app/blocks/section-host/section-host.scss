@@ -1,0 +1,149 @@
+/* Backgrounds.
+   Each variant republishes the "on this surface" tokens, so a block never names
+   a literal colour and stays legible wherever an editor places it. Without this,
+   a hero moved onto a light section rendered white-on-cream at 1.12 contrast. */
+
+.bg-default,
+.bg-alt {
+  --on-surface: var(--ink);
+  --on-surface-muted: var(--ink-muted);
+  --on-surface-faint: var(--ink-faint);
+  --on-surface-line: var(--line);
+  --on-surface-glass: rgb(12 18 38 / 4%);
+  --glass-solid: var(--bg-raised);
+  color: var(--on-surface);
+}
+
+.bg-brand,
+.bg-dark {
+  --on-surface: #ffffff;
+  --on-surface-muted: var(--navy-300);
+  --on-surface-faint: var(--navy-400);
+  --on-surface-line: var(--glass-line);
+  --on-surface-glass: var(--glass-bg);
+  --glass-solid: rgb(6 11 28 / 72%);
+  color: var(--on-surface);
+}
+
+.bg-default {
+  background: var(--bg);
+}
+
+.bg-alt {
+  background: var(--bg-subtle);
+}
+
+.bg-brand {
+  background: linear-gradient(135deg, var(--navy-800), var(--navy-700));
+  color: #fff;
+}
+
+/*
+ * Flat near-black, matching the reference's closing sections. The hero paints
+ * its own gradient, so a dark section here does not need one — and a gradient
+ * made the boundary with the light section above read as a hard seam.
+ */
+.bg-dark {
+  background: var(--navy-990);
+  color: #fff;
+}
+
+/* Headings follow the surface token rather than a fixed colour. */
+.section :is(h1, h2, h3, h4) {
+  color: var(--on-surface);
+}
+
+/* Vertical rhythm */
+
+.space-none {
+  padding-block: 0;
+}
+
+.space-compact {
+  padding-block: clamp(2rem, 1.2rem + 2vw, 3rem);
+}
+
+.space-normal {
+  padding-block: clamp(3rem, 2rem + 3vw, 5rem);
+}
+
+.space-spacious {
+  padding-block: clamp(4rem, 2.5rem + 5vw, 8rem);
+}
+
+.section-inner-full {
+  width: 100%;
+}
+
+/* A two-block section lays its blocks out side by side, wider block first. */
+/*
+ * Editor-sized blocks share a 12-column grid.
+ *
+ * Every column stacks to full width below 900px, so no combination an editor
+ * picks can push the page wider than the screen — the widths are proportions,
+ * never fixed sizes.
+ */
+.block-row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.block-col {
+  /* min-width:0 stops a long word inside a column from widening the track. */
+  min-width: 0;
+  grid-column: span 12;
+}
+
+@media (min-width: 900px) {
+  .block-row {
+    gap: 2.5rem;
+  }
+
+  .span-half {
+    grid-column: span 6;
+  }
+
+  .span-third {
+    grid-column: span 4;
+  }
+
+  .span-two-thirds {
+    grid-column: span 8;
+  }
+
+  /*
+   * A narrow column must not crush its contents. Blocks that carry their own
+   * internal layout — a stat panel, a card grid — need room to stay readable,
+   * so a column that cannot reach this width drops to the next line instead of
+   * squeezing. Without it, "99.99%" wrapped onto four lines at one third.
+   */
+  .block-col {
+    min-width: 300px;
+  }
+
+  .block-row {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  /* The span rules only apply once the row is a true 12-column track. */
+  .block-row:has(.span-half, .span-third, .span-two-thirds) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+}
+
+.block-pair {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .block-pair {
+    /* Matches the reference's 616/440 split. */
+    grid-template-columns: 1.4fr 1fr;
+    gap: 3.5rem;
+  }
+}
