@@ -1,7 +1,6 @@
 import { Component, input, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactFormBlock } from '../../core/models/blocks.models';
-import { TranslatePipe } from '../../core/translate.pipe';
 
 /**
  * Renders the contact form defined in the CMS.
@@ -12,7 +11,7 @@ import { TranslatePipe } from '../../core/translate.pipe';
  */
 @Component({
   selector: 'app-contact-form',
-  imports: [FormsModule, TranslatePipe],
+  imports: [FormsModule],
   templateUrl: './contact-form.html',
   styleUrl: './contact-form.scss',
 })

@@ -273,6 +273,100 @@ public sealed class ContentMigrations : DataMigration
     }
 
     /// <summary>
+    /// Fills in the contact labels that just became CMS fields.
+    ///
+    /// They render from the frontend's wording while empty, so the pages already
+    /// look right — but an editor opening the block would find blank boxes and no
+    /// idea what they control. Writing the current wording in makes the fields
+    /// self-explanatory and editable.
+    /// </summary>
+    public async Task<int> UpdateFrom13Async()
+    {
+        foreach (var (id, ar) in new[]
+                 {
+                     ("trafotechcontact0000000000", true),
+                     ("trafotechcontacten00000000", false),
+                 })
+        {
+            var item = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (item is null)
+            {
+                continue;
+            }
+
+            JsonNode content = item.Content;
+            if (content is not JsonObject root)
+            {
+                continue;
+            }
+
+            var changed = false;
+
+            foreach (var block in Blocks(root))
+            {
+                if (block["ContactFormBlock"] is JsonObject form)
+                {
+                    changed |= FillLabel(form, "NameLabel", ar ? "الاسم" : "Name");
+                    changed |= FillLabel(form, "EmailLabel", ar ? "البريد الإلكتروني" : "Email");
+                    changed |= FillLabel(form, "OrganisationLabel",
+                        ar ? "الجهة (اختياري)" : "Organisation (optional)");
+                    changed |= FillLabel(form, "MessageLabel", ar ? "رسالتك" : "Your message");
+                }
+
+                if (block["ContactInfoBlock"] is JsonObject info)
+                {
+                    changed |= FillLabel(info, "EmailLabel", ar ? "البريد" : "Email");
+                    changed |= FillLabel(info, "PhoneLabel", ar ? "الهاتف" : "Phone");
+                    changed |= FillLabel(info, "AddressLabel", ar ? "العنوان" : "Address");
+                    changed |= FillLabel(info, "HoursLabel", ar ? "ساعات العمل" : "Working hours");
+                }
+            }
+
+            if (changed)
+            {
+                await _contentManager.UpdateAsync(item);
+                await _contentManager.PublishAsync(item);
+            }
+        }
+
+        return 14;
+    }
+
+    /// <summary>Every block on a page, across all of its sections.</summary>
+    private static IEnumerable<JsonObject> Blocks(JsonObject pageRoot)
+    {
+        if (pageRoot["Sections"]?["ContentItems"] is not JsonArray sections)
+        {
+            yield break;
+        }
+
+        foreach (var section in sections.OfType<JsonObject>())
+        {
+            if (section["Blocks"]?["ContentItems"] is not JsonArray blocks)
+            {
+                continue;
+            }
+
+            foreach (var block in blocks.OfType<JsonObject>())
+            {
+                yield return block;
+            }
+        }
+    }
+
+    /// <summary>Writes a label only when the editor has not set one.</summary>
+    private static bool FillLabel(JsonObject part, string field, string value)
+    {
+        if (!string.IsNullOrWhiteSpace(part[field]?["Text"]?.GetValue<string>()))
+        {
+            return false;
+        }
+
+        part[field] = new JsonObject { ["Text"] = value };
+        return true;
+    }
+
+    /// <summary>
     /// Points one item's Logo media field at a file, unless it already has one.
     /// </summary>
     private async Task SetLogoAsync(string contentItemId, string part, string fileName)

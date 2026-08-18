@@ -34,26 +34,3 @@ export interface Page extends ContentItemBase {
   body?: HtmlField | null;
   heroImage?: MediaField | null;
 }
-
-export interface Service extends ContentItemBase {
-  summary?: string | null;
-  description?: HtmlField | null;
-  icon?: MediaField | null;
-  /** Editorial sort weight. Orchard cannot sort custom fields, so this is applied client-side. */
-  order?: number | null;
-}
-
-export interface Term {
-  contentItemId: string;
-  displayText: string;
-}
-
-export interface BlogPost extends ContentItemBase {
-  subtitle?: string | null;
-  metaDescription?: string | null;
-  publishedOn?: string | null;
-  createdUtc?: string | null;
-  coverImage?: MediaField | null;
-  markdownBody?: { html: string } | null;
-  categories?: { termContentItems: Term[] } | null;
-}

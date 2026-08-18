@@ -105,6 +105,11 @@ export interface ContactFormBlock extends BlockBase {
   submitButtonText?: string | null;
   successMessage?: string | null;
   showOrganisation?: boolean | null;
+  /* Field captions; blank falls back to the built-in wording. */
+  nameLabel?: string | null;
+  emailLabel?: string | null;
+  organisationLabel?: string | null;
+  messageLabel?: string | null;
 }
 
 export interface ContactInfoBlock extends BlockBase {
@@ -115,6 +120,11 @@ export interface ContactInfoBlock extends BlockBase {
   address?: string | null;
   hours?: string | null;
   note?: string | null;
+  /* Row headings; blank falls back to the built-in wording. */
+  emailLabel?: string | null;
+  phoneLabel?: string | null;
+  addressLabel?: string | null;
+  hoursLabel?: string | null;
 }
 
 export interface MilestoneItem {

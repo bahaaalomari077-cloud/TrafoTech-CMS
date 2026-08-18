@@ -519,6 +519,43 @@ public sealed class ContentTypeMigrations : DataMigration
         return 10;
     }
 
+    /// <summary>
+    /// Moves the contact block labels into the CMS.
+    ///
+    /// The field captions and the details headings were the last strings baked
+    /// into the frontend's translation table, so an editor could change a phone
+    /// number but not the word above it. They are ordinary fields now.
+    ///
+    /// Each is optional: a blank one falls back to the built-in wording, so a
+    /// half-filled block still renders a complete form rather than bare inputs.
+    /// </summary>
+    public async Task<int> UpdateFrom10Async()
+    {
+        await _contentDefinitionManager.AlterPartDefinitionAsync("ContactFormBlock", part => part
+            .WithField("NameLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Name\" label").WithPosition("5")
+                .WithSettings(new TextFieldSettings { Hint = "Blank keeps the default wording." }))
+            .WithField("EmailLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Email\" label").WithPosition("6"))
+            .WithField("OrganisationLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Organisation\" label").WithPosition("7"))
+            .WithField("MessageLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Message\" label").WithPosition("8")));
+
+        await _contentDefinitionManager.AlterPartDefinitionAsync("ContactInfoBlock", part => part
+            .WithField("EmailLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Email\" heading").WithPosition("5")
+                .WithSettings(new TextFieldSettings { Hint = "Blank keeps the default wording." }))
+            .WithField("PhoneLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Phone\" heading").WithPosition("6"))
+            .WithField("AddressLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Address\" heading").WithPosition("7"))
+            .WithField("HoursLabel", f => f
+                .OfType("TextField").WithDisplayName("\"Working hours\" heading").WithPosition("8")));
+
+        return 11;
+    }
+
     /// <summary>Every block an editor can place inside a section.</summary>
     private static readonly string[] AllBlockTypes =
     [

@@ -13,29 +13,29 @@
   } @else {
     <form class="contact-form" (submit)="submit($event)">
       <label>
-        <span>{{ 'form.name' | t }}</span>
+        <span>{{ block().nameLabel }}</span>
         <input type="text" name="name" required [(ngModel)]="name" />
       </label>
 
       <label>
-        <span>{{ 'form.email' | t }}</span>
+        <span>{{ block().emailLabel }}</span>
         <input type="email" name="email" required [(ngModel)]="email" />
       </label>
 
       @if (block().showOrganisation) {
         <label>
-          <span>{{ 'form.organisation' | t }}</span>
+          <span>{{ block().organisationLabel }}</span>
           <input type="text" name="organisation" [(ngModel)]="organisation" />
         </label>
       }
 
       <label>
-        <span>{{ 'form.message' | t }}</span>
+        <span>{{ block().messageLabel }}</span>
         <textarea name="message" rows="6" required [(ngModel)]="message"></textarea>
       </label>
 
       <button type="submit" class="btn">
-        {{ block().submitButtonText || ('form.send' | t) }}
+        {{ block().submitButtonText }}
         <span class="arrow" aria-hidden="true">→</span>
       </button>
     </form>

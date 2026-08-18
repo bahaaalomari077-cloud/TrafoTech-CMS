@@ -6,25 +6,25 @@
   <dl class="rows">
     @if (block().email) {
       <div class="row">
-        <dt>{{ 'contact.email' | t }}</dt>
+        <dt>{{ block().emailLabel }}</dt>
         <dd><a [href]="'mailto:' + block().email">{{ block().email }}</a></dd>
       </div>
     }
     @if (block().phone) {
       <div class="row">
-        <dt>{{ 'contact.phone' | t }}</dt>
+        <dt>{{ block().phoneLabel }}</dt>
         <dd><a [href]="'tel:' + block().phone">{{ block().phone }}</a></dd>
       </div>
     }
     @if (block().address) {
       <div class="row">
-        <dt>{{ 'contact.address' | t }}</dt>
+        <dt>{{ block().addressLabel }}</dt>
         <dd>{{ block().address }}</dd>
       </div>
     }
     @if (block().hours) {
       <div class="row">
-        <dt>{{ 'contact.hours' | t }}</dt>
+        <dt>{{ block().hoursLabel }}</dt>
         <dd>{{ block().hours }}</dd>
       </div>
     }
