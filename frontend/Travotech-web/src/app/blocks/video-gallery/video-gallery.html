@@ -1,0 +1,53 @@
+@if (block().heading || block().lead) {
+  <div class="section-head">
+    @if (block().heading) {
+      <h2>{{ block().heading }}</h2>
+    }
+    @if (block().lead) {
+      <p class="lead">{{ block().lead }}</p>
+    }
+  </div>
+}
+
+<div [class]="gridClass()">
+  @for (video of videos(); track $index) {
+    <figure class="video">
+      <div class="frame">
+        @if (video.fileUrl) {
+          <!-- An uploaded file plays in the native player; preload="none" keeps
+               a page of videos from downloading megabytes on arrival. -->
+          <video
+            [src]="video.fileUrl"
+            [poster]="video.posterUrl"
+            controls
+            playsinline
+            preload="none"
+          ></video>
+        } @else if (video.embedUrl) {
+          <iframe
+            [src]="video.embedUrl"
+            [title]="video.title"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture"
+            allowfullscreen
+          ></iframe>
+        } @else if (video.posterUrl) {
+          <!-- Neither a file nor a recognised link: the poster stands in rather
+               than leaving an empty box. -->
+          <img [src]="video.posterUrl" [alt]="video.title" loading="lazy" />
+        }
+      </div>
+
+      @if (video.title || video.description) {
+        <figcaption>
+          @if (video.title) {
+            <strong>{{ video.title }}</strong>
+          }
+          @if (video.description) {
+            <span>{{ video.description }}</span>
+          }
+        </figcaption>
+      }
+    </figure>
+  }
+</div>

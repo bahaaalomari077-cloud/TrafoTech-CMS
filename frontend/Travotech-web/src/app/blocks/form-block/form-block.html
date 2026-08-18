@@ -1,0 +1,90 @@
+@if (block().heading || block().intro) {
+  <div class="form-head">
+    @if (block().heading) {
+      <h2>{{ block().heading }}</h2>
+    }
+    @if (block().intro) {
+      <p class="intro">{{ block().intro }}</p>
+    }
+  </div>
+}
+
+@if (sent()) {
+  <p class="form-success" role="status">{{ block().successMessage }}</p>
+} @else {
+  <form class="builder-form" (ngSubmit)="submit()" novalidate>
+    @for (field of fields(); track field.contentItemId) {
+      <div [class]="fieldClass(field)">
+        <label [for]="'f-' + field.contentItemId">
+          <span>{{ field.displayText }}</span>
+          @if (field.required) {
+            <span class="req" aria-hidden="true">*</span>
+          }
+        </label>
+
+        @switch (field.fieldType) {
+          @case ('textarea') {
+            <textarea
+              [id]="'f-' + field.contentItemId"
+              rows="5"
+              [placeholder]="field.placeholder || ''"
+              [value]="value(field)"
+              (input)="setValue(field, $any($event.target).value)"
+            ></textarea>
+          }
+          @case ('select') {
+            <select
+              [id]="'f-' + field.contentItemId"
+              [value]="value(field)"
+              (change)="setValue(field, $any($event.target).value)"
+            >
+              <option value=""></option>
+              @for (option of options(field); track option) {
+                <option [value]="option">{{ option }}</option>
+              }
+            </select>
+          }
+          @case ('checkbox') {
+            <label class="check">
+              <input
+                [id]="'f-' + field.contentItemId"
+                type="checkbox"
+                [checked]="value(field) === 'yes'"
+                (change)="setValue(field, $any($event.target).checked ? 'yes' : '')"
+              />
+              <span>{{ field.placeholder }}</span>
+            </label>
+          }
+          @default {
+            <input
+              [id]="'f-' + field.contentItemId"
+              [type]="field.fieldType || 'text'"
+              [placeholder]="field.placeholder || ''"
+              [value]="value(field)"
+              (input)="setValue(field, $any($event.target).value)"
+            />
+          }
+        }
+
+        @if (isMissing(field)) {
+          <span class="field-error" role="alert">{{ field.displayText }}</span>
+        }
+      </div>
+    }
+
+    <!-- Off-screen rather than hidden: some bots skip display:none fields. -->
+    <div class="honeypot" aria-hidden="true">
+      <label for="website-hp">Website</label>
+      <input id="website-hp" type="text" tabindex="-1" autocomplete="off"
+             [(ngModel)]="honeypot" name="website" />
+    </div>
+
+    @if (failed()) {
+      <p class="form-error" role="alert">{{ block().errorMessage }}</p>
+    }
+
+    <button type="submit" class="btn" [disabled]="sending()">
+      {{ sending() ? '…' : block().submitText }}
+    </button>
+  </form>
+}

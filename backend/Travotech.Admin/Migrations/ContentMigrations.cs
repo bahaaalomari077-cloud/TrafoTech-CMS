@@ -243,6 +243,136 @@ public sealed class ContentMigrations : DataMigration
     }
 
     /// <summary>
+    /// Adds a worked example of the two galleries to the About page.
+    ///
+    /// The blocks exist but nothing used them, so there was no way to see the
+    /// result without an editor building one by hand. This seeds one of each —
+    /// a photo grid from the media library and a video from a YouTube link —
+    /// which an editor can then edit or delete like any other block.
+    /// </summary>
+    public async Task<int> UpdateFrom15Async()
+    {
+        foreach (var (id, ar) in new[]
+                 {
+                     ("trafotechabout000000000000", true),
+                     ("trafotechabouten0000000000", false),
+                 })
+        {
+            var page = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (page is null)
+            {
+                continue;
+            }
+
+            JsonNode content = page.Content;
+            if (content is not JsonObject root ||
+                root["Sections"]?["ContentItems"] is not JsonArray sections)
+            {
+                continue;
+            }
+
+            // Drop any gallery section from the earlier attempt: it put both
+            // blocks in one section, which rendered them side by side and left
+            // the videos too narrow to use.
+            for (var i = sections.Count - 1; i >= 0; i--)
+            {
+                if (sections[i] is JsonObject existing &&
+                    existing["Blocks"]?["ContentItems"] is JsonArray blocks &&
+                    blocks.OfType<JsonObject>().Any(x =>
+                        x["ContentType"]?.GetValue<string>() is "PhotoGalleryBlock" or "VideoGalleryBlock"))
+                {
+                    sections.RemoveAt(i);
+                }
+            }
+
+            // Section() returns a builder, so the section item is created with
+            // Bag() the same way every other seeded section is.
+            // One section each: two blocks in a single section render side by
+            // side, which squeezed the video grid into a 379px column.
+            var photoSection = Bag(("Section", ar ? "معرض الصور" : "Photo gallery",
+                Section("photos", "alt", "container", "spacious",
+                    ("PhotoGalleryBlock", ar ? "معرض الصور" : "Photo gallery", child =>
+                    {
+                        Text(child, "PhotoGalleryBlock", "Heading",
+                            ar ? "معرض الصور" : "Photo gallery");
+                        Text(child, "PhotoGalleryBlock", "Lead", ar
+                            ? "لقطات من هويتنا ومشاريعنا."
+                            : "Moments from our brand and our work.");
+                        Text(child, "PhotoGalleryBlock", "Columns", "3");
+                        Bool(child, "PhotoGalleryBlock", "Lightbox", true);
+                        Media(child, "PhotoGalleryBlock", "Images",
+                            ["travotech-logo-new.png", "travotech-logo-light.png", "travotech-logo.png"],
+                            [
+                                ar ? "الشعار الأساسي" : "Primary wordmark",
+                                ar ? "الشعار الفاتح" : "Light wordmark",
+                                ar ? "الشعار القديم" : "Previous logo",
+                            ]);
+                    }))));
+
+            var videoSection = Bag(("Section", ar ? "معرض الفيديو" : "Video gallery",
+                Section("videos", "default", "container", "spacious",
+                    ("VideoGalleryBlock", ar ? "معرض الفيديو" : "Video gallery", child =>
+                    {
+                        Text(child, "VideoGalleryBlock", "Heading",
+                            ar ? "معرض الفيديو" : "Video gallery");
+                        Text(child, "VideoGalleryBlock", "Columns", "2");
+                        child["Videos"] = Bag(
+                            ("VideoItem", ar ? "فيديو تعريفي" : "Introduction", video =>
+                            {
+                                Text(video, "VideoItem", "VideoUrl",
+                                    "https://www.youtube.com/watch?v=FodsNpswG8U");
+                                Text(video, "VideoItem", "Description", ar
+                                    ? "نظرة عامة على ما نبنيه."
+                                    : "An overview of what we build.");
+                            }));
+                    }))));
+
+            foreach (var bag in new[] { photoSection, videoSection })
+            {
+                foreach (var node in (bag["ContentItems"] as JsonArray)!.ToList())
+                {
+                    sections.Add(node!.DeepClone());
+                }
+            }
+
+
+            await _contentManager.UpdateAsync(page);
+            await _contentManager.PublishAsync(page);
+        }
+
+        return 16;
+    }
+
+    /// <summary>Points a media field at one or more library files.</summary>
+    private static void Media(
+        JsonObject item,
+        string part,
+        string field,
+        string[] paths,
+        string[]? texts = null)
+    {
+        var pathArray = new JsonArray();
+        foreach (var path in paths)
+        {
+            pathArray.Add(path);
+        }
+
+        // MediaTexts must line up with Paths, so a missing caption is an empty
+        // string rather than a shorter array.
+        var textArray = new JsonArray();
+        for (var i = 0; i < paths.Length; i++)
+        {
+            textArray.Add(texts is not null && i < texts.Length ? texts[i] : string.Empty);
+        }
+
+        Field(item, part, field, new JsonObject
+        {
+            ["Paths"] = pathArray,
+            ["MediaTexts"] = textArray,
+        });
+    }
+
+    /// <summary>
     /// Puts the wordmark into the header, the footer and the newsletter.
     ///
     /// Two files, not one: the logo's "TRAVO" is dark navy, which all but

@@ -218,6 +218,52 @@ export interface FaqBlock extends BlockBase {
   questions?: { contentItems: FaqItem[] } | null;
 }
 
+export interface PhotoGalleryBlock extends BlockBase {
+  __typename: 'PhotoGalleryBlock';
+  heading?: string | null;
+  lead?: string | null;
+  images?: { files: MediaFile[] } | null;
+  columns?: string | null;
+  lightbox?: boolean | null;
+}
+
+export interface VideoItem {
+  contentItemId: string;
+  displayText: string;
+  video?: { files: MediaFile[] } | null;
+  videoUrl?: string | null;
+  poster?: { files: MediaFile[] } | null;
+  description?: string | null;
+}
+
+export interface VideoGalleryBlock extends BlockBase {
+  __typename: 'VideoGalleryBlock';
+  heading?: string | null;
+  lead?: string | null;
+  columns?: string | null;
+  videos?: { contentItems: VideoItem[] } | null;
+}
+
+export interface FormFieldItem {
+  contentItemId: string;
+  displayText: string;
+  fieldType?: string | null;
+  placeholder?: string | null;
+  options?: string | null;
+  required?: boolean | null;
+  width?: string | null;
+}
+
+export interface FormBlock extends BlockBase {
+  __typename: 'FormBlock';
+  heading?: string | null;
+  intro?: string | null;
+  submitText?: string | null;
+  successMessage?: string | null;
+  errorMessage?: string | null;
+  fields?: { contentItems: FormFieldItem[] } | null;
+}
+
 export type Block =
   | StoryBlock
   | TimelineBlock
@@ -232,6 +278,9 @@ export type Block =
   | RichTextBlock
   | MediaBlock
   | FaqBlock
+  | PhotoGalleryBlock
+  | VideoGalleryBlock
+  | FormBlock
   | BlockBase;
 
 export type SectionBackground = 'default' | 'alt' | 'brand' | 'dark';

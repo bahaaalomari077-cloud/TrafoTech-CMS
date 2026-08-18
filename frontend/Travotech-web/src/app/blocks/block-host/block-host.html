@@ -38,6 +38,15 @@
   @case ('FaqBlock') {
     <app-faq-block [block]="asFaq(block())" />
   }
+  @case ('PhotoGalleryBlock') {
+    <app-photo-gallery [block]="asPhotoGallery(block())" />
+  }
+  @case ('VideoGalleryBlock') {
+    <app-video-gallery [block]="asVideoGallery(block())" />
+  }
+  @case ('FormBlock') {
+    <app-form-block [block]="asForm(block())" />
+  }
   @case ('RichTextBlock') {
     <div class="rich-text" [innerHTML]="asRichText(block()).body?.html | safeHtml"></div>
   }

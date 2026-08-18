@@ -556,6 +556,245 @@ public sealed class ContentTypeMigrations : DataMigration
         return 11;
     }
 
+    /// <summary>
+    /// Adds the photo and video galleries.
+    ///
+    /// Two separate blocks rather than one: a photo grid and a video list have
+    /// different shapes — videos need a poster frame and play inline at a fixed
+    /// aspect, photos tile and open in a lightbox — and keeping them apart lets
+    /// an editor pick the right one instead of configuring a mode.
+    ///
+    /// MediaBlock stays as it is for a single standalone image.
+    /// </summary>
+    public async Task<int> UpdateFrom11Async()
+    {
+        await SimpleWidgetAsync("PhotoGalleryBlock", "Photo gallery", part => part
+            .WithField("Heading", f => f
+                .OfType("TextField").WithDisplayName("Heading").WithPosition("0"))
+            .WithField("Lead", f => f
+                .OfType("TextField").WithDisplayName("Lead paragraph").WithPosition("1")
+                .WithEditor("TextArea"))
+            .WithField("Images", f => f
+                .OfType("MediaField").WithDisplayName("Images").WithPosition("2")
+                .WithSettings(new MediaFieldSettings
+                {
+                    Multiple = true,
+                    Hint = "Pick as many as you like — they tile automatically. "
+                        + "The caption of each comes from its media text.",
+                }))
+            .WithField("Columns", f => f
+                .OfType("TextField").WithDisplayName("Columns").WithPosition("3")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "auto", "Automatic",
+                    "2", "Two",
+                    "3", "Three",
+                    "4", "Four")))
+            .WithField("Lightbox", f => f
+                .OfType("BooleanField").WithDisplayName("Open full size on click").WithPosition("4")
+                .WithSettings(new BooleanFieldSettings { DefaultValue = true })));
+
+        await SimpleWidgetAsync("VideoGalleryBlock", "Video gallery", part => part
+            .WithField("Heading", f => f
+                .OfType("TextField").WithDisplayName("Heading").WithPosition("0"))
+            .WithField("Lead", f => f
+                .OfType("TextField").WithDisplayName("Lead paragraph").WithPosition("1")
+                .WithEditor("TextArea"))
+            .WithField("Columns", f => f
+                .OfType("TextField").WithDisplayName("Columns").WithPosition("2")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "auto", "Automatic",
+                    "1", "One",
+                    "2", "Two",
+                    "3", "Three"))));
+
+        // Each video is its own item: a poster and a title cannot be attached to
+        // entries of a single multi-file media field.
+        await SimpleWidgetAsync("VideoItem", "Video", part => part
+            .WithField("Video", f => f
+                .OfType("MediaField").WithDisplayName("Video file").WithPosition("0")
+                .WithSettings(new MediaFieldSettings
+                {
+                    Multiple = false,
+                    Hint = "An uploaded .mp4 or .webm. Leave blank if using a link.",
+                }))
+            .WithField("VideoUrl", f => f
+                .OfType("TextField").WithDisplayName("Or video URL").WithPosition("1")
+                .WithSettings(new TextFieldSettings
+                {
+                    Hint = "A YouTube or Vimeo address, used when no file is uploaded.",
+                }))
+            .WithField("Poster", f => f
+                .OfType("MediaField").WithDisplayName("Poster image").WithPosition("2")
+                .WithSettings(new MediaFieldSettings
+                {
+                    Multiple = false,
+                    Hint = "Shown before playback starts.",
+                }))
+            .WithField("Description", f => f
+                .OfType("TextField").WithDisplayName("Description").WithPosition("3")
+                .WithEditor("TextArea")));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("VideoGalleryBlock", type => type
+            .WithPart("Videos", "BagPart", p => p
+                .WithDisplayName("Videos")
+                .WithPosition("Parts:5#Videos;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes = ["VideoItem"],
+                    DisplayType = "Detail",
+                })));
+
+        // Both take the shared width setting, like every other block.
+        foreach (var blockType in new[] { "PhotoGalleryBlock", "VideoGalleryBlock" })
+        {
+            await _contentDefinitionManager.AlterTypeDefinitionAsync(blockType, type => type
+                .WithPart("BlockLayout", p => p
+                    .WithDisplayName("Layout")
+                    .WithPosition("Parts:20#Layout;0")));
+        }
+
+        // Make them addable to a section alongside the existing blocks.
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("Section", type => type
+            .WithPart("Blocks", "BagPart", p => p
+                .WithDisplayName("Blocks")
+                .WithPosition("Parts:10#Blocks;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes =
+                    [
+                        .. AllBlockTypes,
+                        "PhotoGalleryBlock",
+                        "VideoGalleryBlock",
+                    ],
+                    DisplayType = "Detail",
+                })));
+
+        return 12;
+    }
+
+    /// <summary>
+    /// Adds the form builder: a block holding a list of editor-defined fields.
+    ///
+    /// OrchardCore.Forms is enabled but not used here — it renders a server-side
+    /// form that posts back to a Razor page, which cannot work against an
+    /// Angular frontend reading GraphQL. These types describe the form instead,
+    /// and the frontend renders it from that description.
+    ///
+    /// Submissions land in FormSubmission items, so they are readable in the
+    /// admin like any other content rather than needing a bespoke screen.
+    /// </summary>
+    public async Task<int> UpdateFrom12Async()
+    {
+        await SimpleWidgetAsync("FormField", "Form field", part => part
+            .WithField("FieldType", f => f
+                .OfType("TextField").WithDisplayName("Field type").WithPosition("0")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "text", "Single line text",
+                    "email", "Email",
+                    "tel", "Phone",
+                    "number", "Number",
+                    "textarea", "Paragraph",
+                    "select", "Dropdown",
+                    "checkbox", "Checkbox",
+                    "date", "Date")))
+            .WithField("Placeholder", f => f
+                .OfType("TextField").WithDisplayName("Placeholder").WithPosition("1"))
+            .WithField("Options", f => f
+                .OfType("TextField").WithDisplayName("Dropdown options").WithPosition("2")
+                .WithEditor("TextArea")
+                .WithSettings(new TextFieldSettings
+                {
+                    Hint = "One per line. Only used by the dropdown type.",
+                }))
+            .WithField("Required", f => f
+                .OfType("BooleanField").WithDisplayName("Required").WithPosition("3"))
+            .WithField("Width", f => f
+                .OfType("TextField").WithDisplayName("Field width").WithPosition("4")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "full", "Full width",
+                    "half", "Half width"))));
+
+        await SimpleWidgetAsync("FormBlock", "Form", part => part
+            .WithField("Heading", f => f
+                .OfType("TextField").WithDisplayName("Heading").WithPosition("0"))
+            .WithField("Intro", f => f
+                .OfType("TextField").WithDisplayName("Intro").WithPosition("1")
+                .WithEditor("TextArea"))
+            .WithField("SubmitText", f => f
+                .OfType("TextField").WithDisplayName("Submit button text").WithPosition("2"))
+            .WithField("SuccessMessage", f => f
+                .OfType("TextField").WithDisplayName("Success message").WithPosition("3")
+                .WithEditor("TextArea"))
+            .WithField("ErrorMessage", f => f
+                .OfType("TextField").WithDisplayName("Error message").WithPosition("4")
+                .WithSettings(new TextFieldSettings
+                {
+                    Hint = "Shown if the submission could not be delivered.",
+                }))
+            .WithField("NotifyEmail", f => f
+                .OfType("TextField").WithDisplayName("Notify this address").WithPosition("5")
+                .WithSettings(new TextFieldSettings
+                {
+                    Hint = "Each submission is emailed here. Blank stores it without notifying.",
+                })));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("FormBlock", type => type
+            .WithPart("Fields", "BagPart", p => p
+                .WithDisplayName("Fields")
+                .WithPosition("Parts:5#Fields;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes = ["FormField"],
+                    DisplayType = "Detail",
+                }))
+            .WithPart("BlockLayout", p => p
+                .WithDisplayName("Layout")
+                .WithPosition("Parts:20#Layout;0")));
+
+        // Submissions: listable so they can be read, but not creatable by hand —
+        // they only ever arrive from the site.
+        await _contentDefinitionManager.AlterPartDefinitionAsync("FormSubmission", part => part
+            .WithField("FormName", f => f
+                .OfType("TextField").WithDisplayName("Form").WithPosition("0"))
+            .WithField("Answers", f => f
+                .OfType("TextField").WithDisplayName("Answers").WithPosition("1")
+                .WithEditor("TextArea"))
+            .WithField("SubmittedAt", f => f
+                .OfType("TextField").WithDisplayName("Received").WithPosition("2")));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("FormSubmission", type => type
+            .DisplayedAs("Form submission")
+            .Listable()
+            .Securable()
+            .WithPart(nameof(TitlePart), p => p
+                .WithDisplayName("Reference")
+                .WithPosition("0"))
+            .WithPart("FormSubmission", p => p.WithPosition("1"))
+            .WithSettings(new GraphQLContentTypeSettings { Hidden = true }));
+
+        await _contentDefinitionManager.AlterTypeDefinitionAsync("Section", type => type
+            .WithPart("Blocks", "BagPart", p => p
+                .WithDisplayName("Blocks")
+                .WithPosition("Parts:10#Blocks;0")
+                .WithSettings(new BagPartSettings
+                {
+                    ContainedContentTypes =
+                    [
+                        .. AllBlockTypes,
+                        "PhotoGalleryBlock",
+                        "VideoGalleryBlock",
+                        "FormBlock",
+                    ],
+                    DisplayType = "Detail",
+                })));
+
+        return 13;
+    }
+
     /// <summary>Every block an editor can place inside a section.</summary>
     private static readonly string[] AllBlockTypes =
     [

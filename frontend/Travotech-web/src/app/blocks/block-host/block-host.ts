@@ -15,6 +15,9 @@ import {
   RichTextBlock,
   MediaBlock,
   FaqBlock,
+  PhotoGalleryBlock,
+  VideoGalleryBlock,
+  FormBlock,
 } from '../../core/models/blocks.models';
 import { HeroBlockComponent } from '../hero-block/hero-block';
 import { FeatureGridComponent } from '../feature-grid/feature-grid';
@@ -29,6 +32,9 @@ import { ValuesBlockComponent } from '../values-block/values-block';
 import { CtaBlockComponent } from '../cta-block/cta-block';
 import { MediaBlockComponent } from '../media-block/media-block';
 import { FaqBlockComponent } from '../faq-block/faq-block';
+import { PhotoGalleryComponent } from '../photo-gallery/photo-gallery';
+import { VideoGalleryComponent } from '../video-gallery/video-gallery';
+import { FormBlockComponent } from '../form-block/form-block';
 import { SafeHtmlPipe } from '../../core/safe-html.pipe';
 
 /**
@@ -52,6 +58,9 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
     CtaBlockComponent,
     MediaBlockComponent,
     FaqBlockComponent,
+    PhotoGalleryComponent,
+    VideoGalleryComponent,
+    FormBlockComponent,
     SafeHtmlPipe,
   ],
   templateUrl: './block-host.html',
@@ -101,5 +110,14 @@ export class BlockHostComponent {
   }
   protected asFaq(b: Block): FaqBlock {
     return b as FaqBlock;
+  }
+  protected asPhotoGallery(b: Block): PhotoGalleryBlock {
+    return b as PhotoGalleryBlock;
+  }
+  protected asVideoGallery(b: Block): VideoGalleryBlock {
+    return b as VideoGalleryBlock;
+  }
+  protected asForm(b: Block): FormBlock {
+    return b as FormBlock;
   }
 }

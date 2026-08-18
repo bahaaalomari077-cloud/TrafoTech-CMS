@@ -65,6 +65,27 @@ const BLOCK_FIELDS = `
   ... on CtaBlock { blockLayout { width } heading text buttonText buttonLink { url text } }
   ... on RichTextBlock { blockLayout { width } body { html } }
   ... on MediaBlock { blockLayout { width } caption media { files { url mediaText } } }
+  ... on PhotoGalleryBlock {
+    blockLayout { width }
+    heading lead columns lightbox
+    images { files { url mediaText } }
+  }
+  ... on VideoGalleryBlock {
+    blockLayout { width }
+    heading lead columns
+    videos { contentItems { ... on VideoItem {
+      contentItemId displayText videoUrl description
+      video { files { url } }
+      poster { files { url } }
+    } } }
+  }
+  ... on FormBlock {
+    blockLayout { width }
+    heading intro submitText successMessage errorMessage
+    fields { contentItems { ... on FormField {
+      contentItemId displayText fieldType placeholder options required width
+    } } }
+  }
   ... on FaqBlock { blockLayout { width } 
     heading
     questions { contentItems { ... on FaqItem { contentItemId displayText answer { html } } } }

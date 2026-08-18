@@ -1,0 +1,166 @@
+.section-head {
+  max-width: 62ch;
+  margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+}
+
+.section-head h2 {
+  color: var(--on-surface);
+}
+
+.lead {
+  color: var(--on-surface-muted);
+  margin: 0.5rem 0 0;
+}
+
+/*
+ * Auto sizes itself to the space available, so the same gallery works whether
+ * an editor gave the block a full row or a third of one. The fixed counts are
+ * for deliberate layouts, and still collapse below 640px.
+ */
+.photo-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+}
+
+.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+@media (max-width: 640px) {
+  .cols-2,
+  .cols-3,
+  .cols-4 {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr));
+  }
+}
+
+.photo {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg-subtle);
+  cursor: pointer;
+  /* min-width:0 keeps a wide image from stretching its grid track. */
+  min-width: 0;
+}
+
+.photo.is-static {
+  cursor: default;
+}
+
+/*
+ * A fixed aspect box, not the image's own: editors upload whatever they have,
+ * and mixed portrait and landscape files produced a ragged grid.
+ */
+.photo img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform var(--dur) var(--ease);
+}
+
+.photo:hover img,
+.photo:focus-visible img {
+  transform: scale(1.04);
+}
+
+.caption {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.82rem;
+  color: #fff;
+  text-align: start;
+  background: linear-gradient(to top, rgb(0 0 0 / 72%), transparent);
+  /* The caption can be long; it wraps rather than overflowing the tile. */
+  overflow-wrap: anywhere;
+}
+
+/* --- Lightbox --- */
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 4vmin;
+  background: rgb(4 8 18 / 92%);
+  backdrop-filter: blur(6px);
+}
+
+.lb-figure {
+  margin: 0;
+  max-width: min(1100px, 92vw);
+}
+
+.lb-figure img {
+  display: block;
+  max-width: 100%;
+  /* Leaves room for the caption, so a tall photo never pushes it off screen. */
+  max-height: 78vh;
+  width: auto;
+  margin-inline: auto;
+  border-radius: var(--radius);
+}
+
+.lb-figure figcaption {
+  margin-top: 0.9rem;
+  text-align: center;
+  color: #dbe4ff;
+  font-size: 0.9rem;
+}
+
+.lb-close,
+.lb-nav {
+  position: absolute;
+  border: 0;
+  background: rgb(255 255 255 / 12%);
+  color: #fff;
+  cursor: pointer;
+  border-radius: 999px;
+  line-height: 1;
+}
+
+.lb-close {
+  top: 3vmin;
+  inset-inline-end: 3vmin;
+  width: 42px;
+  height: 42px;
+  font-size: 1.6rem;
+}
+
+.lb-nav {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  font-size: 2rem;
+}
+
+/* Physical sides: the arrows point at fixed screen edges, and swapping them
+   under RTL would put "previous" where the reader expects "next". */
+.lb-prev { left: 3vmin; }
+.lb-next { right: 3vmin; }
+
+.lb-close:hover,
+.lb-nav:hover {
+  background: rgb(255 255 255 / 22%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo img {
+    transition: none;
+  }
+
+  .photo:hover img,
+  .photo:focus-visible img {
+    transform: none;
+  }
+}

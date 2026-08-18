@@ -1,0 +1,62 @@
+@if (block().heading || block().lead) {
+  <div class="section-head">
+    @if (block().heading) {
+      <h2>{{ block().heading }}</h2>
+    }
+    @if (block().lead) {
+      <p class="lead">{{ block().lead }}</p>
+    }
+  </div>
+}
+
+<div [class]="gridClass()">
+  @for (photo of photos(); track photo.url; let i = $index) {
+    <!-- A button, not a div: the lightbox opens on click, so it has to be
+         reachable by keyboard and announced as interactive. -->
+    <button
+      type="button"
+      class="photo"
+      [class.is-static]="block().lightbox === false"
+      [disabled]="block().lightbox === false"
+      (click)="open(i)"
+    >
+      <img [src]="photo.url" [alt]="photo.caption" loading="lazy" />
+      @if (photo.caption) {
+        <span class="caption">{{ photo.caption }}</span>
+      }
+    </button>
+  }
+</div>
+
+@if (openIndex() !== null) {
+  <!-- Escape closes and the arrows page, so the lightbox is usable without a
+       mouse once it has focus. -->
+  <div
+    class="lightbox"
+    role="dialog"
+    aria-modal="true"
+    tabindex="-1"
+    (click)="close()"
+    (keydown.escape)="close()"
+    (keydown.arrowright)="step(1)"
+    (keydown.arrowleft)="step(-1)"
+    appAutofocus
+    appBodyPortal
+  >
+    <button type="button" class="lb-close" aria-label="Close" (click)="close()">&times;</button>
+
+    @if (photos().length > 1) {
+      <button type="button" class="lb-nav lb-prev" aria-label="Previous"
+              (click)="$event.stopPropagation(); step(-1)">&#8249;</button>
+      <button type="button" class="lb-nav lb-next" aria-label="Next"
+              (click)="$event.stopPropagation(); step(1)">&#8250;</button>
+    }
+
+    <figure class="lb-figure" (click)="$event.stopPropagation()">
+      <img [src]="photos()[openIndex()!].url" [alt]="photos()[openIndex()!].caption" />
+      @if (photos()[openIndex()!].caption) {
+        <figcaption>{{ photos()[openIndex()!].caption }}</figcaption>
+      }
+    </figure>
+  </div>
+}

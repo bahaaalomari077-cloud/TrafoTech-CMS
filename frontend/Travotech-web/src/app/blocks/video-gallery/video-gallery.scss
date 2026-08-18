@@ -1,0 +1,79 @@
+.section-head {
+  max-width: 62ch;
+  margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.75rem);
+}
+
+.section-head h2 {
+  color: var(--on-surface);
+}
+
+.lead {
+  color: var(--on-surface-muted);
+  margin: 0.5rem 0 0;
+}
+
+.video-grid {
+  display: grid;
+  gap: 1.5rem;
+  /* Wider minimum than the photo grid: a video squeezed below ~320px loses its
+     own controls to overflow. */
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+}
+
+.cols-1 { grid-template-columns: 1fr; }
+.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 720px) {
+  .cols-2,
+  .cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+.video {
+  margin: 0;
+  min-width: 0;
+}
+
+/*
+ * A fixed 16:9 box holds the slot before anything loads, so a page of videos
+ * does not jump about as each one arrives.
+ */
+.frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #0b1220;
+}
+
+.frame video,
+.frame iframe,
+.frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.frame video,
+.frame img {
+  object-fit: cover;
+}
+
+figcaption {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.25rem;
+  color: var(--on-surface-muted);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+figcaption strong {
+  color: var(--on-surface);
+  font-size: 1rem;
+}

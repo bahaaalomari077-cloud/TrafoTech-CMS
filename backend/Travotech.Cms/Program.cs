@@ -4,6 +4,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseNLogHost();
 
+// Media uploads are chunked, but the request carrying each chunk still has to
+// fit. Kestrel's own 30 MB default rejected video before Orchard's limit was
+// ever consulted, so both are raised together — see OrchardCore_Media:MaxFileSize.
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 524_288_000;
+});
+
 // Angular dev server + production origins, read from configuration.
 var allowedOrigins = builder.Configuration
     .GetSection("TrafoTech:AllowedOrigins")
