@@ -29,6 +29,8 @@
         "OrchardCore.Html",
         "OrchardCore.Markdown",
         "OrchardCore.Media",
+        "OrchardCore.Email",
+        "OrchardCore.Email.Smtp",
         "OrchardCore.Taxonomies",
         "OrchardCore.Lists",
         "OrchardCore.Flows",

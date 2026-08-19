@@ -8,6 +8,7 @@ using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.Data.Migration;
 using OrchardCore.Modules;
 using OrchardCore.Navigation;
+using TrafoTech.Admin.Forms;
 using TrafoTech.Admin.Migrations;
 using TrafoTech.Admin.Newsletter;
 
@@ -39,6 +40,10 @@ public sealed class Startup : StartupBase
         services.AddScoped<CampaignSender>();
         services.AddScoped<IContentDisplayDriver, CampaignSendDriver>();
         services.AddScoped<INavigationProvider, NewsletterAdminMenu>();
+
+        // Form submissions get their own sidebar entry so incoming requests are
+        // not buried in the general Content Items list.
+        services.AddScoped<INavigationProvider, FormSubmissionAdminMenu>();
     }
 
     public override void Configure(
