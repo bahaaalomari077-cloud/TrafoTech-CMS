@@ -34,6 +34,16 @@
                 }
               </li>
             }
+            <!-- Email and phone come from the footer's own fields rather than
+                 from link items: Orchard's LinkField rejects mailto: and tel:
+                 as invalid URLs, so storing them as links makes the footer
+                 fail validation in the admin. -->
+            @if (lastCol && footer()?.email) {
+              <li><a [href]="'mailto:' + footer()!.email">{{ footer()?.email }}</a></li>
+            }
+            @if (lastCol && footer()?.phone) {
+              <li><a [href]="telHref(footer()?.phone)">{{ footer()?.phone }}</a></li>
+            }
             <!-- The location rides along in the last column, as in the reference. -->
             @if (lastCol && footer()?.location) {
               <li class="location">{{ footer()?.location }}</li>

@@ -291,6 +291,7 @@ export type Block =
   | FormBlock
   | BlockBase;
 
+export type SectionLayout = 'stack' | 'split' | 'split-reverse' | 'editorial' | 'canvas';
 export type SectionBackground = 'default' | 'alt' | 'brand' | 'dark' | 'soft' | 'navy' | 'ink' | 'slate' | 'warm';
 export type SectionWidth = 'narrow' | 'container' | 'wide' | 'full';
 export type SectionSpacing = 'none' | 'tight' | 'compact' | 'normal' | 'spacious' | 'extra' | 'huge';
@@ -307,6 +308,10 @@ export interface Section {
   noReveal?: boolean | null;
   revealStyle?: string | null;
   pattern?: string | null;
+  /** Structural arrangement of the blocks inside the section. */
+  layout?: SectionLayout | null;
+  splitRatio?: string | null;
+  stickyPanel?: boolean | null;
   hidden?: boolean | null;
   blocks?: { contentItems: Block[] } | null;
 }

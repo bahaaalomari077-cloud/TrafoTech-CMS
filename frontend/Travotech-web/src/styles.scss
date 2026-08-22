@@ -160,7 +160,10 @@ h4 {
   line-height: 1.2;
   font-weight: 600;
   letter-spacing: -0.01em;
-  color: var(--ink);
+  /* Sections republish --on-surface for their background, so headings follow
+     the surface they sit on and stay legible on dark ones. --ink remains the
+     fallback for headings outside any section. */
+  color: var(--on-surface, var(--ink));
 }
 
 h1 { font-size: var(--step-4); }

@@ -329,3 +329,147 @@
   position: relative;
   z-index: 1;
 }
+
+/* ------------------------------------------------------------------
+   Structural section layouts.
+
+   Everything above re-themes a section (colour, spacing, borders).
+   These rearrange the blocks inside it, which is what makes a page
+   structurally different rather than merely a different colour.
+   The layout is chosen per section in the CMS.
+   ------------------------------------------------------------------ */
+
+/* --- split screen -------------------------------------------------
+   First block becomes a panel beside the remaining blocks, which
+   stack and scroll next to it. */
+.layout-split,
+.layout-split-reverse {
+  display: grid;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: start;
+}
+
+.layout-split.split-half,
+.layout-split-reverse.split-half {
+  grid-template-columns: 1fr 1fr;
+}
+
+.layout-split.split-wide-start,
+.layout-split-reverse.split-wide-start {
+  grid-template-columns: 1.5fr 1fr;
+}
+
+.layout-split.split-wide-end,
+.layout-split-reverse.split-wide-end {
+  grid-template-columns: 1fr 1.5fr;
+}
+
+/* The first child is the panel; every later block shares the other column. */
+.layout-split > *:first-child,
+.layout-split-reverse > *:first-child {
+  grid-row: 1 / -1;
+}
+
+.layout-split > *:first-child {
+  grid-column: 1;
+}
+
+.layout-split > *:not(:first-child) {
+  grid-column: 2;
+}
+
+/* Reversed puts the panel on the trailing edge instead. */
+.layout-split-reverse > *:first-child {
+  grid-column: 2;
+}
+
+.layout-split-reverse > *:not(:first-child) {
+  grid-column: 1;
+}
+
+/* Pinning the panel is what gives the split its scrolling character. */
+.split-sticky > *:first-child {
+  position: sticky;
+  top: calc(var(--header-height, 72px) + 2rem);
+}
+
+/* --- editorial ----------------------------------------------------
+   Asymmetric offset columns: content sits off-centre and alternate
+   blocks are pushed down, breaking the centred rhythm of the site. */
+.layout-editorial {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem) clamp(1.5rem, 3vw, 3rem);
+}
+
+.layout-editorial > * {
+  grid-column: 2 / span 6;
+}
+
+.layout-editorial > *:nth-child(even) {
+  grid-column: 7 / span 5;
+  margin-top: clamp(2rem, 6vw, 6rem);
+}
+
+/* --- canvas -------------------------------------------------------
+   Deliberately overlapping blocks with oversized type. */
+.layout-canvas {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.layout-canvas > * {
+  grid-row: 1;
+}
+
+.layout-canvas > *:first-child {
+  grid-column: 1 / span 8;
+}
+
+.layout-canvas > *:not(:first-child) {
+  grid-column: 6 / span 7;
+  align-self: end;
+  z-index: 2;
+}
+
+.layout-canvas :is(h1, h2) {
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+}
+
+/* --- responsive ---------------------------------------------------
+   Every structural layout collapses to a single column on narrow
+   screens: side-by-side panels and overlaps do not survive there. */
+@media (max-width: 860px) {
+  .layout-split,
+  .layout-split-reverse,
+  .layout-editorial,
+  .layout-canvas {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+  }
+
+  .layout-split > *,
+  .layout-split-reverse > *,
+  .layout-editorial > *,
+  .layout-canvas > * {
+    grid-column: auto;
+    grid-row: auto;
+    margin-top: 0;
+  }
+
+  .split-sticky > *:first-child {
+    position: static;
+  }
+}
+
+/* A block placed in a split column has roughly half the usual width, so any
+   block that lays its own content out in columns must collapse to one. */
+.layout-split > * :is(.story, .feature-grid, .product-grid, .values-grid),
+.layout-split-reverse > * :is(.story, .feature-grid, .product-grid, .values-grid),
+.layout-editorial > * :is(.story, .feature-grid, .product-grid, .values-grid),
+.layout-canvas > * :is(.story, .feature-grid, .product-grid, .values-grid) {
+  grid-template-columns: 1fr;
+}

@@ -122,6 +122,9 @@ const SECTION_FIELDS = `
   noReveal
   revealStyle
   pattern
+  layout
+  splitRatio
+  stickyPanel
   hidden
   blocks { contentItems { ${BLOCK_FIELDS} } }
 `;

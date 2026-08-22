@@ -918,6 +918,39 @@ public sealed class ContentTypeMigrations : DataMigration
         return 15;
     }
 
+    /// <summary>
+    /// Adds the section's structural layout control.
+    ///
+    /// Every option added so far only re-themes a section — colour, spacing,
+    /// borders. This one changes how the blocks inside it are arranged, which
+    /// is what an editor needs to make a page genuinely different from the
+    /// rest of the site rather than just a different colour.
+    /// </summary>
+    public async Task<int> UpdateFrom15Async()
+    {
+        await _contentDefinitionManager.AlterPartDefinitionAsync("Section", part => part
+            .WithField("Layout", f => f
+                .OfType("TextField").WithDisplayName("Section layout").WithPosition("4")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "stack", "Stacked (default)",
+                    "split", "Split screen — first block pinned, rest scroll",
+                    "split-reverse", "Split screen (reversed)",
+                    "editorial", "Editorial — offset asymmetric columns",
+                    "canvas", "Canvas — free overlap, large type")))
+            .WithField("SplitRatio", f => f
+                .OfType("TextField").WithDisplayName("Split ratio").WithPosition("4.1")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "half", "50 / 50",
+                    "wide-start", "60 / 40",
+                    "wide-end", "40 / 60")))
+            .WithField("StickyPanel", f => f
+                .OfType("BooleanField").WithDisplayName("Pin the first block while scrolling").WithPosition("4.2")));
+
+        return 16;
+    }
+
     /// <summary>Every block an editor can place inside a section.</summary>
     private static readonly string[] AllBlockTypes =
     [

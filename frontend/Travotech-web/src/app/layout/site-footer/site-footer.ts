@@ -38,4 +38,9 @@ export class SiteFooterComponent {
   protected href(url: string | null | undefined): string {
     return this.i18n.localizeHref(url);
   }
+
+  /** tel: cannot carry spaces or punctuation, only the dialable digits. */
+  protected telHref(phone: string | null | undefined): string {
+    return `tel:${(phone || '').replace(/[^\d+]/g, '')}`;
+  }
 }

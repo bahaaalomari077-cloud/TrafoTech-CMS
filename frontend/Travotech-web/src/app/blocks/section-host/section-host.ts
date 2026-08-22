@@ -29,7 +29,23 @@ export class SectionHostComponent implements AfterViewInit, OnDestroy {
    * the plain flow it always had, so existing pages are byte-for-byte unchanged.
    */
   protected rowClass(): string {
-    const blocks = this.section().blocks?.contentItems ?? [];
+    const s = this.section();
+    const blocks = s.blocks?.contentItems ?? [];
+
+    // A structural layout chosen in the CMS wins over the width-based default:
+    // it rearranges the blocks rather than just resizing them.
+    const layout = s.layout;
+    if (layout && layout !== 'stack') {
+      const classes = [`layout-${layout}`];
+      if (layout === 'split' || layout === 'split-reverse') {
+        classes.push(`split-${s.splitRatio || 'half'}`);
+        if (s.stickyPanel) {
+          classes.push('split-sticky');
+        }
+      }
+      return classes.join(' ');
+    }
+
     const sized = blocks.some((b) => this.width(b) !== 'full');
 
     // Two unsized blocks keep the original 1.4:1 split the contact page relies on.
@@ -44,6 +60,9 @@ export class SectionHostComponent implements AfterViewInit, OnDestroy {
     const layout = block.blockLayout;
     const width = this.width(block);
     const classes = this.rowClass() === 'block-row' ? [`block-col`, `span-${width}`] : [];
+    // Structural layouts position their children by order, so each child is
+    // tagged with its index for the stylesheet to target.
+
     if (layout?.verticalAlign) {
       classes.push(`valign-${layout.verticalAlign}`);
     }

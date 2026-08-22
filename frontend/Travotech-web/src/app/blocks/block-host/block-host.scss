@@ -56,6 +56,17 @@
 .card-filled,
 .card-elevated {
   background: var(--bg-raised);
+
+  /* A card paints its own light surface, so it republishes the on-surface
+     tokens the same way a section background does. Without this the text
+     colour inherited from a dark section stays white and the card reads as
+     blank. */
+  --on-surface: var(--ink);
+  --on-surface-muted: var(--ink-muted);
+  --on-surface-faint: var(--ink-faint);
+  --on-surface-line: var(--line);
+
+  color: var(--on-surface);
 }
 
 .card-elevated {
