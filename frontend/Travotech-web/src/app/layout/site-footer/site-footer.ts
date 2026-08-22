@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ChromeService } from '../../core/chrome.service';
 import { ContentService } from '../../core/content.service';
+import { I18nService } from '../../core/i18n.service';
 
 @Component({
   selector: 'app-site-footer',
@@ -12,6 +13,7 @@ import { ContentService } from '../../core/content.service';
 export class SiteFooterComponent {
   private readonly chrome = inject(ChromeService);
   private readonly content = inject(ContentService);
+  private readonly i18n = inject(I18nService);
 
   protected readonly footer = this.chrome.footer;
 
@@ -34,6 +36,6 @@ export class SiteFooterComponent {
   }
 
   protected href(url: string | null | undefined): string {
-    return url || '/';
+    return this.i18n.localizeHref(url);
   }
 }

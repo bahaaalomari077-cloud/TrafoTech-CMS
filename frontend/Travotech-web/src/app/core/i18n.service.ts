@@ -76,6 +76,26 @@ export class I18nService {
     return TRANSLATIONS[this.lang()][key] ?? key;
   }
 
+  /**
+   * Rewrites internal paths so links stay in the visitor's current language.
+   * English pages live under /en, Arabic pages are at the root. External
+   * addresses (mailto:, tel:, http...) and hash anchors are left unchanged.
+   */
+  localizeHref(url: string | null | undefined): string {
+    let path = url || '/';
+    if (/^[a-z][a-z0-9+.-]*:/i.test(path) || path.startsWith('#')) return path;
+    if (!path.startsWith('/')) path = `/${path}`;
+
+    if (this.lang() === 'en') {
+      if (path === '/en' || path.startsWith('/en/')) return path;
+      return path === '/' ? '/en' : `/en${path}`;
+    }
+
+    if (path === '/en' || path === '/en/') return '/';
+    if (path.startsWith('/en/')) return path.slice(3);
+    return path;
+  }
+
   private applyToDocument(lang: Lang): void {
     const html = this.document.documentElement;
     html.lang = lang;

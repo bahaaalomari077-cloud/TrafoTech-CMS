@@ -45,8 +45,16 @@ export interface BlockBase {
   __typename: string;
   contentItemId: string;
   displayText?: string;
-  /** How much of the row the editor gave this block; defaults to full. */
-  blockLayout?: { width?: BlockWidth | null } | null;
+  /** Layout choices for the block: width, text alignment, vertical alignment and padding. */
+  blockLayout?: {
+    width?: BlockWidth | null;
+    textAlign?: string | null;
+    verticalAlign?: string | null;
+    padding?: string | null;
+    card?: string | null;
+    shadow?: string | null;
+    radius?: string | null;
+  } | null;
 }
 
 export interface PageHeroBlock extends BlockBase {
@@ -283,9 +291,9 @@ export type Block =
   | FormBlock
   | BlockBase;
 
-export type SectionBackground = 'default' | 'alt' | 'brand' | 'dark';
-export type SectionWidth = 'container' | 'wide' | 'full';
-export type SectionSpacing = 'none' | 'compact' | 'normal' | 'spacious';
+export type SectionBackground = 'default' | 'alt' | 'brand' | 'dark' | 'soft' | 'navy' | 'ink' | 'slate' | 'warm';
+export type SectionWidth = 'narrow' | 'container' | 'wide' | 'full';
+export type SectionSpacing = 'none' | 'tight' | 'compact' | 'normal' | 'spacious' | 'extra' | 'huge';
 
 export interface Section {
   contentItemId: string;
@@ -294,6 +302,11 @@ export interface Section {
   background?: SectionBackground | null;
   width?: SectionWidth | null;
   spacing?: SectionSpacing | null;
+  textAlign?: string | null;
+  border?: string | null;
+  noReveal?: boolean | null;
+  revealStyle?: string | null;
+  pattern?: string | null;
   hidden?: boolean | null;
   blocks?: { contentItems: Block[] } | null;
 }

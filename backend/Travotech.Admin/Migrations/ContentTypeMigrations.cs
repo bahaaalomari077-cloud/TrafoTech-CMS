@@ -795,6 +795,129 @@ public sealed class ContentTypeMigrations : DataMigration
         return 13;
     }
 
+    /// <summary>
+    /// Expands the no-code design controls available to editors: more section
+    /// backgrounds, spacings and widths, plus text alignment, border and scroll
+    /// reveal toggles. Block layout gains text alignment, vertical alignment
+    /// and padding so the editor can fine-tune every block.
+    /// </summary>
+    public async Task<int> UpdateFrom13Async()
+    {
+        await _contentDefinitionManager.AlterPartDefinitionAsync("Section", part => part
+            .WithField("TextAlign", f => f
+                .OfType("TextField").WithDisplayName("Text align").WithPosition("5")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList("start", "Left", "center", "Center", "end", "Right")))
+            .WithField("Border", f => f
+                .OfType("TextField").WithDisplayName("Border").WithPosition("6")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList("none", "None", "top", "Top", "bottom", "Bottom", "both", "Top & bottom")))
+            .WithField("NoReveal", f => f
+                .OfType("BooleanField").WithDisplayName("Disable scroll reveal").WithPosition("7"))
+            .WithField("Background", f => f
+                .OfType("TextField").WithDisplayName("Background").WithPosition("1")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "default", "Default",
+                    "alt", "Alternate",
+                    "brand", "Brand",
+                    "dark", "Dark",
+                    "soft", "Soft",
+                    "navy", "Navy",
+                    "ink", "Ink",
+                    "slate", "Slate",
+                    "warm", "Warm")))
+            .WithField("Spacing", f => f
+                .OfType("TextField").WithDisplayName("Vertical spacing").WithPosition("3")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "none", "None",
+                    "tight", "Tight",
+                    "compact", "Compact",
+                    "normal", "Normal",
+                    "spacious", "Spacious",
+                    "extra", "Extra",
+                    "huge", "Huge")))
+            .WithField("Width", f => f
+                .OfType("TextField").WithDisplayName("Width").WithPosition("2")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "narrow", "Narrow",
+                    "container", "Container",
+                    "wide", "Wide",
+                    "full", "Full bleed"))));
+
+        await _contentDefinitionManager.AlterPartDefinitionAsync("BlockLayout", part => part
+            .WithField("TextAlign", f => f
+                .OfType("TextField").WithDisplayName("Text align").WithPosition("1")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList("start", "Left", "center", "Center", "end", "Right")))
+            .WithField("VerticalAlign", f => f
+                .OfType("TextField").WithDisplayName("Vertical align").WithPosition("2")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList("start", "Top", "center", "Middle", "end", "Bottom")))
+            .WithField("Padding", f => f
+                .OfType("TextField").WithDisplayName("Padding").WithPosition("3")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList("none", "None", "small", "Small", "normal", "Normal", "large", "Large"))));
+
+        return 14;
+    }
+
+    /// <summary>
+    /// Adds more no-code visual options: pattern backgrounds, reveal styles,
+    /// and per-block card/shadow/radius effects.
+    /// </summary>
+    public async Task<int> UpdateFrom14Async()
+    {
+        await _contentDefinitionManager.AlterPartDefinitionAsync("Section", part => part
+            .WithField("RevealStyle", f => f
+                .OfType("TextField").WithDisplayName("Reveal style").WithPosition("8")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "fade", "Fade in",
+                    "slide-up", "Slide up",
+                    "slide-left", "Slide from left",
+                    "scale", "Scale in",
+                    "none", "None")))
+            .WithField("Pattern", f => f
+                .OfType("TextField").WithDisplayName("Background pattern").WithPosition("9")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "none", "None",
+                    "dots", "Dots",
+                    "lines", "Lines",
+                    "grid", "Grid"))));
+
+        await _contentDefinitionManager.AlterPartDefinitionAsync("BlockLayout", part => part
+            .WithField("Card", f => f
+                .OfType("TextField").WithDisplayName("Card style").WithPosition("4")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "none", "None",
+                    "outlined", "Outlined",
+                    "filled", "Filled",
+                    "elevated", "Elevated")))
+            .WithField("Shadow", f => f
+                .OfType("TextField").WithDisplayName("Shadow").WithPosition("5")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "none", "None",
+                    "small", "Small",
+                    "medium", "Medium",
+                    "large", "Large")))
+            .WithField("Radius", f => f
+                .OfType("TextField").WithDisplayName("Border radius").WithPosition("6")
+                .WithEditor("PredefinedList")
+                .WithSettings(PredefinedList(
+                    "none", "None",
+                    "small", "Small",
+                    "medium", "Medium",
+                    "large", "Large"))));
+
+        return 15;
+    }
+
     /// <summary>Every block an editor can place inside a section.</summary>
     private static readonly string[] AllBlockTypes =
     [

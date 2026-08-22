@@ -41,7 +41,13 @@ export class SectionHostComponent implements AfterViewInit, OnDestroy {
   }
 
   protected blockClass(block: Block): string {
-    return this.rowClass() === 'block-row' ? `block-col span-${this.width(block)}` : '';
+    const layout = block.blockLayout;
+    const width = this.width(block);
+    const classes = this.rowClass() === 'block-row' ? [`block-col`, `span-${width}`] : [];
+    if (layout?.verticalAlign) {
+      classes.push(`valign-${layout.verticalAlign}`);
+    }
+    return classes.join(' ');
   }
 
   private width(block: Block): BlockWidth {
@@ -50,16 +56,23 @@ export class SectionHostComponent implements AfterViewInit, OnDestroy {
 
   protected sectionClass(): string {
     const s = this.section();
-    return [
+    const classes = [
       'section',
       `bg-${s.background || 'default'}`,
       `space-${s.spacing || 'normal'}`,
-      'page-flip',
-    ].join(' ');
+      `text-${s.textAlign || 'start'}`,
+      `border-${s.border || 'none'}`,
+      `pattern-${s.pattern || 'none'}`,
+    ];
+    if (!s.noReveal) {
+      classes.push('page-flip');
+    }
+    return classes.join(' ');
   }
 
   protected innerClass(): string {
-    const width = this.section().width || 'container';
+    const s = this.section();
+    const width = s.width || 'container';
     // A full-bleed section still needs its blocks to manage their own gutters.
     // 'reveal' rides on the inner wrapper rather than the section, so the
     // content's fade-in does not fight the section's own flip opacity.
@@ -68,13 +81,21 @@ export class SectionHostComponent implements AfterViewInit, OnDestroy {
         ? 'section-inner-full'
         : width === 'wide'
           ? 'container container-wide'
-          : 'container';
-    return `${base} reveal`;
+          : width === 'narrow'
+            ? 'container container-narrow'
+            : 'container';
+    if (s.noReveal || s.revealStyle === 'none') {
+      return base;
+    }
+    return `${base} reveal reveal-${s.revealStyle || 'fade'}`;
   }
 
   ngAfterViewInit(): void {
     // The reveal now lives on the inner wrapper, not the section, so the class
     // must land there — the section's opacity belongs to the flip alone.
+    if (this.section().noReveal || this.section().revealStyle === 'none') {
+      return;
+    }
     const el = this.host.nativeElement.querySelector('.reveal');
     if (!el) {
       return;

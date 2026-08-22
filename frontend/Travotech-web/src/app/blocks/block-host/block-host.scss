@@ -1,0 +1,89 @@
+.block-fallback {
+  padding: 1.5rem;
+  border: 1px dashed var(--line);
+  border-radius: 0.5rem;
+  background: var(--bg-raised);
+  color: var(--ink-muted);
+  text-align: center;
+}
+
+.block-fallback h3 {
+  margin: 0 0 0.25rem;
+  color: var(--ink);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.block-fallback .meta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+/* No-code padding per block. */
+.pad-small {
+  padding: 1rem;
+}
+
+.pad-normal {
+  padding: 1.5rem;
+}
+
+.pad-large {
+  padding: 2.5rem;
+}
+
+/* Text alignment per block. */
+.text-start {
+  text-align: start;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-end {
+  text-align: end;
+}
+
+/* Card styles for a block. */
+.card-outlined,
+.card-filled,
+.card-elevated {
+  border: 1px solid var(--line);
+}
+
+.card-filled,
+.card-elevated {
+  background: var(--bg-raised);
+}
+
+.card-elevated {
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+
+/* Shadow options. */
+.shadow-small {
+  box-shadow: 0 1px 2px rgb(0 0 0 / 8%);
+}
+
+.shadow-medium {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
+}
+
+.shadow-large {
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+}
+
+/* Border radius options. */
+.radius-small {
+  border-radius: 0.5rem;
+}
+
+.radius-medium {
+  border-radius: 1rem;
+}
+
+.radius-large {
+  border-radius: 1.5rem;
+}

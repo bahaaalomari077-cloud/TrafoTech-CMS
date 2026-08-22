@@ -36,7 +36,7 @@ export class SiteHeaderComponent {
   }
 
   protected href(url: string | null | undefined): string {
-    return url || '/';
+    return this.i18n.localizeHref(url);
   }
 
   /** The switcher shows the language it switches *to*. */

@@ -1537,4 +1537,1483 @@ public sealed class ContentMigrations : DataMigration
                 Attach(item, "Sections", sections);
             });
     }
+
+    // ================================================================
+    // Software-house repositioning.
+    //
+    // The site was seeded as a payments-product company. This migration
+    // replaces every seeded page and the header/footer with content for a
+    // general software development company (custom web, mobile and cloud
+    // work). The old pages are still exactly as seeded — an editor's own
+    // changes would have been kept by EnsureAsync — so they are removed and
+    // recreated. Chrome is recreated too, then its logos are re-applied,
+    // because UpdateFrom12 (which set them once) will not run again.
+    //
+    // Runs after the gallery migration (v15/16), so it is UpdateFrom16.
+    // ================================================================
+    public async Task<int> UpdateFrom16Async()
+    {
+        foreach (var id in new[]
+                 {
+                     "trafotechhome0000000000000", "trafotechhomeen00000000000",
+                     "trafotechproducts000000000", "trafotechproductsen0000000",
+                     "trafotechabout000000000000", "trafotechabouten0000000000",
+                     "trafotechcontact0000000000", "trafotechcontacten00000000",
+                     "trafotechheader00000000000", "trafotechheaderen000000000",
+                     "trafotechfooter00000000000", "trafotechfooteren000000000",
+                 })
+        {
+            var existing = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (existing is not null)
+            {
+                await _contentManager.RemoveAsync(existing);
+            }
+        }
+
+        await SeedChromeSoftwareAsync("ar");
+        await SeedChromeSoftwareAsync("en");
+        await SeedHomeSoftwareAsync("ar");
+        await SeedHomeSoftwareAsync("en");
+        await SeedServicesSoftwareAsync("ar");
+        await SeedServicesSoftwareAsync("en");
+        await SeedAboutSoftwareAsync("ar");
+        await SeedAboutSoftwareAsync("en");
+        await SeedContactSoftwareAsync("ar");
+        await SeedContactSoftwareAsync("en");
+
+        // UpdateFrom12 set these once and will not run again, so re-apply.
+        foreach (var id in new[] { "trafotechheader00000000000", "trafotechheaderen000000000" })
+        {
+            await SetLogoAsync(id, "SiteHeader", "travotech-logo-new.png");
+        }
+
+        foreach (var id in new[] { "trafotechfooter00000000000", "trafotechfooteren000000000" })
+        {
+            await SetLogoAsync(id, "SiteFooter", "travotech-logo-light.png");
+        }
+
+        return 17;
+    }
+
+    // ================================================================
+    // Enriched content: solution detail pages + extra sections.
+    //
+    // UpdateFrom16 reseeded the base pages. This migration deletes them
+    // again (so the enriched versions are recreated) and adds three new
+    // solution detail pages reachable from the home page product cards.
+    // ================================================================
+    public async Task<int> UpdateFrom17Async()
+    {
+        // Remove the pages seeded by UpdateFrom16 so the enriched
+        // versions (with links, FAQ, capabilities, etc.) are recreated.
+        foreach (var id in new[]
+                 {
+                     "trafotechhome0000000000000", "trafotechhomeen00000000000",
+                     "trafotechproducts000000000", "trafotechproductsen0000000",
+                     "trafotechabout000000000000", "trafotechabouten0000000000",
+                     "trafotechcontact0000000000", "trafotechcontacten00000000",
+                     "trafotechheader00000000000", "trafotechheaderen000000000",
+                     "trafotechfooter00000000000", "trafotechfooteren000000000",
+                 })
+        {
+            var existing = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (existing is not null)
+            {
+                await _contentManager.RemoveAsync(existing);
+            }
+        }
+
+        await SeedChromeSoftwareAsync("ar");
+        await SeedChromeSoftwareAsync("en");
+        await SeedHomeSoftwareAsync("ar");
+        await SeedHomeSoftwareAsync("en");
+        await SeedServicesSoftwareAsync("ar");
+        await SeedServicesSoftwareAsync("en");
+        await SeedAboutSoftwareAsync("ar");
+        await SeedAboutSoftwareAsync("en");
+        await SeedContactSoftwareAsync("ar");
+        await SeedContactSoftwareAsync("en");
+
+        // New solution detail pages.
+        await SeedSolutionWebAsync("ar");
+        await SeedSolutionWebAsync("en");
+        await SeedSolutionMobileAsync("ar");
+        await SeedSolutionMobileAsync("en");
+        await SeedSolutionCloudAsync("ar");
+        await SeedSolutionCloudAsync("en");
+
+        // Re-apply logos (UpdateFrom12 won't run again).
+        foreach (var id in new[] { "trafotechheader00000000000", "trafotechheaderen000000000" })
+        {
+            await SetLogoAsync(id, "SiteHeader", "travotech-logo-new.png");
+        }
+
+        foreach (var id in new[] { "trafotechfooter00000000000", "trafotechfooteren000000000" })
+        {
+            await SetLogoAsync(id, "SiteFooter", "travotech-logo-light.png");
+        }
+
+        return 18;
+    }
+
+    // ------------------------------------------------ solution: web -------
+
+    private async Task SeedSolutionWebAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var features = ar
+            ? new[]
+            {
+                ("code", "واجهات حديثة", "مكوّنات قابلة لإعادة الاستخدام بـ Angular و React مع حالة مُدارة بكفاءة."),
+                ("gauge", "أداء عالٍ", "تحميل أولي أقل من ثانيتين، تقسيم الكود، وتخزين مؤقت ذكي."),
+                ("shield", "آمن افتراضياً", "حماية CSRF و XSS، مصادقة OAuth2/OpenID Connect، وصلاحيات حسب الدور."),
+                ("phone", "متجاوب بالكامل", "تصميم يبدو ممتازاً من 320px إلى 4K، مع اختبار على أجهزة حقيقية."),
+            }
+            : new[]
+            {
+                ("code", "Modern UI", "Reusable components in Angular and React with efficient state management."),
+                ("gauge", "High Performance", "Sub-2s initial load, code splitting, and smart caching."),
+                ("shield", "Secure by Default", "CSRF and XSS protection, OAuth2/OpenID Connect auth, role-based access."),
+                ("phone", "Fully Responsive", "Design that looks great from 320px to 4K, tested on real devices."),
+            };
+
+        var featuresBag = Bag(features
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(f =>
+                ("FeatureItem", f.T, child =>
+                {
+                    Text(child, "FeatureItem", "Icon", f.I);
+                    Text(child, "FeatureItem", "Description", f.D);
+                }))
+            .ToArray());
+
+        var techCards = Bag((ar
+            ? new[]
+            {
+                ("Angular", "إطار عمل قوي للمؤسسات", new[] { "TypeScript", "RxJS", "NgRx", "Material" }),
+                ("React", "مرونة وبيئة ضخمة", new[] { "Hooks", "Next.js", "Redux", "Tailwind" }),
+                (".NET", "خوادم سريعة وموثوقة", new[] { "ASP.NET Core", "SignalR", "EF Core", "gRPC" }),
+            }
+            : new[]
+            {
+                ("Angular", "Powerful enterprise framework", new[] { "TypeScript", "RxJS", "NgRx", "Material" }),
+                ("React", "Flexibility & huge ecosystem", new[] { "Hooks", "Next.js", "Redux", "Tailwind" }),
+                (".NET", "Fast, reliable backend", new[] { "ASP.NET Core", "SignalR", "EF Core", "gRPC" }),
+            })
+            .Select<(string B, string T, string[] P), (string, string, Action<JsonObject>)>(c =>
+                ("ProductCard", c.T, child =>
+                {
+                    Text(child, "ProductCard", "Badge", c.B);
+                    Text(child, "ProductCard", "Description", c.T);
+                    Attach(child, "Points", Bag(c.P
+                        .Select<string, (string, string, Action<JsonObject>)>(pt =>
+                            ("ProductPoint", pt, _ => { }))
+                        .ToArray()));
+                }))
+            .ToArray());
+
+        var faqItems = ar
+            ? new[]
+            {
+                ("هل تبنيون تطبيقات ويب تقدمية (PWA)؟", "نعم، نبني PWA تعمل دون اتصال ويمكن تثبيتها على الجهاز مع إشعارات فورية."),
+                ("هل يمكنكم تحسين تطبيق ويب موجود؟", "بالتأكيد. نحلل الأداء والبنية ونحسّنها تدريجياً دون إعادة كتابة كل شيء."),
+            }
+            : new[]
+            {
+                ("Do you build Progressive Web Apps (PWA)?", "Yes, we build PWAs that work offline, can be installed on the device, and support push notifications."),
+                ("Can you improve an existing web app?", "Absolutely. We analyse performance and architecture and improve it incrementally without rewriting everything."),
+            };
+
+        var faqBag = Bag(faqItems
+            .Select<(string Q, string A), (string, string, Action<JsonObject>)>(f =>
+                ("FaqItem", f.Q, child =>
+                    Field(child, "FaqItem", "Answer", new JsonObject { ["Html"] = $"<p>{f.A}</p>" })))
+            .ToArray());
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "الحلول" : "Solutions");
+                Text(child, "PageHeaderBlock", "Heading", ar
+                    ? "تطوير تطبيقات الويب"
+                    : "Web Application Development");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "تطبيقات ويب سريعة وآمنة وقابلة للتوسّع، مبنية بأحدث الأطر وأفضل الممارسات."
+                    : "Fast, secure and scalable web apps built with modern frameworks and best practices.");
+            }));
+
+        var body = Section("body", "default", "container", "spacious",
+            ("RichTextBlock", "Overview", child =>
+            {
+                Field(child, "RichTextBlock", "Body", new JsonObject
+                {
+                    ["Html"] = ar
+                        ? "<p>نبني تطبيقات ويب من البداية أو نطوّر أنظمة موجودة. نبدأ بفهم متطلباتك وجمهورك، ثم نصمّم البنية ونكتب الكود بأحدث الأطر.</p>"
+                          + "<p>كل مشروع يمر بمرحلة اكتشاف، تصميم، تطوير بسبرنتات، واختبار قبل الإطلاق. والنتيجة: تطبيق يعمل بسلاسة على كل المتصفحات والأجهزة.</p>"
+                        : "<p>We build web apps from scratch or evolve existing systems. We start by understanding your requirements and audience, then design the architecture and write code with modern frameworks.</p>"
+                          + "<p>Every project goes through discovery, design, sprint-based development, and testing before launch. The result: an app that works smoothly on every browser and device.</p>",
+                });
+            }));
+
+        var featuresSection = Section("features", "alt", "container", "spacious",
+            ("FeatureGridBlock", "Features", child =>
+            {
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "المميزات" : "Features");
+                Text(child, "FeatureGridBlock", "Heading", ar
+                    ? "ما الذي تحصل عليه"
+                    : "What you get");
+                Attach(child, "Features", featuresBag);
+            }));
+
+        var techSection = Section("tech", "default", "container", "spacious",
+            ("ProductGridBlock", "Tech", child =>
+            {
+                Text(child, "ProductGridBlock", "Eyebrow", ar ? "التقنيات" : "Technologies");
+                Text(child, "ProductGridBlock", "Heading", ar
+                    ? "أدوات نستخدمها"
+                    : "Tools we use");
+                Attach(child, "Products", techCards);
+            }));
+
+        var faqSection = Section("faq", "alt", "container", "spacious",
+            ("FaqBlock", "FAQ", child =>
+            {
+                Text(child, "FaqBlock", "Heading", ar ? "أسئلة شائعة" : "FAQ");
+                Attach(child, "Questions", faqBag);
+            }));
+
+        var cta = Section("cta", "dark", "container", "normal",
+            ("CtaBlock", "CTA", child =>
+            {
+                Text(child, "CtaBlock", "Heading", ar
+                    ? "جاهز تبدأ مشروع ويب؟"
+                    : "Ready to start a web project?");
+                Text(child, "CtaBlock", "Text", ar
+                    ? "احكِ لنا عن فكرتك وسنعود إليك بخطة خلال يوم عمل واحد."
+                    : "Tell us about your idea and we will come back with a plan within one business day.");
+                Text(child, "CtaBlock", "ButtonText", ar ? "ابدأ المحادثة" : "Start the conversation");
+                Link(child, "CtaBlock", "ButtonLink", ar ? "/contact" : "/en/contact",
+                     ar ? "ابدأ المحادثة" : "Start the conversation");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Body", body),
+            ("Section", "Features", featuresSection),
+            ("Section", "Tech", techSection),
+            ("Section", "FAQ", faqSection),
+            ("Section", "CTA", cta));
+
+        await EnsureAsync($"trafotechsolvweb{suffix}".PadRight(26, '0')[..26], "Page",
+            ar ? "تطوير الويب" : "Web Development", item =>
+            {
+                Localize(item, culture, "trafotech-sol-web");
+                Route(item, ar ? "solutions/web" : "en/solutions/web");
+                Text(item, "Seo", "MetaTitle", ar
+                    ? "تطوير تطبيقات الويب — ترافو تيك"
+                    : "Web Application Development — Travotech");
+                Text(item, "Seo", "MetaDescription", ar
+                    ? "نبني تطبيقات ويب سريعة وآمنة وقابلة للتوسّع بـ Angular و React و .NET."
+                    : "We build fast, secure and scalable web apps with Angular, React and .NET.");
+                Bool(item, "Seo", "NoIndex", false);
+                Attach(item, "Sections", sections);
+            });
+    }
+
+    // ------------------------------------------------ solution: mobile ----
+
+    private async Task SeedSolutionMobileAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var features = ar
+            ? new[]
+            {
+                ("phone", "قاعدة كود واحدة", "تطبيقات iOS وأندرويد من كود واحد بـ Flutter أو React Native."),
+                ("wifi-off", "دعم دون اتصال", "بيانات مخزّنة محلياً ومزامنة تلقائية عند عودة الاتصال."),
+                ("bell", "إشعارات فورية", "إشعارات Push عبر Firebase أو APNS لتفاعل أعلى مع المستخدم."),
+                ("shield", "أمان البيانات", "تشفير محلي، مصادقة بيومترية، وتخزين آمن للرموز الحساسة."),
+            }
+            : new[]
+            {
+                ("phone", "Single Codebase", "iOS and Android apps from one codebase with Flutter or React Native."),
+                ("wifi-off", "Offline Support", "Locally cached data with automatic sync when connectivity returns."),
+                ("bell", "Push Notifications", "Push notifications via Firebase or APNS for higher user engagement."),
+                ("shield", "Data Security", "Local encryption, biometric authentication, and secure storage for sensitive tokens."),
+            };
+
+        var featuresBag = Bag(features
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(f =>
+                ("FeatureItem", f.T, child =>
+                {
+                    Text(child, "FeatureItem", "Icon", f.I);
+                    Text(child, "FeatureItem", "Description", f.D);
+                }))
+            .ToArray());
+
+        var techCards = Bag((ar
+            ? new[]
+            {
+                ("Flutter", "أداء أصلي من كود واحد", new[] { "Dart", "Skia", "Firebase", "Riverpod" }),
+                ("React Native", "بيئة JavaScript ضخمة", new[] { "TypeScript", "Expo", "Redux", "Reanimated" }),
+                ("Swift / Kotlin", "أصلي 100% عند الحاجة", new[] { "SwiftUI", "CoreData", "Jetpack", "Room" }),
+            }
+            : new[]
+            {
+                ("Flutter", "Native performance from one code", new[] { "Dart", "Skia", "Firebase", "Riverpod" }),
+                ("React Native", "Huge JavaScript ecosystem", new[] { "TypeScript", "Expo", "Redux", "Reanimated" }),
+                ("Swift / Kotlin", "100% native when needed", new[] { "SwiftUI", "CoreData", "Jetpack", "Room" }),
+            })
+            .Select<(string B, string T, string[] P), (string, string, Action<JsonObject>)>(c =>
+                ("ProductCard", c.T, child =>
+                {
+                    Text(child, "ProductCard", "Badge", c.B);
+                    Text(child, "ProductCard", "Description", c.T);
+                    Attach(child, "Points", Bag(c.P
+                        .Select<string, (string, string, Action<JsonObject>)>(pt =>
+                            ("ProductPoint", pt, _ => { }))
+                        .ToArray()));
+                }))
+            .ToArray());
+
+        var faqItems = ar
+            ? new[]
+            {
+                ("هل تنشرون على المتاجر؟", "نعم، نتعامل مع عملية النشر على App Store و Google Play بالكامل بما في ذلك المراجعة والتصحيح."),
+                ("هل يمكن لتطبيق الموبايل التحدث مع نظامنا الحالي؟", "نعم، نربط التطبيق بواجهاتكم البرمجية الحالية أو نبني واجهات جديدة حسب الحاجة."),
+            }
+            : new[]
+            {
+                ("Do you publish to the app stores?", "Yes, we handle the full publishing process on the App Store and Google Play including review and fixes."),
+                ("Can the mobile app talk to our existing system?", "Yes, we connect the app to your existing APIs or build new ones as needed."),
+            };
+
+        var faqBag = Bag(faqItems
+            .Select<(string Q, string A), (string, string, Action<JsonObject>)>(f =>
+                ("FaqItem", f.Q, child =>
+                    Field(child, "FaqItem", "Answer", new JsonObject { ["Html"] = $"<p>{f.A}</p>" })))
+            .ToArray());
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "الحلول" : "Solutions");
+                Text(child, "PageHeaderBlock", "Heading", ar
+                    ? "تطوير تطبيقات الموبايل"
+                    : "Mobile App Development");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "تطبيقات iOS وأندرويد بجودة أصلية من قاعدة كود واحدة، مع دعم دون اتصال وإشعارات."
+                    : "Native-quality iOS and Android apps from a single codebase, with offline support and notifications.");
+            }));
+
+        var body = Section("body", "default", "container", "spacious",
+            ("RichTextBlock", "Overview", child =>
+            {
+                Field(child, "RichTextBlock", "Body", new JsonObject
+                {
+                    ["Html"] = ar
+                        ? "<p>نبني تطبيقات موبايل تعمل بسلاسة على iOS وأندرويد من قاعدة كود واحدة. نستخدم Flutter أو React Native لمعظم المشاريع، ونلجأ للكود الأصلي عند الحاجة لميزات متقدمة.</p>"
+                          + "<p>نهتم بتجربة المستخدم والأداء واستهلاك البطارية، ونختبر على أجهزة حقيقية قبل النشر.</p>"
+                        : "<p>We build mobile apps that run smoothly on iOS and Android from a single codebase. We use Flutter or React Native for most projects, and drop to native code when advanced features require it.</p>"
+                          + "<p>We care about UX, performance and battery usage, and test on real devices before publishing.</p>",
+                });
+            }));
+
+        var featuresSection = Section("features", "alt", "container", "spacious",
+            ("FeatureGridBlock", "Features", child =>
+            {
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "المميزات" : "Features");
+                Text(child, "FeatureGridBlock", "Heading", ar ? "ما الذي تحصل عليه" : "What you get");
+                Attach(child, "Features", featuresBag);
+            }));
+
+        var techSection = Section("tech", "default", "container", "spacious",
+            ("ProductGridBlock", "Tech", child =>
+            {
+                Text(child, "ProductGridBlock", "Eyebrow", ar ? "التقنيات" : "Technologies");
+                Text(child, "ProductGridBlock", "Heading", ar ? "أدوات نستخدمها" : "Tools we use");
+                Attach(child, "Products", techCards);
+            }));
+
+        var faqSection = Section("faq", "alt", "container", "spacious",
+            ("FaqBlock", "FAQ", child =>
+            {
+                Text(child, "FaqBlock", "Heading", ar ? "أسئلة شائعة" : "FAQ");
+                Attach(child, "Questions", faqBag);
+            }));
+
+        var cta = Section("cta", "dark", "container", "normal",
+            ("CtaBlock", "CTA", child =>
+            {
+                Text(child, "CtaBlock", "Heading", ar
+                    ? "جاهز تبدأ تطبيق موبايل؟"
+                    : "Ready to start a mobile app?");
+                Text(child, "CtaBlock", "Text", ar
+                    ? "احكِ لنا عن فكرتك وسنعود إليك بخطة خلال يوم عمل واحد."
+                    : "Tell us about your idea and we will come back with a plan within one business day.");
+                Text(child, "CtaBlock", "ButtonText", ar ? "ابدأ المحادثة" : "Start the conversation");
+                Link(child, "CtaBlock", "ButtonLink", ar ? "/contact" : "/en/contact",
+                     ar ? "ابدأ المحادثة" : "Start the conversation");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Body", body),
+            ("Section", "Features", featuresSection),
+            ("Section", "Tech", techSection),
+            ("Section", "FAQ", faqSection),
+            ("Section", "CTA", cta));
+
+        await EnsureAsync($"trafotechsolvmob{suffix}".PadRight(26, '0')[..26], "Page",
+            ar ? "تطبيقات الموبايل" : "Mobile Apps", item =>
+            {
+                Localize(item, culture, "trafotech-sol-mobile");
+                Route(item, ar ? "solutions/mobile" : "en/solutions/mobile");
+                Text(item, "Seo", "MetaTitle", ar
+                    ? "تطوير تطبيقات الموبايل — ترافو تيك"
+                    : "Mobile App Development — Travotech");
+                Text(item, "Seo", "MetaDescription", ar
+                    ? "تطبيقات iOS وأندرويد من قاعدة كود واحدة بـ Flutter و React Native."
+                    : "iOS and Android apps from a single codebase with Flutter and React Native.");
+                Bool(item, "Seo", "NoIndex", false);
+                Attach(item, "Sections", sections);
+            });
+    }
+
+    // ------------------------------------------------ solution: cloud -----
+
+    private async Task SeedSolutionCloudAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var features = ar
+            ? new[]
+            {
+                ("rocket", "نشر مؤتمت", "خطوط CI/CD تبني وتختبر وتنشر تلقائياً عند كل دمج."),
+                ("container", "حاويات", "Docker و Kubernetes لتوسّع أفقي وسهل دون توقف."),
+                ("gauge", "مراقبة وتنبيهات", "لوحات أداء وتنبيهات فورية عند أي مشكلة في الإنتاج."),
+                ("shield", "أمان سحابي", "شبكات معزولة، إدارة أسرار، وامتثال للمعايير."),
+            }
+            : new[]
+            {
+                ("rocket", "Automated Deployment", "CI/CD pipelines that build, test and deploy automatically on every merge."),
+                ("container", "Containers", "Docker and Kubernetes for horizontal scaling with zero downtime."),
+                ("gauge", "Monitoring & Alerts", "Performance dashboards and instant alerts on any production issue."),
+                ("shield", "Cloud Security", "Isolated networks, secrets management, and standards compliance."),
+            };
+
+        var featuresBag = Bag(features
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(f =>
+                ("FeatureItem", f.T, child =>
+                {
+                    Text(child, "FeatureItem", "Icon", f.I);
+                    Text(child, "FeatureItem", "Description", f.D);
+                }))
+            .ToArray());
+
+        var techCards = Bag((ar
+            ? new[]
+            {
+                ("Azure", "السحابة الأولى للمؤسسات", new[] { "App Service", "Functions", "AKS", "Blob Storage" }),
+                ("AWS", "مرونة وخدمات لا تنتهي", new[] { "ECS", "Lambda", "RDS", "S3" }),
+                ("DevOps", "أتمتة كاملة", new[] { "GitHub Actions", "Terraform", "Docker", "Helm" }),
+            }
+            : new[]
+            {
+                ("Azure", "Enterprise-first cloud", new[] { "App Service", "Functions", "AKS", "Blob Storage" }),
+                ("AWS", "Flexibility & endless services", new[] { "ECS", "Lambda", "RDS", "S3" }),
+                ("DevOps", "Full automation", new[] { "GitHub Actions", "Terraform", "Docker", "Helm" }),
+            })
+            .Select<(string B, string T, string[] P), (string, string, Action<JsonObject>)>(c =>
+                ("ProductCard", c.T, child =>
+                {
+                    Text(child, "ProductCard", "Badge", c.B);
+                    Text(child, "ProductCard", "Description", c.T);
+                    Attach(child, "Points", Bag(c.P
+                        .Select<string, (string, string, Action<JsonObject>)>(pt =>
+                            ("ProductPoint", pt, _ => { }))
+                        .ToArray()));
+                }))
+            .ToArray());
+
+        var faqItems = ar
+            ? new[]
+            {
+                ("هل تساعدون في الهجرة إلى السحابة؟", "نعم، نقيّم بنيتك الحالية ونخطط الهجرة تدريجياً مع تقليل التوقف إلى أدنى حد."),
+                ("هل تقدّمون مراقبة بعد الإطلاق؟", "نعم، نセット لوحات مراقبة وتنبيهات ونبقى متاحين للاستجابة للحوادث."),
+            }
+            : new[]
+            {
+                ("Do you help with cloud migration?", "Yes, we assess your current infrastructure and plan a gradual migration with minimal downtime."),
+                ("Do you provide monitoring after launch?", "Yes, we set up monitoring dashboards and alerts and remain available for incident response."),
+            };
+
+        var faqBag = Bag(faqItems
+            .Select<(string Q, string A), (string, string, Action<JsonObject>)>(f =>
+                ("FaqItem", f.Q, child =>
+                    Field(child, "FaqItem", "Answer", new JsonObject { ["Html"] = $"<p>{f.A}</p>" })))
+            .ToArray());
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "الحلول" : "Solutions");
+                Text(child, "PageHeaderBlock", "Heading", ar
+                    ? "السحابة و DevOps"
+                    : "Cloud & DevOps");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "بنية سحابية تنشر نفسها، خطوط CI/CD، وحاويات تنمو مع عملك دون توقف."
+                    : "Self-deploying cloud infrastructure, CI/CD pipelines, and containers that scale with your business.");
+            }));
+
+        var body = Section("body", "default", "container", "spacious",
+            ("RichTextBlock", "Overview", child =>
+            {
+                Field(child, "RichTextBlock", "Body", new JsonObject
+                {
+                    ["Html"] = ar
+                        ? "<p>نصمّم وننفّذ بنية سحابية متكاملة: من تخزين الكود إلى النشر التلقائي إلى المراقبة. نستخدم Azure و AWS حسب احتياجك.</p>"
+                          + "<p>كل شيء ككود: البنية التحتية بـ Terraform، خطوط النشر بـ GitHub Actions، والحاويات بـ Docker و Kubernetes.</p>"
+                        : "<p>We design and implement complete cloud infrastructure: from code storage to automated deployment to monitoring. We use Azure and AWS depending on your needs.</p>"
+                          + "<p>Everything as code: infrastructure with Terraform, deployment pipelines with GitHub Actions, and containers with Docker and Kubernetes.</p>",
+                });
+            }));
+
+        var featuresSection = Section("features", "alt", "container", "spacious",
+            ("FeatureGridBlock", "Features", child =>
+            {
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "المميزات" : "Features");
+                Text(child, "FeatureGridBlock", "Heading", ar ? "ما الذي تحصل عليه" : "What you get");
+                Attach(child, "Features", featuresBag);
+            }));
+
+        var techSection = Section("tech", "default", "container", "spacious",
+            ("ProductGridBlock", "Tech", child =>
+            {
+                Text(child, "ProductGridBlock", "Eyebrow", ar ? "التقنيات" : "Technologies");
+                Text(child, "ProductGridBlock", "Heading", ar ? "أدوات نستخدمها" : "Tools we use");
+                Attach(child, "Products", techCards);
+            }));
+
+        var faqSection = Section("faq", "alt", "container", "spacious",
+            ("FaqBlock", "FAQ", child =>
+            {
+                Text(child, "FaqBlock", "Heading", ar ? "أسئلة شائعة" : "FAQ");
+                Attach(child, "Questions", faqBag);
+            }));
+
+        var cta = Section("cta", "dark", "container", "normal",
+            ("CtaBlock", "CTA", child =>
+            {
+                Text(child, "CtaBlock", "Heading", ar
+                    ? "جاهز تنتقل إلى السحابة؟"
+                    : "Ready to move to the cloud?");
+                Text(child, "CtaBlock", "Text", ar
+                    ? "احكِ لنا عن بنيتك الحالية وسنقترح خطة هجرة آمنة."
+                    : "Tell us about your current setup and we will propose a safe migration plan.");
+                Text(child, "CtaBlock", "ButtonText", ar ? "ابدأ المحادثة" : "Start the conversation");
+                Link(child, "CtaBlock", "ButtonLink", ar ? "/contact" : "/en/contact",
+                     ar ? "ابدأ المحادثة" : "Start the conversation");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Body", body),
+            ("Section", "Features", featuresSection),
+            ("Section", "Tech", techSection),
+            ("Section", "FAQ", faqSection),
+            ("Section", "CTA", cta));
+
+        await EnsureAsync($"trafotechsolvclu{suffix}".PadRight(26, '0')[..26], "Page",
+            ar ? "السحابة و DevOps" : "Cloud & DevOps", item =>
+            {
+                Localize(item, culture, "trafotech-sol-cloud");
+                Route(item, ar ? "solutions/cloud" : "en/solutions/cloud");
+                Text(item, "Seo", "MetaTitle", ar
+                    ? "السحابة و DevOps — ترافو تيك"
+                    : "Cloud & DevOps — Travotech");
+                Text(item, "Seo", "MetaDescription", ar
+                    ? "بنية سحابية وخطوط CI/CD وحاويات على Azure و AWS و Docker و Kubernetes."
+                    : "Cloud infrastructure, CI/CD pipelines and containers on Azure, AWS, Docker and Kubernetes.");
+                Bool(item, "Seo", "NoIndex", false);
+                Attach(item, "Sections", sections);
+            });
+    }
+
+    // ================================================================
+    // Fix header/footer home links: /Home does not match any route.
+    // Arabic home -> "/", English home -> "/en".
+    // ================================================================
+    public async Task<int> UpdateFrom18Async()
+    {
+        foreach (var id in new[]
+                 {
+                     "trafotechheader00000000000", "trafotechheaderen000000000",
+                     "trafotechfooter00000000000", "trafotechfooteren000000000",
+                 })
+        {
+            var existing = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (existing is not null)
+            {
+                await _contentManager.RemoveAsync(existing);
+            }
+        }
+
+        await SeedChromeSoftwareAsync("ar");
+        await SeedChromeSoftwareAsync("en");
+
+        foreach (var id in new[] { "trafotechheader00000000000", "trafotechheaderen000000000" })
+        {
+            await SetLogoAsync(id, "SiteHeader", "travotech-logo-new.png");
+        }
+
+        foreach (var id in new[] { "trafotechfooter00000000000", "trafotechfooteren000000000" })
+        {
+            await SetLogoAsync(id, "SiteFooter", "travotech-logo-light.png");
+        }
+
+        return 19;
+    }
+
+    // ---------------------------------------------------- chrome (software)
+
+    private async Task SeedChromeSoftwareAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var navItems = ar
+            ? new[] { ("الرئيسية", "/"), ("خدماتنا", "/services"),
+                      ("عن الشركة", "/about"), ("تواصل معنا", "/contact") }
+            : new[] { ("Home", "/en"), ("Services", "/en/services"),
+                      ("About", "/en/about"), ("Contact", "/en/contact") };
+
+        var navBag = Bag(navItems
+            .Select<(string Label, string Url), (string, string, Action<JsonObject>)>(n =>
+                ("NavLink", n.Label, child => Link(child, "NavLink", "Link", n.Url, n.Label)))
+            .ToArray());
+
+        await EnsureAsync($"trafotechheader{suffix}".PadRight(26, '0')[..26], "SiteHeader",
+            "Site header", item =>
+            {
+                Localize(item, culture, "trafotech-siteheader");
+                Text(item, "SiteHeader", "BrandName", ar ? "ترافو تيك" : "Travotech");
+                Text(item, "SiteHeader", "CtaText", ar ? "ابدأ مشروعك" : "Start your project");
+                Link(item, "SiteHeader", "CtaLink", ar ? "/contact" : "/en/contact",
+                     ar ? "ابدأ مشروعك" : "Start your project");
+                Bool(item, "SiteHeader", "ShowLanguageSwitcher", true);
+                Bool(item, "SiteHeader", "ShowThemeToggle", true);
+                Bool(item, "SiteHeader", "Sticky", true);
+                Attach(item, "NavLinks", navBag);
+            });
+
+        var columns = ar
+            ? new[]
+            {
+                ("الشركة", new[] { ("الرئيسية", "/"), ("خدماتنا", "/services"),
+                                   ("عن الشركة", "/about"), ("تواصل معنا", "/contact") }),
+                ("خدماتنا", new[] { ("تطوير الويب", "/solutions/web"),
+                                     ("تطبيقات الموبايل", "/solutions/mobile"),
+                                     ("السحابة و DevOps", "/solutions/cloud"),
+                                     ("تصميم واجهات المستخدم", "/services") }),
+                ("تواصل", new[] { ("CreditPlus.Travo@gmail.com", "mailto:CreditPlus.Travo@gmail.com"),
+                                  ("+962 6 000 0000", "tel:+96260000000") }),
+            }
+            : new[]
+            {
+                ("COMPANY", new[] { ("Home", "/en"), ("Services", "/en/services"),
+                                    ("About", "/en/about"), ("Contact", "/en/contact") }),
+                ("SERVICES", new[] { ("Web Development", "/en/solutions/web"),
+                                     ("Mobile Apps", "/en/solutions/mobile"),
+                                     ("Cloud & DevOps", "/en/solutions/cloud"),
+                                     ("UI/UX Design", "/en/services") }),
+                ("CONTACT", new[] { ("CreditPlus.Travo@gmail.com", "mailto:CreditPlus.Travo@gmail.com"),
+                                    ("+962 6 000 0000", "tel:+96260000000") }),
+            };
+
+        var columnEntries = new List<(string, string, Action<JsonObject>)>();
+        foreach (var (head, links) in columns)
+        {
+            var linkBag = Bag(links
+                .Select<(string Label, string Url), (string, string, Action<JsonObject>)>(l =>
+                    ("FooterLink", l.Label, child => Link(child, "FooterLink", "Link", l.Url, l.Label)))
+                .ToArray());
+
+            columnEntries.Add(("FooterLinkColumn", head, child => Attach(child, "Links", linkBag)));
+        }
+
+        var columnsBag = Bag(columnEntries.ToArray());
+
+        await EnsureAsync($"trafotechfooter{suffix}".PadRight(26, '0')[..26], "SiteFooter",
+            "Site footer", item =>
+            {
+                Localize(item, culture, "trafotech-sitefooter");
+                Text(item, "SiteFooter", "BrandName", ar ? "ترافو تيك" : "Travotech");
+                Text(item, "SiteFooter", "Tagline", ar
+                    ? "برمجيات تُحرّك أعمالك نحو الأمام"
+                    : "Software that moves your business forward");
+                Text(item, "SiteFooter", "Email", "CreditPlus.Travo@gmail.com");
+                Text(item, "SiteFooter", "Phone", "+962 6 000 0000");
+                Text(item, "SiteFooter", "Location", ar ? "عمّان، الأردن" : "Amman, Jordan");
+                Text(item, "SiteFooter", "Copyright", ar
+                    ? "© 2026 ترافو تيك. جميع الحقوق محفوظة."
+                    : "© 2026 Travotech. All rights reserved.");
+                Text(item, "SiteFooter", "ComplianceNote", ar
+                    ? "نبني برمجيات موثوقة منذ 2019"
+                    : "Building reliable software since 2019");
+                Attach(item, "LinkColumns", columnsBag);
+            });
+    }
+
+    // ------------------------------------------------------ home (software)
+
+    private async Task SeedHomeSoftwareAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var stats = ar
+            ? new[] { ("200", "+", "مشروع مُنجز"), ("40", "+", "مهندس ومصمّم"),
+                      ("15", "+", "سوقاً حول العالم"), ("98", "%", "رضا العملاء") }
+            : new[] { ("200", "+", "Projects delivered"), ("40", "+", "Engineers & designers"),
+                      ("15", "+", "Markets served"), ("98", "%", "Client satisfaction") };
+
+        var statsBag = Bag(stats
+            .Select<(string V, string S, string L), (string, string, Action<JsonObject>)>(s =>
+                ("StatItem", s.L, child =>
+                {
+                    Text(child, "StatItem", "Value", s.V);
+                    Text(child, "StatItem", "Suffix", s.S);
+                    Text(child, "StatItem", "Label", s.L);
+                }))
+            .ToArray());
+
+        var hero = Section("hero", "dark", "full", "none",
+            ("PageHeroBlock", "Hero", child =>
+            {
+                Text(child, "PageHeroBlock", "Eyebrow", ar ? "شركة تطوير برمجيات" : "Software development company");
+                Text(child, "PageHeroBlock", "HeadingBefore", ar ? "نبني" : "We build");
+                Text(child, "PageHeroBlock", "HeadingHighlight", ar ? "برمجيات" : "software");
+                Text(child, "PageHeroBlock", "HeadingAfter", ar ? "تُحرّك أعمالك" : "that moves your business forward");
+                Text(child, "PageHeroBlock", "Lead", ar
+                    ? "من الفكرة إلى الإطلاق — منتجات ويب وموبايل وسحابة مبنية للتوسّع والسرعة والأمان."
+                    : "From idea to launch — web, mobile and cloud products engineered to scale, perform and stay secure.");
+                Text(child, "PageHeroBlock", "PrimaryText", ar ? "ابدأ مشروعك" : "Start your project");
+                Link(child, "PageHeroBlock", "PrimaryLink", ar ? "/contact" : "/en/contact",
+                     ar ? "ابدأ مشروعك" : "Start your project");
+                Text(child, "PageHeroBlock", "SecondaryText", ar ? "استعرض خدماتنا" : "Explore services");
+                Link(child, "PageHeroBlock", "SecondaryLink", ar ? "/services" : "/en/services",
+                     ar ? "استعرض خدماتنا" : "Explore services");
+                Text(child, "PageHeroBlock", "DialValue", "200+");
+                Text(child, "PageHeroBlock", "DialLabel", ar ? "مشروع مُنجز" : "Projects delivered");
+                Text(child, "PageHeroBlock", "BadgeTitle", "Agile");
+                Text(child, "PageHeroBlock", "BadgeText", ar ? "تسليم رشيق كل أسبوعين" : "Agile delivery, every sprint");
+                Attach(child, "Stats", statsBag);
+            }));
+
+        var features = ar
+            ? new[]
+            {
+                ("bolt", "تسليم سريع ومنتظم", "سبرنتات كل أسبوعين مع نسخة عاملة في نهاية كل واحدة — ترى التقدّم لا الوعود."),
+                ("link", "تكاملات نظيفة", "نربط أنظمتك وأدواتك الحالية عبر واجهات برمجية موثّقة ومختبرة."),
+                ("growth", "مبني للتوسّع", "بنية تتحمّل عشرة مستخدمين أو عشرة ملايين دون إعادة بناء."),
+                ("support", "نبقى بعد الإطلاق", "مراقبة وصيانة واتفاقية دعم تُبقي المنتج يعمل على مدار الساعة."),
+            }
+            : new[]
+            {
+                ("bolt", "Fast, predictable delivery", "Two-week sprints ending in a working build — you see progress, not promises."),
+                ("link", "Clean integrations", "We connect to the tools and systems you already run through documented, tested APIs."),
+                ("growth", "Built to scale", "Architecture that handles ten users or ten million without a rewrite."),
+                ("support", "We stay after launch", "Monitoring, maintenance and a support agreement that keeps the product running."),
+            };
+
+        var featuresBag = Bag(features
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(f =>
+                ("FeatureItem", f.T, child =>
+                {
+                    Text(child, "FeatureItem", "Icon", f.I);
+                    Text(child, "FeatureItem", "Description", f.D);
+                }))
+            .ToArray());
+
+        var why = Section("why", "alt", "container", "spacious",
+            ("FeatureGridBlock", "Why", child =>
+            {
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "لماذا ترافو تيك" : "Why Travotech");
+                Text(child, "FeatureGridBlock", "Heading", ar
+                    ? "شريك هندسي، لا مورّد فحسب"
+                    : "An engineering partner, not just a vendor");
+                Text(child, "FeatureGridBlock", "Lead", ar
+                    ? "نتعامل مع منتجك كأنه منتجنا: قرارات واضحة، وكود نظيف، وتسليم في موعده."
+                    : "We treat your product like our own: clear decisions, clean code, delivered on time.");
+                Attach(child, "Features", featuresBag);
+            }));
+
+        var productCards = Bag((ar
+            ? new[]
+            {
+                ("الويب", "تطبيقات الويب", "تطبيقات ولوحات تحكم سريعة وسهلة الوصول مبنية بأحدث الأطر.", "/solutions/web", new[] { "Angular و React و .NET", "لوحات تحكم وبوابات عملاء", "متجاوبة وسهلة الوصول" }),
+                ("الموبايل", "تطبيقات الموبايل", "تطبيقات iOS وأندرويد بجودة أصلية من قاعدة كود واحدة قابلة للصيانة.", "/solutions/mobile", new[] { "iOS وأندرويد من كود واحد", "دعم دون اتصال", "منشورة على المتاجر" }),
+                ("السحابة", "السحابة و DevOps", "خطوط نشر مؤتمتة وحاويات وبنية سحابية تنشر نفسها.", "/solutions/cloud", new[] { "CI/CD مؤتمت", "بنية تحتية ككود", "مراقبة وتنبيهات" }),
+            }
+            : new[]
+            {
+                ("Web", "Web Applications", "Fast, accessible web apps and dashboards built with modern frameworks.", "/en/solutions/web", new[] { "Angular, React & .NET", "Dashboards & customer portals", "Accessible & responsive" }),
+                ("Mobile", "Mobile Apps", "Native-quality iOS and Android apps from a single, maintainable codebase.", "/en/solutions/mobile", new[] { "iOS & Android from one codebase", "Offline-first support", "App Store & Play published" }),
+                ("Cloud", "Cloud & DevOps", "Automated pipelines, containers and cloud infrastructure that deploys itself.", "/en/solutions/cloud", new[] { "Automated CI/CD", "Infrastructure as code", "Monitoring & alerts" }),
+            })
+            .Select<(string B, string T, string D, string L, string[] P), (string, string, Action<JsonObject>)>(c =>
+                ("ProductCard", c.T, child =>
+                {
+                    Text(child, "ProductCard", "Badge", c.B);
+                    Text(child, "ProductCard", "Description", c.D);
+                    Link(child, "ProductCard", "Link", c.L, ar ? "اعرف المزيد" : "Learn more");
+                    Attach(child, "Points", Bag(c.P
+                        .Select<string, (string, string, Action<JsonObject>)>(pt =>
+                            ("ProductPoint", pt, _ => { }))
+                        .ToArray()));
+                }))
+            .ToArray());
+
+        var services = Section("services", "alt", "container", "spacious",
+            ("ProductGridBlock", "Services", child =>
+            {
+                Text(child, "ProductGridBlock", "Eyebrow", ar ? "خدماتنا" : "Our services");
+                Text(child, "ProductGridBlock", "Heading", ar
+                    ? "كل ما تحتاجه لبناء منتج رقمي"
+                    : "Everything you need to build a digital product");
+                Text(child, "ProductGridBlock", "LinkText", ar ? "كل الخدمات" : "All services");
+                Link(child, "ProductGridBlock", "Link", ar ? "/services" : "/en/services",
+                     ar ? "كل الخدمات" : "All services");
+                Attach(child, "Products", productCards);
+            }));
+
+        // --- Process section -----------------------------------------------
+        var processSteps = ar
+            ? new[]
+            {
+                ("search", "اكتشاف وتحليل", "نبدأ بفهم تحديك وأهدافك ونقاط مستخدميك، ونخرج بخارطة طريق واضحة."),
+                ("pen", "التصميم والنماذج الأولية", "نحوّل المتطلبات إلى نماذج أولية قابلة للنقر قبل كتابة أي كود."),
+                ("code", "التطوير والبناء", "سبرنتات كل أسبوعين مع نسخة عاملة، ترى التقدّم وتجرّب الميزات."),
+                ("rocket", "الإطلاق والدعم", "ننشر، نراقب، ونبقى معك بعد الإطلاق بصيانة ودعم مستمر."),
+            }
+            : new[]
+            {
+                ("search", "Discover & Analyse", "We start by understanding your challenge, goals and users, and produce a clear roadmap."),
+                ("pen", "Design & Prototype", "We turn requirements into clickable prototypes before writing any code."),
+                ("code", "Build & Develop", "Two-week sprints with a working build — you see progress and test features."),
+                ("rocket", "Launch & Support", "We deploy, monitor and stay with you after launch with ongoing maintenance."),
+            };
+
+        var processBag = Bag(processSteps
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(s =>
+                ("FeatureItem", s.T, child =>
+                {
+                    Text(child, "FeatureItem", "Icon", s.I);
+                    Text(child, "FeatureItem", "Description", s.D);
+                }))
+            .ToArray());
+
+        var process = Section("process", "default", "container", "spacious",
+            ("FeatureGridBlock", "Process", child =>
+            {
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "كيف نعمل" : "How we work");
+                Text(child, "FeatureGridBlock", "Heading", ar
+                    ? "أربع خطوات من الفكرة إلى الإطلاق"
+                    : "Four steps from idea to launch");
+                Text(child, "FeatureGridBlock", "Lead", ar
+                    ? "منهجية واضحة وشفافة تبقيك في الصورة في كل مرحلة."
+                    : "A clear, transparent methodology that keeps you in the picture at every stage.");
+                Attach(child, "Features", processBag);
+            }));
+
+        // --- Industries section --------------------------------------------
+        var industries = ar
+            ? new[]
+            {
+                ("bank", "الخدمات المالية", "أنظمة دفع، محافظ إلكترونية وبوابات تقرير."),
+                ("cart", "التجارة الإلكترونية", "متاجر ومنصّات طلبات بتجربة شراء سلسة."),
+                ("heart", "الرعاية الصحية", "سجلات المرضى والمواعيد والتطبيب عن بعد."),
+                ("factory", "التصنيع واللوجستيات", "تتبّع المخزون وإدارة العمليات ولوحات الأداء."),
+                ("graduation", "التعليم", "منصّات تعليم وإدارة فصول واختبارات."),
+                ("building", "العقارات", "إدارة المحافظ والعقود والعملاء."),
+            }
+            : new[]
+            {
+                ("bank", "Financial Services", "Payment systems, e-wallets and reporting portals."),
+                ("cart", "E-Commerce", "Stores and order platforms with a seamless checkout."),
+                ("heart", "Healthcare", "Patient records, appointments and telemedicine."),
+                ("factory", "Manufacturing & Logistics", "Inventory tracking, operations management and dashboards."),
+                ("graduation", "Education", "Learning platforms, class management and assessments."),
+                ("building", "Real Estate", "Portfolio, contract and client management."),
+            };
+
+        var industriesBag = Bag(industries
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(ind =>
+                ("ProductCard", ind.T, child =>
+                {
+                    Text(child, "ProductCard", "Badge", ind.I);
+                    Text(child, "ProductCard", "Description", ind.D);
+                }))
+            .ToArray());
+
+        var industriesSection = Section("industries", "alt", "container", "spacious",
+            ("ProductGridBlock", "Industries", child =>
+            {
+                Text(child, "ProductGridBlock", "Eyebrow", ar ? "القطاعات" : "Industries");
+                Text(child, "ProductGridBlock", "Heading", ar
+                    ? "خبرة في قطاعات متعددة"
+                    : "Expertise across industries");
+                Attach(child, "Products", industriesBag);
+            }));
+
+        // --- Tech stack section --------------------------------------------
+        var techStack = ar
+            ? new[]
+            {
+                ("code", "الواجهات الأمامية", "Angular, React, Vue, TypeScript, TailwindCSS"),
+                ("server", "الخوادم والـ APIs", ".NET, Node.js, Python, REST, GraphQL"),
+                ("database", "قواعد البيانات", "PostgreSQL, SQL Server, MongoDB, Redis"),
+                ("cloud", "السحابة و DevOps", "Azure, AWS, Docker, Kubernetes, GitHub Actions"),
+            }
+            : new[]
+            {
+                ("code", "Frontend", "Angular, React, Vue, TypeScript, TailwindCSS"),
+                ("server", "Backend & APIs", ".NET, Node.js, Python, REST, GraphQL"),
+                ("database", "Databases", "PostgreSQL, SQL Server, MongoDB, Redis"),
+                ("cloud", "Cloud & DevOps", "Azure, AWS, Docker, Kubernetes, GitHub Actions"),
+            };
+
+        var techBag = Bag(techStack
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(t =>
+                ("FeatureItem", t.T, child =>
+                {
+                    Text(child, "FeatureItem", "Icon", t.I);
+                    Text(child, "FeatureItem", "Description", t.D);
+                }))
+            .ToArray());
+
+        var techSection = Section("tech", "default", "container", "spacious",
+            ("FeatureGridBlock", "TechStack", child =>
+            {
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "التقنيات" : "Tech stack");
+                Text(child, "FeatureGridBlock", "Heading", ar
+                    ? "أدوات نثق بها ونعرفها جيداً"
+                    : "Tools we know and trust");
+                Text(child, "FeatureGridBlock", "Lead", ar
+                    ? "نختار التقنية حسب الحاجة لا حسب الموضة — كل ما سبق مُختبر في الإنتاج."
+                    : "We pick technology by need, not fashion — all of the above is battle-tested in production.");
+                Attach(child, "Features", techBag);
+            }));
+
+        // --- FAQ section ---------------------------------------------------
+        var faqItems = ar
+            ? new[]
+            {
+                ("كم يستغرق بناء مشروع من الصفر؟", "يعتمد على النطاق، لكن معظم مشاريعنا تنتقل من الفكرة إلى نسخة أولية عاملة في ٤-٨ أسابيع، وإلى إطلاق كامل في ٣-٦ أشهر."),
+                ("هل تعملون بعقود ثابتة أم بالساعة؟", "كلاهما متاح. للمشاريع ذات النطاق الواضح نقدّم سعراً ثابتاً، وللمشاريع المرنة نعمل بالساعة مع تقارير أسبوعية."),
+                ("هل أبقى أملك الكود المصدري؟", "نعم، كودك ملكك بالكامل من اليوم الأول. نسلّمه على مستودع Git خاص بك مع توثيق كامل."),
+                ("هل تقدّمون الدعم بعد الإطلاق؟", "نعم، نقدّم اتفاقيات دعم وصيانة تتراوح من المراقبة الأساسية إلى الدعم على مدار الساعة حسب احتياجك."),
+            }
+            : new[]
+            {
+                ("How long does it take to build a project from scratch?", "It depends on scope, but most of our projects go from idea to a working prototype in 4-8 weeks, and to full launch in 3-6 months."),
+                ("Do you work on fixed-price or hourly contracts?", "Both are available. For well-scoped projects we offer a fixed price; for flexible projects we work hourly with weekly reports."),
+                ("Do I own the source code?", "Yes, your code is entirely yours from day one. We deliver it on your own Git repository with full documentation."),
+                ("Do you provide post-launch support?", "Yes, we offer support and maintenance agreements ranging from basic monitoring to 24/7 support depending on your needs."),
+            };
+
+        var faqBag = Bag(faqItems
+            .Select<(string Q, string A), (string, string, Action<JsonObject>)>(f =>
+                ("FaqItem", f.Q, child =>
+                    Field(child, "FaqItem", "Answer", new JsonObject { ["Html"] = $"<p>{f.A}</p>" })))
+            .ToArray());
+
+        var faqSection = Section("faq", "alt", "container", "spacious",
+            ("FaqBlock", "FAQ", child =>
+            {
+                Text(child, "FaqBlock", "Heading", ar
+                    ? "أسئلة شائعة"
+                    : "Frequently asked questions");
+                Attach(child, "Questions", faqBag);
+            }));
+
+        var cta = Section("cta", "dark", "container", "normal",
+            ("CtaBlock", "CTA", child =>
+            {
+                Text(child, "CtaBlock", "Heading", ar
+                    ? "عندك فكرة مشروع؟"
+                    : "Have a project in mind?");
+                Text(child, "CtaBlock", "Text", ar
+                    ? "احكِ لنا عن فكرتك وسنعود إليك بخطة وتقدير خلال يوم عمل واحد."
+                    : "Tell us about your idea and we will come back with a plan and an estimate within one business day.");
+                Text(child, "CtaBlock", "ButtonText", ar ? "ابدأ المحادثة" : "Start the conversation");
+                Link(child, "CtaBlock", "ButtonLink", ar ? "/contact" : "/en/contact",
+                     ar ? "ابدأ المحادثة" : "Start the conversation");
+            }));
+
+        var sections = Bag(
+            ("Section", "Hero", hero),
+            ("Section", "Why", why),
+            ("Section", "Services", services),
+            ("Section", "Process", process),
+            ("Section", "Industries", industriesSection),
+            ("Section", "TechStack", techSection),
+            ("Section", "FAQ", faqSection),
+            ("Section", "CTA", cta));
+
+        await EnsureAsync($"trafotechhome{suffix}".PadRight(26, '0')[..26], "Page", "Home", item =>
+        {
+            Localize(item, culture, "trafotech-home");
+            Route(item, ar ? "home" : "en", homepage: ar);
+            Text(item, "Seo", "MetaTitle", ar
+                ? "ترافو تيك — شركة تطوير برمجيات"
+                : "Travotech — Software development company");
+            Text(item, "Seo", "MetaDescription", ar
+                ? "نبني تطبيقات الويب والموبايل والأنظمة السحابية المخصّصة للشركات."
+                : "We build custom web, mobile and cloud software for businesses.");
+            Bool(item, "Seo", "NoIndex", false);
+            Attach(item, "Sections", sections);
+        });
+    }
+
+    // -------------------------------------------------- services (software)
+
+    private async Task SeedServicesSoftwareAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var categories = ar
+            ? new[] { ("web", "الويب"), ("mobile", "الموبايل"),
+                      ("cloud", "السحابة و DevOps"), ("design", "التصميم والاستشارات") }
+            : new[] { ("web", "Web"), ("mobile", "Mobile"),
+                      ("cloud", "Cloud & DevOps"), ("design", "Design & Consulting") };
+
+        var categoriesBag = Bag(categories
+            .Select<(string K, string L), (string, string, Action<JsonObject>)>(c =>
+                ("ProductCategory", c.L, child => Text(child, "ProductCategory", "Key", c.K)))
+            .ToArray());
+
+        var services = ar
+            ? new[]
+            {
+                ("hub", "web", "تطوير تطبيقات الويب", "تطبيقات ويب متقدّمة ولوحات تحكم وبوابات عملاء مبنية بـ Angular وReact و.NET.", "/solutions/web", new[] { "واجهات حديثة قائمة على المكوّنات", "واجهات برمجية آمنة وموثّقة", "متجاوبة وسهلة الوصول افتراضياً" }),
+                ("card", "web", "برمجيات مخصّصة للمؤسسات", "أنظمة أعمال مصمّمة على طريقة عمل فريقك، تستبدل جداول البيانات والخطوات اليدوية.", "", new[] { "مصمّمة حسب عملياتك", "صلاحيات حسب الدور وسجل تدقيق", "تتكامل مع أنظمتك الحالية" }),
+                ("bolt", "mobile", "تطوير تطبيقات الموبايل", "تطبيقات iOS وأندرويد من قاعدة كود واحدة، مع دعم دون اتصال وإشعارات فورية.", "/solutions/mobile", new[] { "قاعدة كود واحدة للمنصّتين", "تعمل دون اتصال عند الحاجة", "منشورة على App Store وGoogle Play" }),
+                ("growth", "cloud", "السحابة و DevOps", "نشر بالحاويات وخطوط CI/CD وبنية تحتية ككود على Azure وAWS.", "/solutions/cloud", new[] { "بناء ونشر مؤتمت", "بنية تحتية ككود", "مراقبة وتنبيهات مدمجة" }),
+                ("check", "cloud", "اختبار الجودة والأتمتة", "اختبار آلي ويدوي يكتشف المشاكل قبل أن يصل إليها مستخدموك.", "", new[] { "مجموعات اختبار انحدار آلية", "اختبار الأداء والحِمل", "تقارير أخطاء واضحة قابلة للتكرار" }),
+                ("design", "design", "تصميم تجربة وواجهة المستخدم", "بحث ونماذج أولية وواجهات مصقولة تجعل المنتجات المعقّدة تبدو بسيطة.", "", new[] { "بحث المستخدم والنماذج الأولية", "أنظمة تصميم لا شاشات منفردة", "جاهزة للتسليم للتطوير" }),
+                ("link", "web", "الواجهات البرمجية والتكامل", "ربط أنظمتك ببوابات الدفع وأنظمة ERP والخدمات الخارجية.", "", new[] { "واجهات REST وGraphQL", "تكامل مع أطراف ثالثة", "تحديث الأنظمة القديمة" }),
+            }
+            : new[]
+            {
+                ("hub", "web", "Web Application Development", "Progressive web apps, dashboards and customer portals built with Angular, React and .NET.", "/en/solutions/web", new[] { "Modern, component-based front ends", "Secure, well-documented APIs", "Accessible and responsive by default" }),
+                ("card", "web", "Custom & Enterprise Software", "Line-of-business systems tailored to how your team actually works, replacing spreadsheets and manual steps.", "", new[] { "Tailored to your processes", "Role-based access and audit trails", "Integrates with your existing stack" }),
+                ("bolt", "mobile", "Mobile App Development", "iOS and Android apps from a single codebase, with offline support and push notifications.", "/en/solutions/mobile", new[] { "One codebase, both platforms", "Offline-first where it matters", "Published to the App Store and Google Play" }),
+                ("growth", "cloud", "Cloud & DevOps", "Containerised deployments, CI/CD pipelines and infrastructure as code on Azure and AWS.", "/en/solutions/cloud", new[] { "Automated build and deploy", "Infrastructure as code", "Monitoring and alerting built in" }),
+                ("check", "cloud", "QA & Test Automation", "Automated and manual testing that catches problems before your users do.", "", new[] { "Automated regression suites", "Performance and load testing", "Clear, reproducible bug reports" }),
+                ("design", "design", "UI/UX Design", "Research, wireframes and polished interfaces that make complex products feel simple.", "", new[] { "User research and prototyping", "Design systems, not one-off screens", "Handoff-ready for engineering" }),
+                ("link", "web", "API & Integrations", "Connecting your systems to payment gateways, ERPs and third-party services.", "", new[] { "REST and GraphQL APIs", "Third-party integrations", "Legacy system modernisation" }),
+            };
+
+        var rowEntries = new List<(string, string, Action<JsonObject>)>();
+        foreach (var (icon, cat, title, desc, linkUrl, points) in services)
+        {
+            var pointsBag = Bag(points
+                .Select<string, (string, string, Action<JsonObject>)>(pt =>
+                    ("ProductPoint", pt, _ => { }))
+                .ToArray());
+
+            var label = categories.First(c => c.Item1 == cat).Item2;
+
+            rowEntries.Add(("ProductRow", title, child =>
+            {
+                Text(child, "ProductRow", "Icon", icon);
+                Text(child, "ProductRow", "Category", cat);
+                Text(child, "ProductRow", "CategoryLabel", label);
+                Text(child, "ProductRow", "Description", desc);
+                if (!string.IsNullOrEmpty(linkUrl))
+                {
+                    Link(child, "ProductRow", "Link", linkUrl, ar ? "اعرف المزيد" : "Learn more");
+                }
+                Attach(child, "Points", pointsBag);
+            }));
+        }
+
+        var rowsBag = Bag(rowEntries.ToArray());
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "خدماتنا" : "Services");
+                Text(child, "PageHeaderBlock", "Heading", ar
+                    ? "خدمات تغطّي دورة حياة منتجك بالكامل"
+                    : "Services that cover your product's whole lifecycle");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "من أول نموذج أولي إلى التشغيل والصيانة في الإنتاج — نبقى معك في كل مرحلة."
+                    : "From the first prototype to running and maintaining it in production — we are with you at every stage.");
+            }));
+
+        var list = Section("list", "alt", "container", "spacious",
+            ("ProductListBlock", "Services", child =>
+            {
+                Text(child, "ProductListBlock", "AllLabel", ar ? "الكل" : "All");
+                Bool(child, "ProductListBlock", "ShowFilters", true);
+                Attach(child, "Categories", categoriesBag);
+                Attach(child, "Rows", rowsBag);
+            }));
+
+        // --- FAQ section ---------------------------------------------------
+        var svcFaqItems = ar
+            ? new[]
+            {
+                ("ما الفرق بين تطبيق الويب وتطبيق الموبايل؟", "تطبيق الويب يعمل في المتصفح ولا يحتاج تثبيت، بينما تطبيق الموبايل يُثبّت على الجهاز ويعمل دون اتصال. نساعدك على اختيار الأنسب لجمهورك."),
+                ("هل تستخدمون تقنيات مفتوحة المصدر؟", "نعم، نستخدم مزيجاً من التقنيات مفتوحة المصدر والتجارية حسب متطلبات المشروع وميزانيته."),
+                ("هل يمكنكم العمل مع فريقنا الداخلي؟", "بالتأكيد. نندمج مع فريقك ونستخدم نفس أدوات إدارة المشاريع والتواصل لضمان سير العمل بسلاسة."),
+            }
+            : new[]
+            {
+                ("What is the difference between a web app and a mobile app?", "A web app runs in the browser and needs no installation, while a mobile app is installed on the device and can work offline. We help you choose what fits your audience."),
+                ("Do you use open-source technologies?", "Yes, we use a mix of open-source and commercial technologies depending on project requirements and budget."),
+                ("Can you work with our in-house team?", "Absolutely. We integrate with your team and use the same project management and communication tools to ensure smooth collaboration."),
+            };
+
+        var svcFaqBag = Bag(svcFaqItems
+            .Select<(string Q, string A), (string, string, Action<JsonObject>)>(f =>
+                ("FaqItem", f.Q, child =>
+                    Field(child, "FaqItem", "Answer", new JsonObject { ["Html"] = $"<p>{f.A}</p>" })))
+            .ToArray());
+
+        var svcFaqSection = Section("faq", "default", "container", "spacious",
+            ("FaqBlock", "FAQ", child =>
+            {
+                Text(child, "FaqBlock", "Heading", ar ? "أسئلة شائعة عن خدماتنا" : "FAQ about our services");
+                Attach(child, "Questions", svcFaqBag);
+            }));
+
+        var cta = Section("cta", "default", "container", "spacious",
+            ("CtaBlock", "CTA", child =>
+            {
+                Text(child, "CtaBlock", "Heading", ar ? "غير متأكد من أين تبدأ؟" : "Not sure where to start?");
+                Text(child, "CtaBlock", "Text", ar
+                    ? "احكِ لنا عن التحدي الذي تواجهه وسنقترح عليك الطريق الأنسب بصراحة."
+                    : "Tell us about the challenge you are facing and we will honestly suggest the best way forward.");
+                Text(child, "CtaBlock", "ButtonText", ar ? "تواصل معنا" : "Contact us");
+                Link(child, "CtaBlock", "ButtonLink", ar ? "/contact" : "/en/contact",
+                     ar ? "تواصل معنا" : "Contact us");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Services", list),
+            ("Section", "FAQ", svcFaqSection),
+            ("Section", "CTA", cta));
+
+        await EnsureAsync($"trafotechproducts{suffix}".PadRight(26, '0')[..26], "Page",
+            "Services", item =>
+            {
+                Localize(item, culture, "trafotech-products");
+                Route(item, ar ? "services" : "en/services");
+                Text(item, "Seo", "MetaTitle", ar ? "خدماتنا — ترافو تيك" : "Services — Travotech");
+                Text(item, "Seo", "MetaDescription", ar
+                    ? "خدمات تطوير الويب والموبايل والسحابة والتصميم من ترافو تيك."
+                    : "Web, mobile, cloud and design development services from Travotech.");
+                Bool(item, "Seo", "NoIndex", false);
+                Attach(item, "Sections", sections);
+            });
+    }
+
+    // ----------------------------------------------------- about (software)
+
+    private async Task SeedAboutSoftwareAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var stats = ar
+            ? new[] { ("200", "+", "مشروع مُنجز"), ("40", "+", "مهندس ومصمّم"),
+                      ("15", "+", "سوقاً حول العالم"), ("98", "%", "رضا العملاء") }
+            : new[] { ("200", "+", "Projects delivered"), ("40", "+", "Engineers & designers"),
+                      ("15", "+", "Markets served"), ("98", "%", "Client satisfaction") };
+
+        var statsBag = Bag(stats
+            .Select<(string V, string S, string L), (string, string, Action<JsonObject>)>(s =>
+                ("StatItem", s.L, child =>
+                {
+                    Text(child, "StatItem", "Value", s.V);
+                    Text(child, "StatItem", "Suffix", s.S);
+                    Text(child, "StatItem", "Label", s.L);
+                }))
+            .ToArray());
+
+        var milestones = ar
+            ? new[]
+            {
+                ("2019", "الانطلاق", "بدأنا بفريق صغير من المهندسين وهدف واحد: بناء برمجيات يعتمد عليها الناس كل يوم."),
+                ("2021", "أول عملاء المؤسسات", "سلّمنا أول أنظمة أعمال متكاملة، وبدأت الشراكات طويلة الأمد."),
+                ("2023", "الموبايل والسحابة", "أضفنا فرق الموبايل و DevOps، وخدمنا عملاء في عدّة أسواق."),
+                ("2025", "فريق من أربعين+", "نمونا إلى أكثر من أربعين مهندساً ومصمّماً، مع الحفاظ على معايير الجودة نفسها."),
+            }
+            : new[]
+            {
+                ("2019", "The start", "We began with a small team of engineers and one goal: build software people rely on every day."),
+                ("2021", "First enterprise clients", "Delivered our first end-to-end business systems and began long-term partnerships."),
+                ("2023", "Mobile and cloud", "Added mobile and DevOps teams and served clients across several markets."),
+                ("2025", "A team of 40+", "Grew to more than forty engineers and designers, holding the same quality bar."),
+            };
+
+        var milestonesBag = Bag(milestones
+            .Select<(string Y, string T, string D), (string, string, Action<JsonObject>)>(m =>
+                ("MilestoneItem", m.T, child =>
+                {
+                    Text(child, "MilestoneItem", "Year", m.Y);
+                    Text(child, "MilestoneItem", "Description", m.D);
+                }))
+            .ToArray());
+
+        var values = ar
+            ? new[]
+            {
+                ("جودة نفخر بها", "نكتب كوداً نظيفاً ونختبره، لأن ما نسلّمه اليوم سيصونه أحدهم بعد سنوات."),
+                ("شفافية كاملة", "تعرف أين وصل مشروعك في أي لحظة — تقدير صادق ومواعيد واقعية بلا مفاجآت."),
+                ("شراكة لا صفقة", "لا نسلّم المشروع ونمضي؛ نبقى شركاء في نجاح المنتج على المدى الطويل."),
+            }
+            : new[]
+            {
+                ("Quality we're proud of", "We write clean, tested code, because what we ship today someone maintains years from now."),
+                ("Full transparency", "You know where your project stands at any moment — honest estimates and realistic dates, no surprises."),
+                ("A partnership, not a deal", "We do not hand over a project and leave; we stay invested in the product's long-term success."),
+            };
+
+        var valuesBag = Bag(values
+            .Select<(string T, string D), (string, string, Action<JsonObject>)>(v =>
+                ("ValueItem", v.T, child => Text(child, "ValueItem", "Description", v.D)))
+            .ToArray());
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "عن الشركة" : "About");
+                Text(child, "PageHeaderBlock", "Heading", ar
+                    ? "نحن نبني البرمجيات، وأنت تبني أعمالك"
+                    : "We build the software, you build the business");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "منذ 2019 ونحن نساعد الشركات على تحويل أفكارها إلى منتجات رقمية يعتمد عليها مستخدموها."
+                    : "Since 2019 we have helped companies turn ideas into digital products their users rely on.");
+            }));
+
+        var story = Section("story", "default", "container", "spacious",
+            ("StoryBlock", "Story", child =>
+            {
+                Text(child, "StoryBlock", "Eyebrow", ar ? "قصتنا" : "Our story");
+                Text(child, "StoryBlock", "Heading", ar
+                    ? "بدأنا من إيمان بسيط"
+                    : "We started from a simple belief");
+                Field(child, "StoryBlock", "Body", new JsonObject
+                {
+                    ["Html"] = ar
+                        ? "<p>رأينا شركات كثيرة عالقة بين أنظمة قديمة وجداول بيانات لا تنتهي، وأفكار عظيمة تنتظر من يبنيها. فقرّرنا أن نكون ذلك الفريق: مهندسون يفهمون العمل قبل الكود.</p>"
+                          + "<p>اليوم نبني تطبيقات الويب والموبايل والأنظمة السحابية لعملاء في عدّة أسواق، والمقياس لم يتغيّر: هل يعتمد المستخدم على ما بنيناه كل يوم؟</p>"
+                        : "<p>We kept seeing companies stuck between legacy systems and endless spreadsheets, with great ideas waiting for someone to build them. We decided to be that team: engineers who understand the business before the code.</p>"
+                          + "<p>Today we build web, mobile and cloud systems for clients across several markets, and the measure has not changed: do people rely on what we built, every day?</p>",
+                });
+                Attach(child, "Stats", statsBag);
+            }));
+
+        var timeline = Section("timeline", "alt", "container", "spacious",
+            ("TimelineBlock", "Timeline", child =>
+            {
+                Text(child, "TimelineBlock", "Eyebrow", ar ? "المسيرة" : "The journey");
+                Text(child, "TimelineBlock", "Heading", ar
+                    ? "محطات شكّلت الطريق"
+                    : "Milestones that shaped the path");
+                Attach(child, "Milestones", milestonesBag);
+            }));
+
+        var valuesSection = Section("values", "default", "container", "spacious",
+            ("ValuesBlock", "Values", child =>
+            {
+                Text(child, "ValuesBlock", "Eyebrow", ar ? "قيمنا" : "Our values");
+                Text(child, "ValuesBlock", "Heading", ar
+                    ? "ثلاثة مبادئ لا نساوم عليها"
+                    : "Three principles we do not compromise on");
+                Attach(child, "Values", valuesBag);
+            }));
+
+        // --- Capabilities section -----------------------------------------
+        var capabilities = ar
+            ? new[]
+            {
+                ("code", "هندسة الواجهات", "Angular, React, Vue, TypeScript — مكوّنات قابلة لإعادة الاستخدام وأداء عالٍ."),
+                ("server", "هندسة الخوادم", ".NET و Node.js و Python — واجهات REST و GraphQL آمنة وسريعة."),
+                ("database", "تصميم البيانات", "نمذجة قواعد البيانات العلاقية وغير العلاقية مع هجرات آمنة."),
+                ("cloud", "البنية السحابية", "Azure و AWS و Docker و Kubernetes — نشر مؤتمت ومراقبة."),
+                ("shield", "الأمن والموثوقية", "اختبار اختراق، مراجعة كود أمنية، وامتثال GDPR و PCI."),
+                ("users", "تجربة المستخدم", "بحث، نماذج أولية، اختبار قابلية استخدام، وأنظمة تصميم."),
+            }
+            : new[]
+            {
+                ("code", "Frontend Engineering", "Angular, React, Vue, TypeScript — reusable components and high performance."),
+                ("server", "Backend Engineering", ".NET, Node.js, Python — secure, fast REST and GraphQL APIs."),
+                ("database", "Data Design", "Relational and non-relational database modelling with safe migrations."),
+                ("cloud", "Cloud Infrastructure", "Azure, AWS, Docker, Kubernetes — automated deployment and monitoring."),
+                ("shield", "Security & Reliability", "Penetration testing, secure code review, GDPR and PCI compliance."),
+                ("users", "User Experience", "Research, prototyping, usability testing, and design systems."),
+            };
+
+        var capabilitiesBag = Bag(capabilities
+            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(c =>
+                ("FeatureItem", c.T, child =>
+                {
+                    Text(child, "FeatureItem", "Icon", c.I);
+                    Text(child, "FeatureItem", "Description", c.D);
+                }))
+            .ToArray());
+
+        var capabilitiesSection = Section("capabilities", "alt", "container", "spacious",
+            ("FeatureGridBlock", "Capabilities", child =>
+            {
+                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "قدراتنا" : "Our capabilities");
+                Text(child, "FeatureGridBlock", "Heading", ar
+                    ? "مهارات تقنية تغطي المكدّس بالكامل"
+                    : "Technical skills across the full stack");
+                Text(child, "FeatureGridBlock", "Lead", ar
+                    ? "من الواجهة إلى قاعدة البيانات إلى السحابة — نمتلك الخبرة في كل طبقة."
+                    : "From frontend to database to cloud — we have expertise in every layer.");
+                Attach(child, "Features", capabilitiesBag);
+            }));
+
+        var cta = Section("cta", "alt", "container", "spacious",
+            ("CtaBlock", "CTA", child =>
+            {
+                Text(child, "CtaBlock", "Heading", ar ? "تحب تعرف أكثر؟" : "Want to know more?");
+                Text(child, "CtaBlock", "Text", ar
+                    ? "الباب مفتوح للأسئلة التقنية والتجارية على حد سواء."
+                    : "The door is open for technical and commercial questions alike.");
+                Text(child, "CtaBlock", "ButtonText", ar ? "تواصل معنا" : "Contact us");
+                Link(child, "CtaBlock", "ButtonLink", ar ? "/contact" : "/en/contact",
+                     ar ? "تواصل معنا" : "Contact us");
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Story", story),
+            ("Section", "Timeline", timeline),
+            ("Section", "Values", valuesSection),
+            ("Section", "Capabilities", capabilitiesSection),
+            ("Section", "CTA", cta));
+
+        await EnsureAsync($"trafotechabout{suffix}".PadRight(26, '0')[..26], "Page", "About", item =>
+        {
+            Localize(item, culture, "trafotech-about");
+            Route(item, ar ? "about" : "en/about");
+            Text(item, "Seo", "MetaTitle", ar ? "عن الشركة — ترافو تيك" : "About — Travotech");
+            Text(item, "Seo", "MetaDescription", ar
+                ? "شركة تطوير برمجيات تساعد الشركات على بناء منتجات رقمية موثوقة منذ 2019."
+                : "A software company helping businesses build reliable digital products since 2019.");
+            Bool(item, "Seo", "NoIndex", false);
+            Attach(item, "Sections", sections);
+        });
+    }
+
+    // --------------------------------------------------- contact (software)
+
+    private async Task SeedContactSoftwareAsync(string culture)
+    {
+        var ar = culture == "ar";
+        var suffix = ar ? string.Empty : "en";
+
+        var header = Section("top", "dark", "container", "spacious",
+            ("PageHeaderBlock", "Header", child =>
+            {
+                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "تواصل معنا" : "Contact");
+                Text(child, "PageHeaderBlock", "Heading", ar ? "لنبدأ الحديث" : "Let's start the conversation");
+                Text(child, "PageHeaderBlock", "Lead", ar
+                    ? "احكِ لنا عن مشروعك أو فكرتك. نقرأ كل رسالة ونعود خلال يوم عمل واحد."
+                    : "Tell us about your project or idea. We read every message and reply within one business day.");
+            }));
+
+        var body = Section("form", "default", "container", "spacious",
+            ("ContactFormBlock", "Form", child =>
+            {
+                Text(child, "ContactFormBlock", "Heading", ar ? "راسلنا" : "Send us a message");
+                Text(child, "ContactFormBlock", "RecipientEmail", "CreditPlus.Travo@gmail.com");
+                Text(child, "ContactFormBlock", "SubmitButtonText", ar ? "إرسال" : "Send");
+                Text(child, "ContactFormBlock", "SuccessMessage", ar
+                    ? "تم استلام رسالتك، شكراً لتواصلك معنا."
+                    : "Thanks for reaching out — we have received your message.");
+                Text(child, "ContactFormBlock", "NameLabel", ar ? "الاسم" : "Name");
+                Text(child, "ContactFormBlock", "EmailLabel", ar ? "البريد الإلكتروني" : "Email");
+                Text(child, "ContactFormBlock", "OrganisationLabel", ar ? "الجهة (اختياري)" : "Organisation (optional)");
+                Text(child, "ContactFormBlock", "MessageLabel", ar ? "رسالتك" : "Your message");
+                Bool(child, "ContactFormBlock", "ShowOrganisation", true);
+            }),
+            ("ContactInfoBlock", "Details", child =>
+            {
+                Text(child, "ContactInfoBlock", "Heading", ar ? "معلومات التواصل" : "Contact details");
+                Text(child, "ContactInfoBlock", "Email", "CreditPlus.Travo@gmail.com");
+                Text(child, "ContactInfoBlock", "Phone", "+962 6 000 0000");
+                Text(child, "ContactInfoBlock", "Address", ar ? "عمّان، الأردن" : "Amman, Jordan");
+                Text(child, "ContactInfoBlock", "Hours", ar
+                    ? "الأحد إلى الخميس، ٩ صباحاً – ٦ مساءً"
+                    : "Sunday to Thursday, 9 AM – 6 PM");
+                Text(child, "ContactInfoBlock", "Note", ar
+                    ? "للعملاء الحاليين: استخدم قناة الدعم في اتفاقية الخدمة للطلبات العاجلة."
+                    : "Existing clients: use the support channel in your service agreement for urgent requests.");
+                Text(child, "ContactInfoBlock", "EmailLabel", ar ? "البريد" : "Email");
+                Text(child, "ContactInfoBlock", "PhoneLabel", ar ? "الهاتف" : "Phone");
+                Text(child, "ContactInfoBlock", "AddressLabel", ar ? "العنوان" : "Address");
+                Text(child, "ContactInfoBlock", "HoursLabel", ar ? "ساعات العمل" : "Working hours");
+            }));
+
+        // --- FAQ section ---------------------------------------------------
+        var contactFaqItems = ar
+            ? new[]
+            {
+                ("كم تستغرق الرد على رسالتي؟", "نعود إليك خلال يوم عمل واحد (الأحد إلى الخميس). للطلبات العاجلة من العملاء الحاليين، استخدم قناة الدعم في اتفاقية الخدمة."),
+                ("ما المعلومات التي يجب أن أرسلها؟", "صف فكرتك أو تحديك باختصار، أخبرنا عن حجم فريقك والجدول الزمني المتوقع، وأي ميزانية تقريبية. كلما أعطيتنا تفاصيل أكثر، كان ردنا أدق."),
+                ("هل توقّعون اتفاقية عدم إفشاء (NDA)؟", "نعم، نوقّع NDA قبل أي نقاش تقني تفصيلي لحماية فكرتك ومعلوماتك التجارية."),
+            }
+            : new[]
+            {
+                ("How long until you reply to my message?", "We reply within one business day (Sunday to Thursday). For urgent requests from existing clients, use the support channel in your service agreement."),
+                ("What information should I include?", "Describe your idea or challenge briefly, tell us about your team size and expected timeline, and any approximate budget. The more detail you give, the more accurate our response."),
+                ("Do you sign an NDA?", "Yes, we sign an NDA before any detailed technical discussion to protect your idea and business information."),
+            };
+
+        var contactFaqBag = Bag(contactFaqItems
+            .Select<(string Q, string A), (string, string, Action<JsonObject>)>(f =>
+                ("FaqItem", f.Q, child =>
+                    Field(child, "FaqItem", "Answer", new JsonObject { ["Html"] = $"<p>{f.A}</p>" })))
+            .ToArray());
+
+        var contactFaqSection = Section("faq", "alt", "container", "spacious",
+            ("FaqBlock", "FAQ", child =>
+            {
+                Text(child, "FaqBlock", "Heading", ar ? "أسئلة شائعة" : "Frequently asked questions");
+                Attach(child, "Questions", contactFaqBag);
+            }));
+
+        var sections = Bag(
+            ("Section", "Header", header),
+            ("Section", "Contact", body),
+            ("Section", "FAQ", contactFaqSection));
+
+        await EnsureAsync($"trafotechcontact{suffix}".PadRight(26, '0')[..26], "Page",
+            "Contact", item =>
+            {
+                Localize(item, culture, "trafotech-contact");
+                Route(item, ar ? "contact" : "en/contact");
+                Text(item, "Seo", "MetaTitle", ar ? "تواصل معنا — ترافو تيك" : "Contact — Travotech");
+                Text(item, "Seo", "MetaDescription", ar
+                    ? "تواصل مع فريق ترافو تيك لبناء منتجك الرقمي القادم."
+                    : "Get in touch with the Travotech team to build your next digital product.");
+                Bool(item, "Seo", "NoIndex", false);
+                Attach(item, "Sections", sections);
+            });
+    }
 }

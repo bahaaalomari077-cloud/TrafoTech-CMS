@@ -1,6 +1,6 @@
 <header class="site-header" [class.is-sticky]="header()?.sticky !== false">
   <div class="container container-wide header-inner">
-    <a class="brand" routerLink="/">
+    <a class="brand" [routerLink]="href('/')">
       @if (logoUrl(); as logo) {
         <img class="brand-logo" [src]="logo" [alt]="header()?.brandName || ''" />
       } @else {
@@ -19,7 +19,7 @@
         <a
           [routerLink]="href(item.link?.url)"
           routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: href(item.link?.url) === '/' }"
+          [routerLinkActiveOptions]="{ exact: true }"
         >
           {{ item.link?.text || item.displayText }}
         </a>

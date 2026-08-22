@@ -64,9 +64,31 @@ import { SafeHtmlPipe } from '../../core/safe-html.pipe';
     SafeHtmlPipe,
   ],
   templateUrl: './block-host.html',
+  styleUrl: './block-host.scss',
 })
 export class BlockHostComponent {
   readonly block = input.required<Block>();
+
+  protected styleClass(): string {
+    const l = this.block().blockLayout;
+    const classes: string[] = [];
+    if (l?.textAlign) {
+      classes.push(`text-${l.textAlign}`);
+    }
+    if (l?.padding) {
+      classes.push(`pad-${l.padding}`);
+    }
+    if (l?.card && l.card !== 'none') {
+      classes.push(`card-${l.card}`);
+    }
+    if (l?.shadow && l.shadow !== 'none') {
+      classes.push(`shadow-${l.shadow}`);
+    }
+    if (l?.radius && l.radius !== 'none') {
+      classes.push(`radius-${l.radius}`);
+    }
+    return classes.join(' ');
+  }
 
   // Narrowing helpers: the template cannot assert types on a union directly.
   protected asHero(b: Block): PageHeroBlock {

@@ -9,22 +9,40 @@ import { environment } from '../../environments/environment';
  * Blocks are fetched with inline fragments per type. Adding a block type means
  * adding a fragment here and a case in BlockHostComponent.
  */
+/**
+ * Layout is selected identically by every block type. Orchard's GraphQL
+ * complexity analyzer counts each inline repetition, and repeating these
+ * fields across all block fragments overruns its budget, so the selection is
+ * spread from one named fragment instead.
+ */
+const LAYOUT_FRAGMENT = `
+  fragment LayoutParts on BlockLayout {
+    width
+    textAlign
+    verticalAlign
+    padding
+    card
+    shadow
+    radius
+  }
+`;
+
 const BLOCK_FIELDS = `
   __typename
   contentItemId
   displayText
-  ... on PageHeroBlock { blockLayout { width } 
+  ... on PageHeroBlock { blockLayout { ...LayoutParts } 
     eyebrow headingBefore headingHighlight headingAfter lead
     primaryText primaryLink { url text }
     secondaryText secondaryLink { url text }
     dialValue dialLabel badgeTitle badgeText
     stats { contentItems { ... on StatItem { contentItemId displayText value suffix label } } }
   }
-  ... on FeatureGridBlock { blockLayout { width } 
+  ... on FeatureGridBlock { blockLayout { ...LayoutParts } 
     eyebrow heading lead
     features { contentItems { ... on FeatureItem { contentItemId displayText icon description } } }
   }
-  ... on ProductGridBlock { blockLayout { width } 
+  ... on ProductGridBlock { blockLayout { ...LayoutParts } 
     eyebrow heading linkText link { url text }
     products {
       contentItems {
@@ -35,8 +53,8 @@ const BLOCK_FIELDS = `
       }
     }
   }
-  ... on PageHeaderBlock { blockLayout { width } eyebrow heading lead }
-  ... on ProductListBlock { blockLayout { width } 
+  ... on PageHeaderBlock { blockLayout { ...LayoutParts } eyebrow heading lead }
+  ... on ProductListBlock { blockLayout { ...LayoutParts } 
     allLabel showFilters
     categories { contentItems { ... on ProductCategory { contentItemId displayText key } } }
     rows {
@@ -48,30 +66,30 @@ const BLOCK_FIELDS = `
       }
     }
   }
-  ... on ContactFormBlock { blockLayout { width } heading intro recipientEmail submitButtonText successMessage showOrganisation nameLabel emailLabel organisationLabel messageLabel }
-  ... on ContactInfoBlock { blockLayout { width } heading email phone address hours note emailLabel phoneLabel addressLabel hoursLabel }
-  ... on StoryBlock { blockLayout { width } 
+  ... on ContactFormBlock { blockLayout { ...LayoutParts } heading intro recipientEmail submitButtonText successMessage showOrganisation nameLabel emailLabel organisationLabel messageLabel }
+  ... on ContactInfoBlock { blockLayout { ...LayoutParts } heading email phone address hours note emailLabel phoneLabel addressLabel hoursLabel }
+  ... on StoryBlock { blockLayout { ...LayoutParts } 
     eyebrow heading body { html }
     stats { contentItems { ... on StatItem { contentItemId displayText value suffix label } } }
   }
-  ... on TimelineBlock { blockLayout { width } 
+  ... on TimelineBlock { blockLayout { ...LayoutParts } 
     eyebrow heading
     milestones { contentItems { ... on MilestoneItem { contentItemId displayText year description } } }
   }
-  ... on ValuesBlock { blockLayout { width } 
+  ... on ValuesBlock { blockLayout { ...LayoutParts } 
     eyebrow heading
     values { contentItems { ... on ValueItem { contentItemId displayText description } } }
   }
-  ... on CtaBlock { blockLayout { width } heading text buttonText buttonLink { url text } }
-  ... on RichTextBlock { blockLayout { width } body { html } }
-  ... on MediaBlock { blockLayout { width } caption media { files { url mediaText } } }
+  ... on CtaBlock { blockLayout { ...LayoutParts } heading text buttonText buttonLink { url text } }
+  ... on RichTextBlock { blockLayout { ...LayoutParts } body { html } }
+  ... on MediaBlock { blockLayout { ...LayoutParts } caption media { files { url mediaText } } }
   ... on PhotoGalleryBlock {
-    blockLayout { width }
+    blockLayout { ...LayoutParts }
     heading lead columns lightbox
     images { files { url mediaText } }
   }
   ... on VideoGalleryBlock {
-    blockLayout { width }
+    blockLayout { ...LayoutParts }
     heading lead columns
     videos { contentItems { ... on VideoItem {
       contentItemId displayText videoUrl description
@@ -80,13 +98,13 @@ const BLOCK_FIELDS = `
     } } }
   }
   ... on FormBlock {
-    blockLayout { width }
+    blockLayout { ...LayoutParts }
     heading intro submitText successMessage errorMessage
     fields { contentItems { ... on FormField {
       contentItemId displayText fieldType placeholder options required width
     } } }
   }
-  ... on FaqBlock { blockLayout { width } 
+  ... on FaqBlock { blockLayout { ...LayoutParts } 
     heading
     questions { contentItems { ... on FaqItem { contentItemId displayText answer { html } } } }
   }
@@ -99,6 +117,11 @@ const SECTION_FIELDS = `
   background
   width
   spacing
+  textAlign
+  border
+  noReveal
+  revealStyle
+  pattern
   hidden
   blocks { contentItems { ${BLOCK_FIELDS} } }
 `;
@@ -132,11 +155,26 @@ export class ContentService {
    * an untranslated page still renders rather than showing an empty screen.
    */
   getPageWithSections(path: string, culture?: string): Observable<PageWithSections | null> {
-    const query = `query PageSections($path: String!, $culture: String) {
-      localized: page(where: { path: $path, localization: { culture: $culture } }) {
+    // English paths carry an "en/" prefix. If that localized version does not
+    // exist, falling back to the default path lets the page render in its
+    // original culture instead of showing a blank or 404.
+    const fallbackPath = path.startsWith('en/') ? path.slice(3) : path;
+
+    // Orchard's localization filter dereferences the culture, so passing null
+    // throws server-side. Without a culture there is nothing to localize by:
+    // query the path alone and let the fallback alias do the work.
+    const localizedPart = culture
+      ? `localized: page(where: { path: $path, localization: { culture: $culture } }) {
         ...PageParts
-      }
-      fallback: page(where: { path: $path }) {
+      }`
+      : '';
+    // $path is only referenced by the localized alias, and GraphQL rejects a
+    // declared-but-unused variable, so it is declared only alongside it.
+    const localizedVars = culture ? ', $path: String!, $culture: String!' : '';
+
+    const query = `query PageSections($fallbackPath: String!${localizedVars}) {
+      ${localizedPart}
+      fallback: page(where: { path: $fallbackPath }) {
         ...PageParts
       }
     }
@@ -146,12 +184,13 @@ export class ContentService {
       path
       seo { metaTitle metaDescription metaKeywords }
       sections { contentItems { ... on Section { ${SECTION_FIELDS} } } }
-    }`;
+    }
+    ${LAYOUT_FRAGMENT}`;
 
     return this.gql
-      .query<{ localized: PageWithSections[]; fallback: PageWithSections[] }>(query, {
-        path,
-        culture: culture ?? null,
+      .query<{ localized?: PageWithSections[]; fallback: PageWithSections[] }>(query, {
+        fallbackPath,
+        ...(culture ? { path, culture } : {}),
       })
       .pipe(
         map((data) => {

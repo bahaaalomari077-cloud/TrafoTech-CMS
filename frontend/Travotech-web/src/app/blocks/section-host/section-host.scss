@@ -147,3 +147,185 @@
     gap: 3.5rem;
   }
 }
+
+/* Extra backgrounds
+   Editors can pick these from the CMS. Each republishes the on-surface tokens
+   so text stays legible no matter which background a section uses. */
+
+.bg-soft,
+.bg-warm {
+  --on-surface: var(--ink);
+  --on-surface-muted: var(--ink-muted);
+  --on-surface-faint: var(--ink-faint);
+  --on-surface-line: var(--line);
+}
+
+.bg-soft {
+  background: var(--bg-raised);
+}
+
+.bg-warm {
+  background: #f7f5f1;
+}
+
+.bg-navy,
+.bg-ink,
+.bg-slate {
+  --on-surface: #ffffff;
+  --on-surface-muted: var(--navy-300);
+  --on-surface-faint: var(--navy-400);
+  --on-surface-line: var(--glass-line);
+  color: var(--on-surface);
+}
+
+.bg-navy {
+  background: var(--navy-900);
+}
+
+.bg-ink {
+  background: var(--navy-960);
+}
+
+.bg-slate {
+  background: var(--navy-850);
+}
+
+/* Text alignment on the section and the block host wrapper. */
+.section .text-start,
+.text-start {
+  text-align: start;
+}
+
+.section .text-center,
+.text-center {
+  text-align: center;
+}
+
+.section .text-end,
+.text-end {
+  text-align: end;
+}
+
+/* Section border dividers. */
+.border-top,
+.border-both {
+  border-top: 1px solid var(--line);
+}
+
+.border-bottom,
+.border-both {
+  border-bottom: 1px solid var(--line);
+}
+
+.border-none {
+  border: 0;
+}
+
+/* Extra vertical rhythm. */
+.space-tight {
+  padding-block: clamp(1rem, 0.6rem + 1.5vw, 1.75rem);
+}
+
+.space-extra {
+  padding-block: clamp(5rem, 3.5rem + 5vw, 8rem);
+}
+
+.space-huge {
+  padding-block: clamp(6rem, 4rem + 7vw, 10rem);
+}
+
+/* A narrow container for editorial text-heavy sections. */
+.container.container-narrow {
+  max-width: 760px;
+}
+
+/* Vertical alignment of blocks inside a grid row. */
+.valign-start {
+  align-self: start;
+}
+
+.valign-center {
+  align-self: center;
+}
+
+.valign-end {
+  align-self: end;
+}
+
+/* Reveal animations. The base .reveal is defined elsewhere with opacity 0;
+   these classes provide the starting transform states for each style. */
+.reveal-fade,
+.reveal-slide-up,
+.reveal-slide-left,
+.reveal-scale {
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  will-change: transform, opacity;
+}
+
+.reveal-slide-up {
+  transform: translateY(2rem);
+}
+
+.reveal-slide-left {
+  transform: translateX(-2rem);
+}
+
+.reveal-scale {
+  transform: scale(0.97);
+}
+
+.reveal-fade.is-visible,
+.reveal-slide-up.is-visible,
+.reveal-slide-left.is-visible,
+.reveal-scale.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Background pattern overlays. */
+.section {
+  position: relative;
+  isolation: isolate;
+}
+
+.section.pattern-dots::before,
+.section.pattern-lines::before,
+.section.pattern-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.08;
+  pointer-events: none;
+  background-repeat: repeat;
+}
+
+.pattern-dots::before {
+  background-image: radial-gradient(currentColor 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.pattern-lines::before {
+  background-image: repeating-linear-gradient(
+    45deg,
+    currentColor 0,
+    currentColor 1px,
+    transparent 1px,
+    transparent 12px
+  );
+}
+
+.pattern-grid::before {
+  background-image:
+    linear-gradient(currentColor 1px, transparent 1px),
+    linear-gradient(90deg, currentColor 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* Keep the section's inner wrapper above the pattern overlay. */
+.section .reveal,
+.section .section-inner-full {
+  position: relative;
+  z-index: 1;
+}

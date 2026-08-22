@@ -19,11 +19,19 @@
 @if (block().products?.contentItems?.length) {
   <ul class="product-grid stagger">
     @for (product of block().products!.contentItems; track product.contentItemId; let i = $index) {
-      <li class="product card-surface" [attr.style]="'--i:' + i">
+      <li class="product card-surface" [class.product--link]="!!product.link?.url" [attr.style]="'--i:' + i">
         @if (product.badge) {
           <span class="badge">{{ product.badge }}</span>
         }
-        <h3>{{ product.displayText }}</h3>
+        <h3>
+          @if (product.link?.url) {
+            <a class="product-title-link" [routerLink]="href(product.link?.url)">
+              <span class="stretch" aria-hidden="true"></span>{{ product.displayText }}
+            </a>
+          } @else {
+            {{ product.displayText }}
+          }
+        </h3>
         <p class="product-desc">{{ product.description }}</p>
 
         @if (product.points?.contentItems?.length) {
@@ -35,6 +43,13 @@
               </li>
             }
           </ul>
+        }
+
+        @if (product.link?.url) {
+          <span class="product-more">
+            {{ product.link?.text || 'Learn more' }}
+            <span class="arrow" aria-hidden="true">→</span>
+          </span>
         }
       </li>
     }

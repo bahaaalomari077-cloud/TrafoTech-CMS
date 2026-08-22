@@ -65,6 +65,42 @@ html[dir='rtl'] .head-link .arrow {
   margin-bottom: 1.25rem;
 }
 
+/* A linked card: the title carries a stretched overlay so the whole card is
+   clickable, while keeping a single, real link for accessibility. */
+.product--link {
+  position: relative;
+}
+
+.product-title-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-title-link .stretch {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.product--link:hover .product-title-link,
+.product--link:hover .product-more {
+  color: var(--accent);
+}
+
+.product-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-soft);
+  transition: color 0.18s ease;
+}
+
+html[dir='rtl'] .product-more .arrow {
+  transform: scaleX(-1);
+}
+
 .points {
   margin: auto 0 0;
   padding: 1.25rem 0 0;

@@ -1,3 +1,4 @@
+<div [class]="styleClass()">
 @switch (block().__typename) {
   @case ('PageHeroBlock') {
     <app-hero-block [block]="asHero(block())" />
@@ -50,4 +51,11 @@
   @case ('RichTextBlock') {
     <div class="rich-text" [innerHTML]="asRichText(block()).body?.html | safeHtml"></div>
   }
+  @default {
+    <div class="block-fallback">
+      <h3>{{ block().displayText }}</h3>
+      <p class="meta">{{ block().__typename }}</p>
+    </div>
+  }
 }
+</div>
