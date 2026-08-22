@@ -1181,467 +1181,6 @@ public sealed class ContentMigrations : DataMigration
         };
     }
 
-    /// <summary>
-    /// Like <see cref="Section"/>, but also sets the design controls added in
-    /// content-type migrations 14 and 15 (alignment, border, background
-    /// pattern and reveal style). The plain overload leaves those unset so the
-    /// existing pages keep their original look.
-    /// </summary>
-    private static Action<JsonObject> StyledSection(
-        string anchor,
-        string background,
-        string width,
-        string spacing,
-        string textAlign,
-        string border,
-        string pattern,
-        string revealStyle,
-        params (string Type, string Title, Action<JsonObject> Build)[] blocks) =>
-        StyledSection(anchor, background, width, spacing, textAlign, border, pattern,
-            revealStyle, "stack", "half", false, blocks);
-
-    /// <summary>
-    /// As above, but also sets the structural layout added in content-type
-    /// migration 16 — the control that rearranges a section's blocks instead
-    /// of only re-theming them.
-    /// </summary>
-    private static Action<JsonObject> StyledSection(
-        string anchor,
-        string background,
-        string width,
-        string spacing,
-        string textAlign,
-        string border,
-        string pattern,
-        string revealStyle,
-        string layout,
-        string splitRatio,
-        bool stickyPanel,
-        params (string Type, string Title, Action<JsonObject> Build)[] blocks)
-    {
-        var bag = Bag(blocks);
-
-        return item =>
-        {
-            Text(item, "Section", "Anchor", anchor);
-            Text(item, "Section", "Background", background);
-            Text(item, "Section", "Width", width);
-            Text(item, "Section", "Spacing", spacing);
-            Text(item, "Section", "TextAlign", textAlign);
-            Text(item, "Section", "Border", border);
-            Text(item, "Section", "Pattern", pattern);
-            Text(item, "Section", "RevealStyle", revealStyle);
-            Text(item, "Section", "Layout", layout);
-            Text(item, "Section", "SplitRatio", splitRatio);
-            Bool(item, "Section", "StickyPanel", stickyPanel);
-            Bool(item, "Section", "NoReveal", false);
-            Bool(item, "Section", "Hidden", false);
-            Attach(item, "Blocks", bag);
-        };
-    }
-
-    /// <summary>Sets the per-block layout controls from content-type migrations 14 and 15.</summary>
-    private static void Layout(
-        JsonObject block,
-        string? width = null,
-        string? textAlign = null,
-        string? verticalAlign = null,
-        string? padding = null,
-        string? card = null,
-        string? shadow = null,
-        string? radius = null)
-    {
-        if (width is not null) Text(block, "BlockLayout", "Width", width);
-        if (textAlign is not null) Text(block, "BlockLayout", "TextAlign", textAlign);
-        if (verticalAlign is not null) Text(block, "BlockLayout", "VerticalAlign", verticalAlign);
-        if (padding is not null) Text(block, "BlockLayout", "Padding", padding);
-        if (card is not null) Text(block, "BlockLayout", "Card", card);
-        if (shadow is not null) Text(block, "BlockLayout", "Shadow", shadow);
-        if (radius is not null) Text(block, "BlockLayout", "Radius", radius);
-    }
-
-    // ---------------------------------------------------------------- nour
-
-    /// <summary>
-    /// Seeds the Nour page. Its look is deliberately unlike the rest of the
-    /// site: warm and ink backgrounds instead of the corporate navy, centred
-    /// text, patterned and bordered sections, and per-block cards — all driven
-    /// by the design controls added in content-type migrations 14 and 15
-    /// rather than by any new CSS.
-    /// </summary>
-    private async Task SeedNourAsync(string culture)
-    {
-        var ar = culture == "ar";
-        var suffix = ar ? string.Empty : "en";
-        var contact = ar ? "/contact" : "/en/contact";
-
-        // --- hero: warm background, centred, dotted pattern, scale reveal ---
-        var heroStats = ar
-            ? new[] { ("12", "+", "مبادرة مجتمعية"), ("30", "+", "متطوّع"), ("5", "", "مدن") }
-            : new[] { ("12", "+", "Community initiatives"), ("30", "+", "Volunteers"), ("5", "", "Cities") };
-
-        var heroStatsBag = Bag(heroStats
-            .Select<(string V, string S, string L), (string, string, Action<JsonObject>)>(st =>
-                ("StatItem", st.L, child =>
-                {
-                    Text(child, "StatItem", "Value", st.V);
-                    Text(child, "StatItem", "Suffix", st.S);
-                    Text(child, "StatItem", "Label", st.L);
-                }))
-            .ToArray());
-
-        var hero = StyledSection("top", "warm", "wide", "huge", "center", "bottom", "dots", "scale",
-            ("PageHeroBlock", "Nour hero", child =>
-            {
-                Layout(child, textAlign: "center", padding: "large");
-                Text(child, "PageHeroBlock", "Eyebrow", ar ? "مبادرة نور" : "The Nour Initiative");
-                Text(child, "PageHeroBlock", "HeadingBefore", ar ? "نصنع" : "We create");
-                Text(child, "PageHeroBlock", "HeadingHighlight", ar ? "نوراً" : "light");
-                Text(child, "PageHeroBlock", "HeadingAfter", ar ? "يصل إلى الجميع" : "that reaches everyone");
-                Text(child, "PageHeroBlock", "Lead", ar
-                    ? "نور مبادرتنا المجتمعية: نضع خبرتنا التقنية في خدمة الجمعيات والمشاريع الصغيرة التي تصنع فرقاً حقيقياً في حياة الناس."
-                    : "Nour is our community initiative: we put our technical expertise at the service of nonprofits and small projects that make a real difference in people's lives.");
-                Text(child, "PageHeroBlock", "PrimaryText", ar ? "انضم إلينا" : "Join us");
-                Link(child, "PageHeroBlock", "PrimaryLink", contact, ar ? "انضم إلينا" : "Join us");
-                Text(child, "PageHeroBlock", "SecondaryText", ar ? "اعرف أكثر" : "Learn more");
-                Link(child, "PageHeroBlock", "SecondaryLink", "#story", ar ? "اعرف أكثر" : "Learn more");
-                Text(child, "PageHeroBlock", "DialValue", "100%");
-                Text(child, "PageHeroBlock", "DialLabel", ar ? "تطوّع" : "Volunteered");
-                Text(child, "PageHeroBlock", "BadgeTitle", ar ? "بلا مقابل" : "Pro bono");
-                Text(child, "PageHeroBlock", "BadgeText", ar ? "لكل مبادرة مجتمعية" : "For every community initiative");
-                Attach(child, "Stats", heroStatsBag);
-            }));
-
-        // --- story: ink background, elevated card, slide-from-left reveal ---
-        var storyStats = ar
-            ? new[] { ("2021", "", "سنة الانطلاق"), ("8", "", "شركاء") }
-            : new[] { ("2021", "", "Founded"), ("8", "", "Partners") };
-
-        var storyStatsBag = Bag(storyStats
-            .Select<(string V, string S, string L), (string, string, Action<JsonObject>)>(st =>
-                ("StatItem", st.L, child =>
-                {
-                    Text(child, "StatItem", "Value", st.V);
-                    Text(child, "StatItem", "Suffix", st.S);
-                    Text(child, "StatItem", "Label", st.L);
-                }))
-            .ToArray());
-
-        var story = StyledSection("story", "ink", "wide", "spacious", "start", "none", "lines", "slide-left",
-            "split", "wide-start", true,
-            ("PageHeaderBlock", "Story panel", child =>
-            {
-                Layout(child, padding: "large");
-                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "قصتنا" : "Our story");
-                Text(child, "PageHeaderBlock", "Heading", ar ? "من فكرة إلى أثر" : "From an idea to impact");
-                Text(child, "PageHeaderBlock", "Lead", ar
-                    ? "خمس سنوات من العمل التطوّعي مع الجمعيات التي تصنع فرقاً."
-                    : "Five years of volunteer work alongside nonprofits that make a difference.");
-            }),
-            ("StoryBlock", "Story", child =>
-            {
-                Layout(child, padding: "large", card: "elevated", radius: "large");
-                Text(child, "StoryBlock", "Eyebrow", ar ? "قصتنا" : "Our story");
-                Text(child, "StoryBlock", "Heading", ar
-                    ? "بدأت بفكرة بسيطة: التقنية يجب أن تكون في متناول الجميع"
-                    : "It started with a simple idea: technology should be within everyone's reach");
-                Field(child, "StoryBlock", "Body", new JsonObject
-                {
-                    ["Html"] = ar
-                        ? "<p>في 2021 لاحظنا أن الكثير من الجمعيات الصغيرة تملك أفكاراً رائعة لكنها تفتقر إلى الأدوات الرقمية التي تحوّل هذه الأفكار إلى أثر ملموس.</p><p>أطلقنا <strong>نور</strong> لنسدّ هذه الفجوة: فريق من مهندسينا يخصّص وقتاً لبناء مواقع وتطبيقات ولوحات تحكم للمبادرات المجتمعية — بلا مقابل.</p>"
-                        : "<p>In 2021 we noticed that many small nonprofits had great ideas but lacked the digital tools to turn them into tangible impact.</p><p>We launched <strong>Nour</strong> to close that gap: a team of our engineers dedicates time to building websites, apps and dashboards for community initiatives — free of charge.</p>",
-                });
-                Attach(child, "Stats", storyStatsBag);
-            }));
-
-        // --- values: soft background, centred, grid pattern, slide-up -------
-        var values = ar
-            ? new[]
-            {
-                ("الأثر قبل الظهور", "نقيس نجاحنا بعدد الناس الذين تحسّنت حياتهم، لا بعدد المشاريع التي أنجزناها."),
-                ("الشراكة لا التبرّع", "نعمل مع الجمعيات كشركاء، نستمع أولاً ثم نبني معاً."),
-                ("الاستدامة", "نسلّم أدوات يستطيع الفريق إدارتها بنفسه بعد انتهاء عملنا."),
-                ("الشفافية", "كل مبادرة لها تقرير مفتوح عن الوقت والموارد والنتائج."),
-            }
-            : new[]
-            {
-                ("Impact over visibility", "We measure success by how many lives improved, not by how many projects we shipped."),
-                ("Partnership, not charity", "We work with nonprofits as partners — we listen first, then build together."),
-                ("Sustainability", "We hand over tools the team can run themselves long after our work ends."),
-                ("Transparency", "Every initiative gets an open report on time, resources and outcomes."),
-            };
-
-        var valuesBag = Bag(values
-            .Select<(string T, string D), (string, string, Action<JsonObject>)>(v =>
-                ("ValueItem", v.T, child => Text(child, "ValueItem", "Description", v.D)))
-            .ToArray());
-
-        var valuesSection = StyledSection("values", "soft", "wide", "spacious", "start", "both", "grid", "slide-up",
-            "editorial", "half", false,
-            ("ValuesBlock", "Values", child =>
-            {
-                Layout(child, textAlign: "center", padding: "normal");
-                Text(child, "ValuesBlock", "Eyebrow", ar ? "مبادئنا" : "Our principles");
-                Text(child, "ValuesBlock", "Heading", ar
-                    ? "أربعة مبادئ توجّه كل ما نفعله"
-                    : "Four principles guide everything we do");
-                Attach(child, "Values", valuesBag);
-            }));
-
-        // --- timeline: navy background, top border, fade --------------------
-        var milestones = ar
-            ? new[]
-            {
-                ("2021", "انطلاق نور بأول مشروع: موقع لجمعية محلية تدعم الأسر المنتجة."),
-                ("2022", "توسّعنا إلى ثلاث مدن وبنينا أول لوحة تحكم لإدارة المتطوّعين."),
-                ("2024", "أطلقنا برنامج التدريب: أربعون شاباً وشابة تعلّموا البرمجة معنا."),
-                ("2026", "نور اليوم: اثنتا عشرة مبادرة نشطة وثلاثون متطوّعاً من فريقنا."),
-            }
-            : new[]
-            {
-                ("2021", "Nour launches with its first project: a website for a local nonprofit supporting home businesses."),
-                ("2022", "We expand to three cities and build our first volunteer management dashboard."),
-                ("2024", "We launch the training programme: forty young people learned to code with us."),
-                ("2026", "Nour today: twelve active initiatives and thirty volunteers from our team."),
-            };
-
-        var milestonesBag = Bag(milestones
-            .Select<(string Y, string D), (string, string, Action<JsonObject>)>(m =>
-                ("MilestoneItem", m.Y, child =>
-                {
-                    Text(child, "MilestoneItem", "Year", m.Y);
-                    Text(child, "MilestoneItem", "Description", m.D);
-                }))
-            .ToArray());
-
-        var timeline = StyledSection("timeline", "navy", "wide", "extra", "start", "top", "none", "fade",
-            "split-reverse", "wide-end", true,
-            ("PageHeaderBlock", "Timeline panel", child =>
-            {
-                Layout(child, padding: "large");
-                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "المسيرة" : "The journey");
-                Text(child, "PageHeaderBlock", "Heading", ar ? "محطات نور" : "Milestones of Nour");
-                Text(child, "PageHeaderBlock", "Lead", ar
-                    ? "كل سنة أضافت مبادرة جديدة ومتطوّعين جدداً."
-                    : "Each year added a new initiative and new volunteers.");
-            }),
-            ("TimelineBlock", "Timeline", child =>
-            {
-                Layout(child, padding: "normal");
-                Text(child, "TimelineBlock", "Eyebrow", ar ? "المسيرة" : "The journey");
-                Text(child, "TimelineBlock", "Heading", ar
-                    ? "خمس سنوات من العمل المجتمعي"
-                    : "Five years of community work");
-                Attach(child, "Milestones", milestonesBag);
-            }));
-
-        // --- how we help: slate background, outlined cards ------------------
-        var helps = ar
-            ? new[]
-            {
-                ("bolt", "مواقع ومنصّات", "موقع سريع وسهل الإدارة يعرّف بالمبادرة ويستقبل التبرّعات والتسجيلات."),
-                ("growth", "لوحات تحكم", "أدوات لمتابعة المتطوّعين والمستفيدين وقياس الأثر بالأرقام."),
-                ("support", "تدريب ومرافقة", "ندرّب الفريق على إدارة أدواته بنفسه، ونبقى متاحين للدعم."),
-            }
-            : new[]
-            {
-                ("bolt", "Websites & platforms", "A fast, easy-to-manage site that presents the initiative and collects donations and sign-ups."),
-                ("growth", "Dashboards", "Tools to track volunteers and beneficiaries, and to measure impact in numbers."),
-                ("support", "Training & mentoring", "We train the team to run their own tools, and stay available for support."),
-            };
-
-        var helpsBag = Bag(helps
-            .Select<(string I, string T, string D), (string, string, Action<JsonObject>)>(h =>
-                ("FeatureItem", h.T, child =>
-                {
-                    Text(child, "FeatureItem", "Icon", h.I);
-                    Text(child, "FeatureItem", "Description", h.D);
-                }))
-            .ToArray());
-
-        var helpSection = StyledSection("help", "slate", "wide", "spacious", "start", "none", "dots", "slide-up",
-            "split", "half", false,
-            ("PageHeaderBlock", "Help panel", child =>
-            {
-                Layout(child, padding: "large");
-                Text(child, "PageHeaderBlock", "Eyebrow", ar ? "كيف نساعد" : "How we help");
-                Text(child, "PageHeaderBlock", "Heading", ar
-                    ? "نبدأ بالاستماع، ثم نبني"
-                    : "We listen first, then we build");
-            }),
-            ("FeatureGridBlock", "How we help", child =>
-            {
-                Layout(child, textAlign: "center", padding: "normal", card: "outlined", radius: "medium");
-                Text(child, "FeatureGridBlock", "Eyebrow", ar ? "كيف نساعد" : "How we help");
-                Text(child, "FeatureGridBlock", "Heading", ar
-                    ? "ثلاث طرق نضع بها خبرتنا في خدمة مبادرتك"
-                    : "Three ways we put our expertise to work");
-                Text(child, "FeatureGridBlock", "Lead", ar
-                    ? "كل مبادرة مختلفة، لذلك نبدأ دائماً بالاستماع قبل أن نقترح أي حل."
-                    : "Every initiative is different, so we always start by listening before proposing anything.");
-                Attach(child, "Features", helpsBag);
-            }));
-
-        // --- faq: warm background, narrow column ----------------------------
-        var faqs = ar
-            ? new[]
-            {
-                ("من يستطيع التقدّم إلى نور؟", "أي جمعية أو مبادرة مجتمعية غير ربحية تعمل على مشروع له أثر اجتماعي واضح."),
-                ("هل الخدمة مجانية فعلاً؟", "نعم. نور مبادرة تطوّعية بالكامل، ولا نتقاضى أي مقابل مادي عن العمل الذي ننجزه ضمنها."),
-                ("كم تستغرق المبادرة عادة؟", "تتراوح المشاريع بين أربعة أسابيع واثني عشر أسبوعاً حسب حجم العمل المطلوب."),
-            }
-            : new[]
-            {
-                ("Who can apply to Nour?", "Any nonprofit or community initiative working on a project with clear social impact."),
-                ("Is it really free?", "Yes. Nour is entirely volunteer-run, and we charge nothing for the work we deliver through it."),
-                ("How long does an initiative take?", "Projects typically run between four and twelve weeks depending on the scope."),
-            };
-
-        var faqBag = Bag(faqs
-            .Select<(string Q, string A), (string, string, Action<JsonObject>)>(f =>
-                ("FaqItem", f.Q, child =>
-                    Field(child, "FaqItem", "Answer", new JsonObject { ["Html"] = $"<p>{f.A}</p>" })))
-            .ToArray());
-
-        var faqSection = StyledSection("faq", "warm", "narrow", "spacious", "start", "top", "none", "fade",
-            ("FaqBlock", "FAQ", child =>
-            {
-                Layout(child, padding: "normal");
-                Text(child, "FaqBlock", "Heading", ar ? "أسئلة شائعة عن نور" : "Frequently asked about Nour");
-                Attach(child, "Questions", faqBag);
-            }));
-
-        // --- cta: ink background, centred, filled card ----------------------
-        var cta = StyledSection("cta", "ink", "wide", "extra", "start", "none", "grid", "scale",
-            "canvas", "half", false,
-            ("PageHeaderBlock", "CTA backdrop", child =>
-            {
-                Text(child, "PageHeaderBlock", "Heading", ar ? "نور" : "Nour");
-                Text(child, "PageHeaderBlock", "Lead", ar
-                    ? "مبادرة ترافو تيك المجتمعية"
-                    : "Travotech's community initiative");
-            }),
-            ("CtaBlock", "CTA", child =>
-            {
-                Layout(child, textAlign: "center", padding: "large", card: "filled", radius: "large", shadow: "large");
-                Text(child, "CtaBlock", "Heading", ar
-                    ? "عندك مبادرة تستحق النور؟"
-                    : "Have an initiative that deserves the light?");
-                Text(child, "CtaBlock", "Text", ar
-                    ? "احكِ لنا عنها. نقرأ كل طلب بعناية، ونردّ خلال أسبوع مهما كان جوابنا."
-                    : "Tell us about it. We read every application carefully and reply within a week, whatever our answer.");
-                Text(child, "CtaBlock", "ButtonText", ar ? "قدّم مبادرتك" : "Submit your initiative");
-                Link(child, "CtaBlock", "ButtonLink", contact, ar ? "قدّم مبادرتك" : "Submit your initiative");
-            }));
-
-        var sections = Bag(
-            ("Section", "Hero", hero),
-            ("Section", "Story", story),
-            ("Section", "Values", valuesSection),
-            ("Section", "Timeline", timeline),
-            ("Section", "How we help", helpSection),
-            ("Section", "FAQ", faqSection),
-            ("Section", "CTA", cta));
-
-        await EnsureAsync($"trafotechnour{suffix}".PadRight(26, '0')[..26], "Page",
-            ar ? "نور" : "Nour", item =>
-            {
-                Localize(item, culture, "trafotech-nour");
-                Route(item, ar ? "nour" : "en/nour");
-                Text(item, "Seo", "MetaTitle", ar
-                    ? "نور — مبادرة ترافو تيك المجتمعية"
-                    : "Nour — Travotech's community initiative");
-                Text(item, "Seo", "MetaDescription", ar
-                    ? "نور مبادرة ترافو تيك المجتمعية: خبرة تقنية بلا مقابل للجمعيات والمشاريع ذات الأثر الاجتماعي."
-                    : "Nour is Travotech's community initiative: pro bono technical expertise for nonprofits and social-impact projects.");
-                Bool(item, "Seo", "NoIndex", false);
-                Attach(item, "Sections", sections);
-            });
-    }
-
-    /// <summary>
-    /// Adds the Nour link to the header nav and the footer's company column.
-    ///
-    /// The chrome items already exist, so <see cref="EnsureAsync"/> would skip
-    /// them: the bags are edited in place instead, and the link is appended
-    /// only when it is not already there so re-running changes nothing.
-    /// </summary>
-    private async Task AddNourToChromeAsync(string culture)
-    {
-        var ar = culture == "ar";
-        var suffix = ar ? string.Empty : "en";
-        var label = ar ? "نور" : "Nour";
-        var url = ar ? "/nour" : "/en/nour";
-
-        var headerId = $"trafotechheader{suffix}".PadRight(26, '0')[..26];
-        var header = await _contentManager.GetAsync(headerId, VersionOptions.Latest);
-        if (header is not null)
-        {
-            // ContentItem.Content is dynamic: pattern-matching it directly
-            // resolves at runtime and silently fails, so it is walked as a
-            // JsonNode exactly like SetLogoAsync does.
-            JsonNode content = header.Content;
-            if (content is JsonObject root && root["NavLinks"] is JsonObject navBag
-                && AppendLink(navBag, "NavLink", "NavLink", label, url))
-            {
-                await _contentManager.UpdateAsync(header);
-                await _contentManager.PublishAsync(header);
-            }
-        }
-
-        var footerId = $"trafotechfooter{suffix}".PadRight(26, '0')[..26];
-        var footer = await _contentManager.GetAsync(footerId, VersionOptions.Latest);
-        if (footer is not null)
-        {
-            JsonNode content = footer.Content;
-            if (content is JsonObject root
-                && root["LinkColumns"] is JsonObject columnsBag
-                && columnsBag["ContentItems"] is JsonArray columns
-                && columns.FirstOrDefault() is JsonObject firstColumn
-                && firstColumn["Links"] is JsonObject linkBag
-                && AppendLink(linkBag, "FooterLink", "FooterLink", label, url))
-            {
-                await _contentManager.UpdateAsync(footer);
-                await _contentManager.PublishAsync(footer);
-            }
-        }
-    }
-
-    /// <summary>
-    /// Appends a link item to a bag, returning false when an item pointing at
-    /// the same URL is already present.
-    /// </summary>
-    private static bool AppendLink(JsonObject bag, string type, string part, string label, string url)
-    {
-        if (bag["ContentItems"] is not JsonArray items)
-        {
-            items = [];
-            bag["ContentItems"] = items;
-        }
-
-        foreach (var existing in items)
-        {
-            if (existing?[part]?["Link"]?["Url"]?.GetValue<string>() == url)
-            {
-                return false;
-            }
-        }
-
-        var child = new JsonObject
-        {
-            ["ContentType"] = type,
-            ["ContentItemId"] = Guid.NewGuid().ToString("n")[..26],
-            ["DisplayText"] = label,
-            ["Latest"] = true,
-            ["Published"] = true,
-            ["TitlePart"] = new JsonObject { ["Title"] = label },
-        };
-
-        Link(child, part, "Link", url, label);
-        items.Add(child);
-        return true;
-    }
-
     // -------------------------------------------------------------- chrome
 
     private async Task SeedChromeAsync(string culture)
@@ -2640,61 +2179,17 @@ public sealed class ContentMigrations : DataMigration
     }
 
     /// <summary>
-    /// Adds the Nour page — Travotech's community initiative — in both
-    /// cultures, and links it from the header nav and the footer's first
-    /// column. The page is styled through the design controls added in
-    /// content-type migrations 14 and 15, so it looks deliberately unlike the
-    /// rest of the site without any new CSS.
+    /// Retired. This step used to add the "Nour" page and its navigation
+    /// links; the page was removed from the site, so the step is kept as a
+    /// no-op to preserve the migration chain for databases that already ran it.
     /// </summary>
-    public async Task<int> UpdateFrom19Async()
-    {
-        await SeedNourAsync("ar");
-        await SeedNourAsync("en");
+    public Task<int> UpdateFrom19Async() => Task.FromResult(20);
 
-        await AddNourToChromeAsync("ar");
-        await AddNourToChromeAsync("en");
+    /// <summary>Retired alongside <see cref="UpdateFrom19Async"/>.</summary>
+    public Task<int> UpdateFrom20Async() => Task.FromResult(21);
 
-        return 20;
-    }
-
-    /// <summary>
-    /// Re-applies the Nour navigation links. Migration 19 walked the chrome's
-    /// dynamic Content with a direct pattern match, which resolves at runtime
-    /// and silently matched nothing, so the links were never appended.
-    /// </summary>
-    public async Task<int> UpdateFrom20Async()
-    {
-        await AddNourToChromeAsync("ar");
-        await AddNourToChromeAsync("en");
-
-        return 21;
-    }
-
-    /// <summary>
-    /// Rebuilds the Nour page on the structural layouts added in content-type
-    /// migration 16.
-    ///
-    /// The first version only re-themed the standard stacked sections, so the
-    /// page still read as the rest of the site in different colours. The page
-    /// is removed and re-seeded rather than patched, because the sections now
-    /// carry an extra panel block that the old items do not have.
-    /// </summary>
-    public async Task<int> UpdateFrom21Async()
-    {
-        foreach (var id in new[] { "trafotechnour0000000000000", "trafotechnouren00000000000" })
-        {
-            var existing = await _contentManager.GetAsync(id, VersionOptions.Latest);
-            if (existing is not null)
-            {
-                await _contentManager.RemoveAsync(existing);
-            }
-        }
-
-        await SeedNourAsync("ar");
-        await SeedNourAsync("en");
-
-        return 22;
-    }
+    /// <summary>Retired alongside <see cref="UpdateFrom19Async"/>.</summary>
+    public Task<int> UpdateFrom21Async() => Task.FromResult(22);
 
     /// <summary>
     /// Removes the mailto: and tel: entries from the footer's contact column.
@@ -2756,21 +2251,90 @@ public sealed class ContentMigrations : DataMigration
         return 23;
     }
 
-    /// <summary>
-    /// Restores the Nour page.
-    ///
-    /// Migration 21 removed the page and re-seeded it in the same step so the
-    /// sections could gain their extra panel block. The removal committed but
-    /// the re-seed did not survive, leaving the site without the page. Seeding
-    /// it again is safe either way: EnsureAsync skips any item that already
-    /// exists, so this is a no-op where migration 21 did complete.
-    /// </summary>
-    public async Task<int> UpdateFrom23Async()
-    {
-        await SeedNourAsync("ar");
-        await SeedNourAsync("en");
+    /// <summary>Retired alongside <see cref="UpdateFrom19Async"/>.</summary>
+    public Task<int> UpdateFrom23Async() => Task.FromResult(24);
 
-        return 24;
+    /// <summary>
+    /// Drops navigation links pointing at the removed "Nour" page.
+    ///
+    /// The page was deleted from the site, but a link to it was left behind in
+    /// the footer, where it resolved to nothing.
+    /// </summary>
+    public async Task<int> UpdateFrom24Async()
+    {
+        foreach (var id in new[]
+                 {
+                     "trafotechheader00000000000", "trafotechheaderen000000000",
+                     "trafotechfooter00000000000", "trafotechfooteren000000000",
+                 })
+        {
+            var item = await _contentManager.GetAsync(id, VersionOptions.Latest);
+            if (item is null)
+            {
+                continue;
+            }
+
+            JsonNode content = item.Content;
+            if (content is not JsonObject root)
+            {
+                continue;
+            }
+
+            var changed = false;
+
+            // The header keeps its links in one bag; the footer nests them a
+            // level deeper, inside each column.
+            if (root["NavLinks"] is JsonObject navBag)
+            {
+                changed |= RemoveLinksTo(navBag, "NavLink", "/nour", "/en/nour");
+            }
+
+            if (root["LinkColumns"] is JsonObject columnsBag
+                && columnsBag["ContentItems"] is JsonArray columns)
+            {
+                foreach (var column in columns.OfType<JsonObject>())
+                {
+                    if (column["Links"] is JsonObject linkBag)
+                    {
+                        changed |= RemoveLinksTo(linkBag, "FooterLink", "/nour", "/en/nour");
+                    }
+                }
+            }
+
+            if (changed)
+            {
+                await _contentManager.UpdateAsync(item);
+                await _contentManager.PublishAsync(item);
+            }
+        }
+
+        return 25;
+    }
+
+    /// <summary>
+    /// Removes every item in a link bag whose URL matches one of the given
+    /// paths, returning whether anything was dropped.
+    /// </summary>
+    private static bool RemoveLinksTo(JsonObject bag, string part, params string[] urls)
+    {
+        if (bag["ContentItems"] is not JsonArray items)
+        {
+            return false;
+        }
+
+        var removed = false;
+
+        for (var i = items.Count - 1; i >= 0; i--)
+        {
+            var url = items[i]?[part]?["Link"]?["Url"]?.GetValue<string>();
+            if (url is not null && urls.Contains(url, StringComparer.OrdinalIgnoreCase))
+            {
+                items.RemoveAt(i);
+                removed = true;
+            }
+        }
+
+        return removed;
     }
 
     // ---------------------------------------------------- chrome (software)
